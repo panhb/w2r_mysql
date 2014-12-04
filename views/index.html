@@ -72,7 +72,7 @@ function loadArtcile(pageIndex,pageSize,loadType){
 				var list=data.list;
 				var html='';
 				$(list).each(function(){
-					html+='<li class="entry-item"><div class="entry-meta">'+this.author_name+
+					html+='<li class="entry-item"><div class="entry-meta">'+this.username+
 					'&nbsp;&nbsp;&nbsp;&nbsp;<time>'+moment(this.update_date).format('YYYY-MM-DD HH:mm')+'</time></div>'+
 					'<div><h2><a target="_blank" href="/articles/reading/'+this._id+'">'+this.title+'</a></h2></div></li>';
 				});
