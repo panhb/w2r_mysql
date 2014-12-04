@@ -74,7 +74,8 @@ router.get('/user/login', function(req, res) {
 							res.send({status:'fail',message:'登录失败,请联系管理员。'});
 						}else{
 							var obj=new Object();
-							obj.id = util.getId();
+                            var id = util.getId();
+							obj.id = id;
 							obj.userid=doc.id;
 							obj.login_date=util.getDate();
 							obj.ip=req.headers['x-forwarded-for']||req.connection.remoteAddress||req.socket.remoteAddress||req.connection.socket.remoteAddress;;
@@ -86,7 +87,7 @@ router.get('/user/login', function(req, res) {
 								}else{
 									req.session.user = doc;
 									req.session.message_count = count.count;
-									req.session.loginid=logindoc.id;
+									req.session.loginid= id ;
 									res.send({status:'success'});
 								}
 							});
