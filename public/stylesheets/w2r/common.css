@@ -1,0 +1,61 @@
+body {
+	margin: 0;
+	padding: 0.4em 1em 6em;
+	background: #efefef;
+  }
+.yue {
+	max-width: 770px;
+	margin: 0 auto;
+	margin-top: 70px;
+  }
+.shade{
+	position:absolute; 
+	z-index:10; 
+	top:0; 
+	left:0;
+	width:100%; 
+	height:100%; 
+	background:#F0EFEF; 
+	filter:alpha(opacity=90); 
+	-moz-opacity:0.9; 
+	opacity: 0.9; 
+	display: none;
+}
+.avatar {
+	display: inline-block;
+	overflow: hidden;
+	line-height: 1;
+	vertical-align: middle;
+	border-radius: 3px;
+	float: left;
+	margin-right: 5px;
+	margin-top: -5px;
+}
+
+.yue .pagination{
+	margin-left:-16px;
+}
+.pagination>.disabled>span, .pagination>.disabled>span:hover, .pagination>.disabled>span:focus, .pagination>.disabled>a, .pagination>.disabled>a:hover, .pagination>.disabled>a:focus {
+	background-color:#efefef;
+}
+
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{
+	background-color:#C5C5C5;
+	color:#000;
+	border:1px solid #C5C5C5;
+}
+
+.pagination>li>a, .pagination>li>span{
+	background-color:#efefef;
+	color:#000;
+}
+
+.pagination>li>a:hover{
+	color:#6C6B6B;
+}
+
+.btn-primary,.btn-primary:hover,.btn-primary:focus {
+	color: #f9f9f8;
+	background-color: #222223;
+	border-color: #222223;
+}

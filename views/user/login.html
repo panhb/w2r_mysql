@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>登录</title>
+	<%- partial('../common/header') %>
+	<style>
+	.input{
+		font-size:30px;
+		line-height:35px; 
+		width:450px;
+		outline:none;
+		margin-bottom:50px;
+		margin-left:50px;
+		background: #efefef;
+		border-left: 0;
+		border-right: 0;
+		border-top: 0;
+		border-bottom: 3px solid #837A7A;
+	}
+	
+	.button{
+		display: inline-block;
+		-webkit-font-smoothing: antialiased;
+		padding: .84em 1.2em;
+		margin: 0;
+		margin-left:50px;
+		background-color: #222223;
+		color: #f9f9f8;
+		text-transform: uppercase;
+		border: 0;
+		text-decoration: none;
+		outline: 0;
+		border-radius: 3px;
+		-webkit-transition: background-color .2s ease-in-out;
+		transition: background-color .2s ease-in-out;
+		text-align: center;
+		letter-spacing: .1em;
+		font: 700 .8em/1 Arial,"Xin Gothic","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	</style>
+  </head>
+  <body>
+	<div class="shade"></div>
+	<div class="yue">
+	<% if( typeof(articleid)!=='undefined'&&articleid!==null) { %>
+		<input hidden id="articleid" value="<%= articleid%>" />
+	<% } else { %>
+		<input hidden id="articleid" value="" />
+	<% } %>
+	<input class="input" id="username" type="text" style="margin-top:100px;" placeholder="用户名" /><br>
+	<input class="input" id="password" type="password" placeholder="密码" /><br>
+	<button id="loginBtn" onclick="login()" data-loading-text="登录中..." class="button">登录</button>
+	<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	<a href="/users/forget_password" style="text-decoration:underline;">忘记密码?</a>
+	</div>
+  <%- partial('../common/footer') %>
+  </body>
+</html>
+<script>
+$(function(){
+	$("#username").keyup(function(){
+		checkUsername();
+	})
+	$("#username").focus(function(){
+		checkUsername();
+	})
+	$("#username").blur(function(){
+		checkUsername();
+	})
+	$("#password").keyup(function(){
+		checkPassword();
+	})
+	$("#password").focus(function(){
+		checkPassword();
+	})
+	$("#password").blur(function(){
+		checkPassword();
+	})
+	
+	$('#password').keydown(function(){
+        if(event.keyCode=="13"){
+            login();
+        }
+    })
+    $('#username').keydown(function(){
+        if(event.keyCode=="13"){
+            login();
+        }
+    })
+})
+
+function login(){
+	var flag1=checkUsername();
+	var flag2=checkPassword();
+	if(flag1&&flag2){
+		var username=$("#username").val();
+		var password=$("#password").val();
+		password = hex_md5(password);
+		$("#loginBtn").button('loading');
+		$(".shade").show();
+		$.ajax({
+			type: "GET",
+			url: "/users/user/login",
+			data: {username:username,password:password},
+			dataType: "json",
+			success: function(json){
+				var data=eval(json)
+				if(data.status==='success'){
+				//	window.location.href="/articles/myArticle";
+					var articleid=$('#articleid').val();
+					if(articleid!==''&&articleid!==null){
+						window.location.href="/articles/reading/"+articleid;
+					}else{
+						window.location.href="/";
+					}
+				}else{
+					$(".shade").hide();
+					$("#loginBtn").button('reset');
+					alert(data.message);
+				}
+			},
+			error: function(){
+				$(".shade").hide();
+				$("#loginBtn").button('reset');
+				alert("登录失败");
+			}
+		})
+	}else{
+		if(!flag1){
+			$("#username").focus();
+			return;
+		}else if(!flag2){
+			$("#password").focus();
+			return;
+		}
+	}
+}
+
+//检测用户名
+function checkUsername() {
+	var sValue=$("#username").val();
+	if(sValue===null||sValue===''){
+		$("#username").css("border-bottom","3px solid #D51B1B");
+		return false;
+	}else{
+		$("#username").css("border-bottom","3px solid #837A7A");
+		return true;
+	}	
+}
+
+//检测密码强度
+function checkPassword() {
+	var sValue=$("#password").val();
+	if(sValue===null||sValue===''){
+		$("#password").css("border-bottom","3px solid #D51B1B");
+		return false;
+	}else{
+		$("#password").css("border-bottom","3px solid #837A7A");
+		return true;
+	}
+}
+
+</script>

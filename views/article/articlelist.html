@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>文章</title>
+<%- partial('../common/header') %>
+<style>
+.subheader {
+//	background: #fbfbfa;
+	padding: 16px 0;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	text-align: center;
+}
+.entry-list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+.entry-list .entry-item {
+	margin: 25px 0 35px;
+	line-height: 25px;
+	min-height: 50px;
+}
+.entry-list .entry-meta {
+	font-size: 14px;
+	font-family: Optima,"Helvetica Neue",sans-serif;
+	color: #999;
+}
+</style>
+</head>
+<body>
+<div class="yue">
+<div class="subheader">共
+<% if (typeof(count) !== 'undefined' && count !== '') { %>
+<%= count %>
+<% }else{ %>
+0
+<% } %>
+篇<% if (typeof(type) !== 'undefined' && type !== ''&& type === 'my') { %><% }else{ %>分享<% } %>文章</div>
+<ul id="article_list" class="entry-list">
+<% if (typeof(type) !== 'undefined' && type !== ''&& type === 'my') { %>
+	<%- partial('../article/myarticlelist') %>
+<% }else{ %> 
+	<%- partial('../article/sharearticlelist') %>
+<% } %>
+</ul>
+<div id="pagediv" style="text-align:center;">
+<% if (typeof(has_more) !== 'undefined' && has_more !== null&& has_more === true) { %>
+	<% if (typeof(type) !== 'undefined' && type !== ''&& type === 'my') { %>
+		<a style="cursor:pointer;" onclick="loadArtcile('<%= pageIndex%>','<%= pageSize%>','my')">更多文章...</a>
+	<% }else{ %> 
+		<a style="cursor:pointer;" onclick="loadArtcile('<%= pageIndex%>','<%= pageSize%>','share')">更多分享文章...</a>
+	<% } %>
+<% } %>
+</div>
+<div>
+<%- partial('../common/footer') %>
+</body>
+</html>
+<script>
+$(function(){
+	$("time").each(function(){
+		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+	});
+})
+
+function loadArtcile(pageIndex,pageSize,loadType){
+	$.ajax({
+		type: "GET",
+		url: "/articles/getArticlelist",
+		data: {pageIndex:pageIndex,pageSize:pageSize,loadType:loadType,condition:$('#condition').val()},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			if(data.status==='fail'){
+				alert('加载失败');
+			}else{
+				var list=data.list;
+				var html='';
+				$(list).each(function(){
+					if(loadType==='my'){
+						html+='<li class="entry-item"><div class="entry-meta">'+
+						'create:<time>'+moment(this.create_date).format('YYYY-MM-DD HH:mm')+'</time>&nbsp;&nbsp;'+
+						'update:<time>'+moment(this.update_date).format('YYYY-MM-DD HH:mm')+'</time>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+						'<span title="编辑" onclick="editArticle(\''+this.create_date+'\')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;';
+						if(this.status == 0){
+							html+='<span title="分享" onclick="shareArticle(\''+this.id+'\',\'1\',this)" class="glyphicon glyphicon-share-alt" style="cursor:pointer;"></span>&nbsp;&nbsp;'
+						}else{
+							html+='<span title="取消分享" onclick="shareArticle(\''+this.id+'\',\'0\',this)" class="glyphicon glyphicon-ban-circle" style="cursor:pointer;"></span>&nbsp;&nbsp;'
+						}
+						html+='<span title="删除" onclick="deleteArticle(\''+this.id+'\')" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span>'+
+						'</div><div><h2><a target="_blank" href="/articles/reading/'+this.id+'">'+this.title+'</a></h2></div></li>';
+					}else{
+						html+='<li class="entry-item"><div class="entry-meta">'+this.username+
+						'&nbsp;&nbsp;&nbsp;&nbsp;<time>'+moment(this.update_date).format('YYYY-MM-DD HH:mm')+'</time></div>'+
+						'<div><h2><a target="_blank" href="/articles/reading/'+this.id+'">'+this.title+'</a></h2></div></li>';
+					}
+				});
+				var pagehtml='';
+				if(data.has_more){
+					if(loadType==='share'){
+						pagehtml='<a style="cursor:pointer;" onclick="loadArtcile(\''+data.pageIndex+'\',\''+data.pageSize+'\',\'share\')">更多分享文章...</a>';
+					}else{
+						pagehtml='<a style="cursor:pointer;" onclick="loadArtcile(\''+data.pageIndex+'\',\''+data.pageSize+'\',\'my\')">更多文章...</a>';
+					}
+				}else{
+					pagehtml="加载完了，还加载条毛啊";
+				}
+				$('#article_list').append(html);
+				$('#pagediv').html(pagehtml);
+			}
+		},
+		error: function(){
+			alert('加载失败');
+		}
+	})
+}
+
+function editArticle(id){
+	window.location.href="/articles/editArticle/"+id;
+}
+
+function shareArticle(id,status,obj){
+	$.ajax({
+		type: "GET",
+		url: "/articles/shareArticle",
+		data: {id:id,status:status},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				var nstatus='0';
+				var ntitle='取消分享';
+				var nclass='glyphicon glyphicon-ban-circle';
+				if(status=='0'){
+					 nstatus='1';
+					 ntitle='分享';
+					 nclass='glyphicon glyphicon-share-alt';
+				}
+				$(obj).before('<span title="'+ntitle+'" onclick=shareArticle("'+id+'","'+nstatus+'",this) class="'+nclass+'" style="cursor:pointer;"></span>')
+				$(obj).remove();
+			}
+		},
+		error: function(){
+			alert("操作失败");
+		}
+	})
+}
+function deleteArticle(id){
+	if(!confirm('是否确定删除？')){
+		return;
+	}
+	$.ajax({
+		type: "GET",
+		url: "/articles/deleteArticle",
+		data: {id:id},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				location.reload();
+			}
+		},
+		error: function(){
+			alert("删除失败");
+		}
+	})
+}
+</script>

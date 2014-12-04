@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>账号管理</title>
+<%- partial('../common/header') %>
+<style type="text/css">
+	.avatar {
+		display: inline-block;
+		overflow: hidden;
+		line-height: 1;
+		vertical-align: middle;
+		border-radius: 3px;
+		float: left;
+		margin-right: 5px;
+		margin-top: -5px;
+	}
+</style>
+</head>
+<body>
+<div class="yue">
+<h1>账号管理</h1>
+<form class="navbar-form navbar-left" role="search" action="/users/userlist">
+<div class="form-group">
+	<% if (typeof(username) !== 'undefined' && username !== null) { %>
+		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" value="<%= username %>" placeholder="用户名">	
+	<% } else {%>
+		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" placeholder="用户名">
+	<% } %>				
+</div>
+<button type="submit" class="btn btn-default" style="background:#F0EFEF; font-family:Microsoft YaHei;">搜索</button>
+<button type="button" onclick="addUser()" class="btn btn-default" style="margin-left:20px;background:#F0EFEF; font-family:Microsoft YaHei;">新增用户</button>
+</form>
+<br>
+<hr>
+<input type="hidden" id="pageSize" value="<%= pageSize %>">
+<input type="hidden" id="totalCount" value="<%= totalCount %>">
+<table class="table table-hover">
+      <thead>
+        <tr>
+          <th width="150">用户名</th>
+		  <!--
+          <th>密码</th>
+		  -->
+          <th>邮箱</th>
+          <th width="120">角色</th>
+		  <!--
+          <th>头像</th>
+		  -->
+		  <th width="80">状态</th>
+		  <th width="160">注册时间</th>
+		  <th width="100">操作</th>
+        </tr>
+      </thead>
+      <tbody id="user_list">
+        <% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+		<% list.forEach(function (v, k){ %>
+			<tr>
+				<td><%= v.username %></td>
+				<!--
+				<td><%= v.password %></td>
+				-->
+				<td><%= v.email %></td>
+				<% if (v.role_type==0) { %>
+					<td>普通用户</td>
+				<% } else if (v.role_type==1){ %>
+					<td>管理员</td>
+				<% } else { %>
+					<td>没有角色</td>
+				<% }  %>
+				<!--
+				<td>
+					<% if (v.avatar !== null&& v.avatar !== '') { %>
+						<img class="avatar" height="20" width="20" src="<%= v.avatar %>" >
+					<% } else { %>
+						<img class="avatar" height="20" width="20" src="http://www.gravatar.com/avatar?size=20" >
+					<% } %>
+				</td>
+				-->
+				<% if (v.status==0) { %>
+					<td>未激活</td>
+				<% } else if (v.status==1){ %>
+					<td>已激活</td>
+				<% } else { %>
+					<td>冻结</td>
+				<% } %>
+				<td><time><%= v.create_date %></time></td>
+				<td><span title="编辑用户" onclick="editUser('<%= v.id %>')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span title="删除用户" onclick="deleteUser('<%= v.id %>',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>
+			</tr>
+		<% })%>
+		<% } %>
+      </tbody>
+    </table>
+	<ul id="page" class="pagination" ></ul>
+</div>
+
+<!-- Modal -->
+<div class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><b>用户信息<b></h4>
+      </div>
+      <div class="modal-body">
+	  <input type="text" hidden id="userId">
+	  <div class="input-group">
+		  <span class="input-group-addon" style="min-width:81px;"><b>用户名</b></span>
+		  <input type="text" class="form-control" id="userName">
+	  </div>
+	  <br>
+	  <div class="input-group">
+		  <span class="input-group-addon" style="min-width:81px;"><b>密码</b></span>
+		  <input type="text" class="form-control" id="password">
+	  </div>
+	  <br>
+	  <div class="input-group">
+		  <span class="input-group-addon" style="min-width:81px;"><b>Email</b></span>
+		  <input type="text" class="form-control" id="email">
+	  </div>
+	  <br>
+	  <div class="input-group">
+		  <span class="input-group-addon" style="min-width:81px;"><b>用户状态</b></span>
+		  <input type="text" class="form-control" id="status">
+	  </div>
+	  <br>
+	  <div class="input-group">
+		  <span class="input-group-addon" style="min-width:81px;"><b>用户角色</b></span>
+		  <input type="text" class="form-control" id="role_type">
+	  </div>
+	  <br>
+	  <div class="input-group">
+		  <span class="input-group-addon" style="min-width:81px;"><b>gavatar</b></span>
+		  <input type="text" class="form-control" id="avatar">
+	  </div>
+	  <br>
+	  <div class="input-group">
+		  <span class="input-group-addon" style="min-width:81px;"><b>个人主页</b></span>
+		  <input type="text" class="form-control" id="url">
+	  </div>
+	  <br>
+	  <div class="input-group">
+		  <span class="input-group-addon" style="min-width:81px;"><b>个性签名</b></span>
+		  <input type="text" class="form-control" id="signature">
+	  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		<!---->
+        <button type="button" class="btn btn-primary" onclick="saveUser()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- partial('../common/footer') %>
+</body>
+</html>
+<script>
+
+$(function(){
+	$("time").each(function(){
+		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+	});
+	
+	PageTool.init({
+        totalCount:$('#totalCount').val(),
+        pageSize:$('#pageSize').val(), 
+        pageMax:10 
+    },function(){});
+})
+
+function select(index){
+    PageTool.setPage(index,function(){
+		$.ajax({
+			type: "GET",
+			url: "/users/getUserlist",
+			data: {pageIndex:index,pageSize:$('#pageSize').val(),condition:$('#username').val()},
+			dataType: "json",
+			success: function(json){
+				var data=eval(json)
+				if(data.status==='fail'){
+					alert('加载失败');
+				}else{
+					var list=data.list;
+					var html='';
+					$(list).each(function(){
+						html+='<tr>';
+						html+='<td>'+this.username+'</td>';
+						html+='<td>'+this.email+'</td>';
+						if (this.role_type==0) {
+							html+='<td>普通用户</td>';
+						}else if(this.role_type==1){
+							html+='<td>管理员</td>';
+						}else{
+							html+='<td>没有角色</td>';
+						}
+						if (this.status==0) {
+							html+='<td>未激活</td>';
+						}else if (this.status==1){
+							html+='<td>已激活</td>';
+						}else{
+							html+='<td>冻结</td>';
+						}
+						html+='<td><time>'+moment(this.create_date).format('YYYY-MM-DD HH:mm')+'</time></td>';
+						html+='<td><span title="编辑用户" onclick="editUser(\''+this.id+'\')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span title="删除用户" onclick="deleteUser(\''+this.id+'\',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>';
+					});
+					$('#user_list').html(html);
+				}
+			},
+			error: function(){
+				alert('加载失败');
+			}
+		})
+	});
+}
+
+function previous(){
+    select(PageTool.getCurrentPage()-1);
+}
+
+function next(){
+    select(PageTool.getCurrentPage()+1);
+}
+
+function deleteUser(id,obj){
+	if(!confirm('是否确定删除？')){
+		return;
+	}
+	$.ajax({
+		type: "GET",
+		url: "/users/user/delete",
+		data: {userid:id},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				$(obj).parent().parent().fadeOut();
+			}
+		},
+		error: function(){
+			alert("删除失败");
+		}
+	})
+}
+
+function editUser(id){
+	$.ajax({
+		 type: "GET",
+		 url: "/users/user/userinfoDetail",
+		 data: {userid:id},
+		 dataType: "json",
+		 success: function(array){
+			 var data=eval(array)
+			 $("#userId").val(data.id);
+			 $("#userName").val(data.username);
+			 $("#password").val(data.password);
+			 $("#email").val(data.email);
+			 $("#status").val(data.status);
+			 $("#role_type").val(data.role_type);
+			 $("#avatar").val(data.avatar);
+			 $("#url").val(data.url);
+			 $("#signature").val(data.signature);
+			 $("#myModal").modal("show");
+		 } 
+	});
+}
+
+
+
+function addUser(){
+	 $("#userId").val('');
+	 $("#userName").val('');
+	 $("#password").val('');
+	 $("#email").val('');
+	 $("#status").val('');
+	 $("#role_type").val('');
+	 $("#avatar").val('');
+	 $("#url").val('');
+	 $("#signature").val('');
+	 $("#myModal").modal("show");
+}
+
+
+
+function saveUser(){
+	$.ajax({
+		 type: "GET",
+		 url: "/users/user/updateuserinfoDetail",
+		 data: {userId:$("#userId").val(),userName:$("#userName").val(),password:hex_md5($("#password").val()),email:$("#email").val(),status:$("#status").val(),role_type:$("#role_type").val(),avatar:$("#avatar").val(),url:$("#url").val(),signature:$("#signature").val()},
+		 dataType: "json",
+		 success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				$("#myModal").modal("hide");
+				window.location.reload();
+			}
+		},
+		error: function(){
+			alert("保存失败");
+		}
+	});
+}
+</script>

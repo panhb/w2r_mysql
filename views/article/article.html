@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>reading</title>
+<%- partial('../common/header') %>
+</head>
+<body>
+<div class="yue">
+<h1 title="<%= article.title%>" style="word-wrap:break-word;"><%= article.title%></h1>
+<input hidden id="currentArticleid" value="<%= article.id %>">
+<p style="margin-bottom:50px;font-size:14px;">
+<% if (typeof(article.avatar) !== 'undefined'&& article.avatar !== null&& article.avatar !== '') { %>
+<img class="avatar" title='<%= article.username%>' height="20" width="20" src="<%= article.avatar %>" >
+<% } else { %>
+<img class="avatar" title='<%= article.username%>' height="20" width="20" src="http://gravatar.com/avatar?size=20" >
+<% } %>
+&nbsp;&nbsp;<%= article.username %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="time"><%= article.update_date %></span><p>
+<%- article.content %>
+<%- partial('../comment/comment') %>
+</div>
+<%- partial('../common/footer') %>
+</body>
+</html>
+<script>
+$(function(){
+	$("#time").html(moment($("#time").html()).format('YYYY-MM-DD HH:mm'))
+})
+</script>

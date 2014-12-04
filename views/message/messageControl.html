@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>站内信管理</title>
+<%- partial('../common/header') %>
+</head>
+<body>
+<div class="yue">
+<h1>站内信管理</h1>
+<form class="navbar-form navbar-left" role="search" action="/messages/messagelist">
+<div class="form-group">
+	<% if (typeof(username) !== 'undefined' && username !== null) { %>
+		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" value="<%= username %>" placeholder="发/收信人">	
+	<% } else {%>
+		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" placeholder="发/收信人">
+	<% } %>				
+</div>
+<button type="submit" class="btn btn-default" style="background:#F0EFEF; font-family:Microsoft YaHei;">搜索</button>
+<button type="button" onclick="addMessage()" class="btn btn-default" style="margin-left:20px;background:#F0EFEF; font-family:Microsoft YaHei;">批量新增站内信</button>
+<button type="button" onclick="addMessageByUsername()" class="btn btn-default" style="margin-left:20px;background:#F0EFEF; font-family:Microsoft YaHei;">新增站内信</button>
+</form>
+<br>
+<hr>
+<input type="hidden" id="pageSize" value="<%= pageSize %>">
+<input type="hidden" id="totalCount" value="<%= totalCount %>">
+<table class="table table-hover">
+      <thead>
+        <tr>
+          <th width="100">发信人</th>
+          <th width="100">收信人</th>
+          <th width="160">发信时间</th>
+          <th >内容</th>
+		  <th width="100">操作</th>
+        </tr>
+      </thead>
+      <tbody id="message_list">
+        <% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+		<% list.forEach(function (v, k){ %>
+			<tr>
+				<td><%= v.send_username %></td>
+				<td><%= v.to_username %></td>
+				<td><time><%= v.send_date %></time></td>
+				<td><%- v.content %></td>
+				<td><span title="编辑" onclick="editMessage('<%= v.id %>',this)" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span title="删除" onclick="deleteMessage('<%= v.id %>',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>
+			</tr>
+		<% })%>
+		<% } %>
+      </tbody>
+    </table>
+	<ul id="page" class="pagination" ></ul>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><b>站内信<b></h4>
+      </div>
+      <div class="modal-body">
+		  <textarea id="messageContent" style="margin-bottom:5px;width:100%;height:200px;border-radius:5px;"></textarea>
+		  <span style="font-family:Microsoft YaHei;">发送对象:</span>
+		  <input type="checkbox" id="checkbox1" value="0"> <span style="font-family:Microsoft YaHei;">普通用户</span>
+		  <input type="checkbox" id="checkbox2" value="1"> <span style="font-family:Microsoft YaHei;">管理员</span> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" onclick="sendMessage()">发送</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade"  id="myModalByUsername" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><b>站内信<b></h4>
+      </div>
+      <div class="modal-body">
+		  <textarea id="messageContentByUser" style="margin-bottom:5px;width:100%;height:200px;border-radius:5px;"></textarea>	
+		  <span style="font-family:Microsoft YaHei;">发送对象(用户名,英文逗号隔开):</span><br>
+		  <input type="text" id="tousername" style="margin-top:5px;width:100%;">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" onclick="sendMessageByUsername()">发送</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade"  id="myeditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><b>站内信<b></h4>
+		<input hidden type="text" id="messageid" >  
+      </div>
+      <div class="modal-body">
+		  <textarea id="editContent" style="width:100%;height:200px;border-radius:5px;"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" onclick="saveMessage()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%- partial('../common/footer') %>
+</body>
+</html>
+<script>
+$(function(){
+	$("time").each(function(){
+		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+	});
+	
+	PageTool.init({
+        totalCount:$('#totalCount').val(),
+        pageSize:$('#pageSize').val(), 
+        pageMax:10 
+    },function(){});
+})
+
+function select(index){
+    PageTool.setPage(index,function(){
+		$.ajax({
+			type: "GET",
+			url: "/messages/getMessagelist",
+			data: {pageIndex:index,pageSize:$('#pageSize').val(),condition:$('#username').val()},
+			dataType: "json",
+			success: function(json){
+				var data=eval(json)
+				if(data.status==='fail'){
+					alert('加载失败');
+				}else{
+					var list=data.list;
+					var html='';
+					$(list).each(function(){
+						html+='<tr>';
+						html+='<td>'+this.send_username+'</td>';
+						html+='<td>'+this.to_username+'</td>';
+						html+='<td><time>'+moment(this.send_date).format('YYYY-MM-DD HH:mm')+'</time></td>';
+						html+='<td>'+this.content+'</td>';
+						html+='<td><span title="编辑" onclick="editMessage(\''+this.id+'\',this)" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span title="删除" onclick="deleteMessage(\''+this.id+'\',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>';
+					});
+					$('#message_list').html(html);
+				}
+			},
+			error: function(){
+				alert('加载失败');
+			}
+		})
+	});
+}
+
+function previous(){
+    select(PageTool.getCurrentPage()-1);
+}
+
+function next(){
+    select(PageTool.getCurrentPage()+1);
+}
+
+function addMessage(){
+	$("#messageContent").val('');
+	$("#checkbox1").attr('checked',false);
+	$("#checkbox2").attr('checked',false);
+	$("#myModal").modal("show");
+}
+
+function addMessageByUsername(){
+	$("#messageContentByUser").val('');
+	$("#tousername").val('');
+	$("#myModalByUsername").modal("show");
+}
+
+
+function editMessage(id,obj){
+	$("#messageid").val(id);
+	var html=$(obj).parent().prev().html();
+	html=html.replace(/<br>/g,'\r\n');
+	$("#editContent").val(html);
+	$("#myeditModal").modal("show");
+}
+
+
+
+function saveMessage(){
+	var content=$("#editContent").val();
+	if(content===null||content===''){
+		alert('内容不能为空。');
+		return;
+	}
+	content=content.replace(/\r\n/g,'<br>');
+	content=content.replace(/\n/g,'<br>');
+	var messageid=$("#messageid").val();
+	$.ajax({
+		type: "GET",
+		url: "/messages/saveMessage",
+		data: {content:content,messageid:messageid},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				$("#myeditModal").modal("hide");
+				location.reload();
+			}
+		},
+		error: function(){
+			alert("保存失败");
+		}
+	})
+}
+
+function sendMessage(){
+	var content=$("#messageContent").val();
+	if(content===null||content===''){
+		alert('内容不能为空。');
+		return;
+	}
+	content=content.replace(/\r\n/g,'<br>');
+	content=content.replace(/\n/g,'<br>');
+	var roletype='';
+	var f1=$("#checkbox1").is(':checked');
+	var f2=$("#checkbox2").is(':checked');
+	if((!f1)&&(!f2)){
+		alert('请选择一个发布对象。');
+		return;
+	}
+	if(f1){
+		roletype=$("#checkbox1").val();
+	}
+	if(f2){
+		if(roletype!==''){
+			roletype+=','+$("#checkbox2").val();
+		}else{
+			roletype=$("#checkbox2").val();
+		}
+	}
+	$.ajax({
+		type: "GET",
+		url: "/messages/addMessage",
+		data: {content:content,roletype:roletype},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				$("#myModal").modal("hide");
+				location.reload();
+			}
+		},
+		error: function(){
+			alert("发送失败");
+		}
+	})
+}
+
+
+
+function sendMessageByUsername(){
+	var content=$("#messageContentByUser").val();
+	if(content===null||content===''){
+		alert('内容不能为空。');
+		return;
+	}
+	content=content.replace(/\r\n/g,'<br>');
+	content=content.replace(/\n/g,'<br>');
+
+	var tousername=$("#tousername").val();	
+	if(tousername===null||tousername===''){
+		alert('发布对象不能为空。');
+		return;
+	}
+	
+	$.ajax({
+		type: "GET",
+		url: "/messages/addMessageByUsername",
+		data: {content:content,tousername:tousername},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				$("#myModalByUsername").modal("hide");
+				location.reload();
+			}
+		},
+		error: function(){
+			alert("发送失败");
+		}
+	})
+}
+
+function deleteMessage(id,obj){
+	if(!confirm('是否确定删除？')){
+		return;
+	}
+	$.ajax({
+		type: "GET",
+		url: "/messages/deleteMessage",
+		data: {messageid:id},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				//$(obj).parent().parent().fadeOut();
+				location.reload();
+			}
+		},
+		error: function(){
+			alert("删除失败");
+		}
+	})
+}
+</script>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>个人信息</title>
+    <%- partial('../common/header') %> 
+	<style>
+	.input{
+		font-size:30px;
+		line-height:35px; 
+		width:450px;
+		outline:none;
+		margin-bottom:50px;
+		margin-left:50px;
+		background: #efefef;
+		border-left: 0;
+		border-right: 0;
+		border-top: 0;
+		border-bottom: 3px solid #837A7A;
+	}
+	
+	.input_1{
+		font-size:30px;
+		line-height:35px; 
+		outline:none;
+		width:140px;
+		margin-bottom:50px;
+		margin-left:50px;
+		background: #efefef;
+		border-left: 0;
+		border-right: 0;
+		border-top: 0;
+		border-bottom: 0;
+	}
+	
+	.button{
+		display: inline-block;
+		-webkit-font-smoothing: antialiased;
+		padding: .84em 1.2em;
+		margin: 0;
+		margin-left:50px;
+		background-color: #222223;
+		color: #f9f9f8;
+		text-transform: uppercase;
+		border: 0;
+		text-decoration: none;
+		outline: 0;
+		border-radius: 3px;
+		-webkit-transition: background-color .2s ease-in-out;
+		transition: background-color .2s ease-in-out;
+		text-align: center;
+		letter-spacing: .1em;
+		font: 700 .8em/1 Arial,"Xin Gothic","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	.password-strength{
+		margin-left:50px;
+		margin-top:-40px;
+		margin-bottom:50px;
+	}
+	.password-strength span {
+		display: inline-block;
+		width: 48px;
+		height: 5px;
+		background: rgba(0,0,0,.04);
+		-webkit-transition: background .2s ease-in-out;
+		-moz-transition: background .2s ease-in-out;
+		-ms-transition: background .2s ease-in-out;
+		transition: background .2s ease-in-out;
+	}
+	</style>
+  </head>
+  <body>
+	<div class="shade"></div>
+	<div class="yue">
+	<input class="input" style="border-bottom:0;" readonly type="text" style="margin-top:100px;" placeholder="用户名:<%= username%>" /><br>
+	<input class="input" style="border-bottom:0;" readonly type="text" placeholder="邮箱:<%= email%>" /><br>
+	<% if (typeof(avatar) !== 'undefined' && avatar !== null&& avatar !== '') { %>
+		<input class="input_1" readonly type="text" placeholder="Gravatar :"><input class="input" style="margin-left:10px;" id="avatar"  type="text"  value="<%= avatar%>" /><br>	
+	<% } else { %>
+		<input class="input_1" readonly type="text" placeholder="Gravatar :"><input class="input" style="margin-left:10px;" id="avatar"  type="text"  value="" /><br>
+	<% } %>
+	
+	<% if (typeof(url) !== 'undefined' && url !== null&& url !== '') { %>
+		<input class="input_1" readonly type="text" placeholder="个人主页:"><input class="input" id="url" style="margin-left:10px;"  type="text"  value="<%= url%>" /><br>
+	<% } else { %>
+		<input class="input_1" readonly type="text" placeholder="个人主页:"><input class="input" id="url" style="margin-left:10px;"  type="text"  value="" /><br>
+	<% } %>
+	
+	<% if (typeof(signature) !== 'undefined' && signature !== null&& signature !== '') { %>
+		<input class="input_1" readonly type="text" placeholder="个性签名:"><input class="input" id="signature" style="margin-left:10px;"  type="text"  value="<%= signature%>" /><br>	
+	<% } else { %>
+		<input class="input_1" readonly type="text" placeholder="个性签名:"><input class="input" id="signature" style="margin-left:10px;"  type="text"  value="" /><br>
+	<% } %>
+	
+	
+	
+	<button id="updateBtn" onclick="updateUserinfo()" data-loading-text="保存中..." class="button">保存</button>
+	</div>
+  <%- partial('../common/footer') %>
+  </body>
+</html>
+<script>
+function updateUserinfo(){
+	var avatar=$("#avatar").val();
+	var url=$("#url").val();
+	var signature=$("#signature").val();
+	$("#updateBtn").button('loading');
+	$(".shade").show();
+	$.ajax({
+		type: "GET",
+		url: "/users/user/updateuserinfo",
+		data: {avatar:avatar,url:url,signature:signature},
+		dataType: "json",
+		success: function(json){
+			$(".shade").hide();
+			$("#updateBtn").button('reset');
+			var data=eval(json)
+			alert(data.message);
+		},
+		error: function(){
+			$(".shade").hide();
+			$("#updateBtn").button('reset');
+			alert("保存失败");
+		}
+	})	
+}
+</script>

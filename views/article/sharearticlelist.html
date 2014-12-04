@@ -1,0 +1,17 @@
+<% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+<% list.forEach(function (v, k){ %>
+<li class="entry-item">
+	<div class="entry-meta">
+		<!--
+		<p style="color:#000000;font-family:Microsoft YaHei;font-size:12px;"><%= v.username %>&nbsp;&nbsp;发表于&nbsp;&nbsp;<%= v.update_date %><p>
+		-->
+	  <%= v.username %>&nbsp;&nbsp;&nbsp;&nbsp;
+	  <time><%= v.update_date %></time>
+	</div>
+	<div>
+	  <h2><a title="<%= v.title %>" target="_blank" href="/articles/reading/<%= v.id %>"><%= v.title %></a></h2>
+	</div>
+  </li>
+<% })%>
+<% } %>
+

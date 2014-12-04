@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>站内信</title>
+<%- partial('../common/header') %>
+</head>
+<body>
+<div class="yue">
+<h1>站内信</h1>
+<style>
+	.line {width:100%; margin-top:20px;margin-bottom:5px;border-bottom:2px solid #8c96a0;}
+	.div_common {padding: 0 0 8px 0;margin-left:50px;width:95%;height:auto;word-wrap: break-word; word-break: normal;}
+</style>
+<div style="margin-top:50px;"></div>
+<h2>未读/新信息</h2>
+<div>
+<% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+	<% list.forEach(function (v, k){ %>
+		<% if(v.has_read===0) {%>
+			<div class='line'></div>
+			<div style='width:100%;'><div style='float:left;width:50px;'>
+			<% if (typeof(v.avatar)!=='undefined'&&v.avatar !== null&& v.avatar !== '') { %>
+				<img src='<%= v.avatar%>' title='<%= v.send_username%>' height='30' width='30' style='border-radius:5px;'></div>
+			<% } else { %>
+				<img src='http://gravatar.com/avatar?size=30' title='<%= v.send_username%>' height='30' width='30' style='border-radius:5px;'></div>
+			<% } %>
+			<div class='div_common' id='<%= v.id%>'>
+			<span style='font-size:16px;'><%- v.content%>
+			</span></div><div style='text-align:right;width:100%;'>
+			<span title="标记已读" onclick="readMessage('<%= v.id %>')" class="glyphicon glyphicon-check" style="cursor:pointer;"></span>&nbsp;&nbsp;
+			<span style='font-size:5px;font-family:Microsoft YaHei;'><%= v.send_username%>&nbsp;&nbsp;&nbsp;&nbsp;<time><%= v.send_date%></time></span></div></div>
+		<% } %>
+	<% })%>
+<% } %>
+</div>
+<div style="margin-top:100px;"></div>
+<h2>已读</h2>
+<div>
+<% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+	<% list.forEach(function (v, k){ %>
+		<% if(v.has_read===1) {%>
+			<div class='line'></div>
+			<div style='width:100%;'><div style='float:left;width:50px;'>
+			<% if (typeof(v.avatar)!=='undefined'&&v.avatar !== null&& v.avatar !== '') { %>
+				<img src='<%= v.avatar%>' title='<%= v.send_username%>' height='30' width='30' style='border-radius:5px;'></div>
+			<% } else { %>
+				<img src='http://gravatar.com/avatar?size=30' title='<%= v.send_username%>' height='30' width='30' style='border-radius:5px;'></div>
+			<% } %>
+			<div class='div_common' id='<%= v.id%>'>
+			<span style='font-size:16px;'><%- v.content%>
+			</span></div><div style='text-align:right;width:100%;'>
+			<span title="删除" onclick="deleteMessage('<%= v.id %>',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span>&nbsp;&nbsp;
+			<span style='font-size:5px;font-family:Microsoft YaHei;'><%= v.send_username%>&nbsp;&nbsp;&nbsp;&nbsp;<time><%= v.send_date%></time></span></div></div>
+		<% } %>
+	<% })%>
+<% } %>
+</div>
+</div>
+<%- partial('../common/footer') %>
+</body>
+</html>
+<script>
+$(function(){
+	$("time").each(function(){
+		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+	});
+})
+
+
+function readMessage(id){
+	$.ajax({
+		 type: "GET",
+		 url: "/messages/changeRead",
+		 data: {messageid:id},
+		 dataType: "json",
+		 success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				location.reload();
+			}
+		},
+		error: function(){
+			alert("操作失败");
+		} 
+	});
+}
+
+
+function deleteMessage(id,obj){
+	if(!confirm('是否确定删除？')){
+		return;
+	}
+	$.ajax({
+		type: "GET",
+		url: "/messages/deleteMessage",
+		data: {messageid:id},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				$(obj).parent().parent().prev().fadeOut();
+				$(obj).parent().parent().fadeOut();
+			}
+		},
+		error: function(){
+			alert("删除失败");
+		}
+	})
+}
+</script>

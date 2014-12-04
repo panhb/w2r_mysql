@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>writing</title>
+<%- partial('../common/header') %>
+<link rel='stylesheet' href='/stylesheets/w2r/editor/editor.css' />
+<script src="/javascripts/w2r/editor/editor.js"></script>
+<script src="/javascripts/shortcut.js"></script>
+<body>
+<div class="yue">
+<% if (typeof(_id) !== 'undefined'&&_id !== '') { %>
+	<input type="hidden" id="article_id" value="<%= _id%>">
+<% }else{ %>
+	<input type="hidden" id="article_id" value="">
+<% } %>
+<% if (typeof(height) !== 'undefined'&&height !== '') { %>
+	<input type="hidden" id="height" value="<%= height%>">
+<% }else{ %>
+	<input type="hidden" id="height" value="">
+<% } %>
+<% if (typeof(title) !== 'undefined'&&title !== '') { %>
+	<input class="title" type="text" value="<%= title%>">
+<% }else{ %>
+	<input class="title" type="text" placeholder="请输入文章标题">
+<% } %>
+<div class="editor-toolbar">
+<a title="加粗 CTRL+B" data-shortcut="ctrl+b" class="glyphicon glyphicon-bold"></a>
+<a title="斜体 CTRL+I" data-shortcut="ctrl+i" class="glyphicon glyphicon-italic"></a>
+<a title="无序列表 CTRL+ALT+L" data-shortcut="ctrl+alt+l" class="glyphicon glyphicon-list"></a>
+<i class="separator">|</i>
+<a title="超链接 CTRL+K" data-shortcut="ctrl+k" class="glyphicon glyphicon-link"></a>
+<a title="图片 CTRL+ALT+I" data-shortcut="ctrl+alt+i" class="glyphicon glyphicon-picture"></a>
+<a title="预览 CTRL+ALT+P" id="glyphicon-eye" data-shortcut="ctrl+alt+p" class="glyphicon glyphicon-eye-open"></a>
+<i class="separator">|</i>
+<a title="使用帮助" href="/help" target="_blank" class="glyphicon glyphicon-question-sign"></a>
+<!--
+<a title="保存" data-shortcut="alt+s" class="glyphicon glyphicon-floppy-disk"></a>
+-->
+</div>
+<textarea id="editor"  placeholder="正文" class="info"  oninput="this.style.height=this.scrollHeight+'px';"><% if (typeof(content) !== 'undefined'&&content !== '') { %><%= content%><% } %></textarea>
+<div id="preview" class="preview"></div>
+<div class="editor-statusbar">
+<span class="lines">1</span>
+<span class="words">0</span>
+</div>
+</div>
+<!--
+<p title="保存文章" id="save" data-shortcut="alt+s" ><a><span></span>保存文章</a></p>
+-->
+<p id="save" data-shortcut="alt+s" ><a><span></span>保存文章</a></p>
+<%- partial('../common/footer') %>
+</body>
+</html>

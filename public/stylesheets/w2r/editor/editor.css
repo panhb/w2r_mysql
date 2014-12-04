@@ -1,0 +1,152 @@
+.info{ 
+  font-family: 'Helvetica Neue', 'Xin Gothic', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  overflow:hidden;
+  width:100%; 
+  line-height:1.62; 
+  padding-top:30px;	  
+  padding-right:20px; 
+  padding-left:40px; 
+  letter-spacing:0;  
+  border-style:none; 
+  min-height:700px;
+  outline:none;
+}
+.preview{ 
+  position:absolute;
+//  left: 327px; 
+  top: 182px;
+  overflow:hidden;
+  width:770px; 
+  padding-top:10px;	  
+  padding-right:20px; 
+  padding-left:10px; 
+  letter-spacing:0;  
+  border-style:none; 
+  min-height:701px;
+  outline:none;
+  background: #efefef;
+  display: none;
+}
+input.title {
+  font-size: 28px;
+  font-family: 'Helvetica Neue', 'Xin Gothic', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', 'Microsoft YaHei', sans-serif;
+  background: transparent;
+  padding: 4px;
+  width: 100%;
+  border: none;
+  outline: none;
+  opacity: 0.6;
+}
+.editor-toolbar {
+  position: relative;
+  opacity: 0.6;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.editor-toolbar:before, .editor-toolbar:after {
+  display: block;
+  content: ' ';
+  height: 1px;
+  background-color: #bdc3c7;
+  background: -moz-linear-gradient(45deg, #f9f9f9, #bdc3c7, #f9f9f9);
+  background: -webkit-linear-gradient(45deg, #f9f9f9, #bdc3c7, #f9f9f9);
+  background: -ms-linear-gradient(45deg, #f9f9f9, #bdc3c7, #f9f9f9);
+  background: linear-gradient(45deg, #f9f9f9, #bdc3c7, #f9f9f9);
+}
+.editor-toolbar:before {
+  margin-bottom: 8px;
+}
+.editor-toolbar:after {
+  margin-top: 8px;
+}
+input.title:hover, .editor-wrapper input.title:focus, .editor-toolbar:hover {
+  opacity: 0.8;
+}
+.editor-toolbar a {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none !important;
+  color: #2c3e50 !important;
+  width: 28px;
+  height: 28px;
+  margin: 4px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.editor-toolbar a:hover, .editor-toolbar a.active {
+  background: #fcfcfc;
+  border-color: #95a5a6;
+}
+.editor-toolbar a:before {
+  line-height: 24px;
+}
+.editor-toolbar i.separator {
+  display: inline-block;
+  width: 0;
+  border-left: 1px solid #d9d9d9;
+  border-right: 1px solid white;
+  color: transparent;
+  text-indent: -10px;
+  margin: 0 6px;
+}
+.editor-statusbar {
+  border-top: 1px solid #ece9e9;
+  padding: 8px 10px;
+  font-size: 16px;
+  color: #959694;
+  text-align: right;
+}
+.editor-statusbar span {
+  display: inline-block;
+  min-width: 4em;
+  margin-left: 1em;
+}
+.editor-statusbar .lines:before {
+  content: 'lines: ';
+}
+.editor-statusbar .words:before {
+  content: 'words: ';
+}
+
+
+p#save{
+    position:fixed;
+    bottom:50px;
+    right:70px;
+}
+p#save a{
+    text-align:center;
+    text-decoration:none;
+    color:#d1d1d1;
+    display:block;
+    width:50px;
+    font-size:10px;
+    font-family: verdana,sans-serif;
+    /*使用CSS3中的transition属性给跳转链接中的文字添加渐变效果*/
+    -moz-transition:color 1s;
+    -webkit-transition:color 1s;
+    -o-transition:color 1s;
+}
+p#save a:hover{
+    color:#979797;
+}
+p#save a span{
+    background:#d1d1d1 url(/images/save_26.png) no-repeat center  center ;
+    border-radius:6px;
+    display:block;
+    height:50px;
+    width:50px;
+    margin-bottom:5px;
+    /*使用CSS3中的transition属性给<span>标签背景颜色添加渐变效果*/
+    -moz-transition:background 1s;
+    -webkit-transition:background 1s;
+    -o-transition:background 1s;
+}
+#save a:hover span{
+    background:#979797 url(/images/save_26.png) no-repeat center  center ;
+}

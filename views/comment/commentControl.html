@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>评论管理</title>
+<%- partial('../common/header') %>
+</head>
+<body>
+<div class="yue">
+<h1>评论管理</h1>
+<form class="navbar-form navbar-left" role="search" action="/comments/commentlist">
+<div class="form-group">
+	<% if (typeof(cusername) !== 'undefined' && cusername !== null) { %>
+		<input type="text" id="cusername" name="cusername" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" value="<%= cusername %>" placeholder="评论人">	
+	<% } else {%>
+		<input type="text" id="cusername" name="cusername" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" placeholder="评论人">
+	<% } %>				
+</div>
+<button type="submit" class="btn btn-default" style="background:#F0EFEF; font-family:Microsoft YaHei;">搜索</button>
+</form>
+<br>
+<hr>
+<input type="hidden" id="pageSize" value="<%= pageSize %>">
+<input type="hidden" id="totalCount" value="<%= totalCount %>">
+<table class="table table-hover">
+      <thead>
+        <tr>
+		  <th width="150">文章名</th>
+          <th width="150">评论人</th>
+          <th width="160">评论时间</th>
+          <th >评论内容</th>
+		  <th width="100">操作</th>
+        </tr>
+      </thead>
+      <tbody id="comment_list">
+        <% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+		<% list.forEach(function (v, k){ %>
+			<tr>
+				<% if (typeof(v.articleid)!=='undefined'&&v.articleid!== null&&v.articleid.length> 0) { %>
+					<td><a title="<%= v.title %>" target="_blank" href="/articles/reading/<%= v.articleid %>"><%= v.title.substring(0,15) %></a></td>
+				<% } else { %>
+					<td></td>
+				<% } %>
+				<td><%= v.username %></td>
+				<td><time><%= v.create_date %></time></td>
+				<td><%- v.content %></td>
+				<td><span title="删除评论" onclick="deleteComment('<%= v.id %>',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>
+			</tr>
+		<% })%>
+		<% } %>
+      </tbody>
+    </table>
+	<ul id="page" class="pagination" ></ul>
+</div>
+<%- partial('../common/footer') %>
+</body>
+</html>
+<script>
+$(function(){
+	$("time").each(function(){
+		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+	});
+	
+	PageTool.init({
+        totalCount:$('#totalCount').val(),
+        pageSize:$('#pageSize').val(), 
+        pageMax:10 
+    },function(){});
+})
+
+function select(index){
+    PageTool.setPage(index,function(){
+		$.ajax({
+			type: "GET",
+			url: "/comments/getCommentlist",
+			data: {pageIndex:index,pageSize:$('#pageSize').val(),condition:$('#cusername').val()},
+			dataType: "json",
+			success: function(json){
+				var data=eval(json)
+				if(data.status==='fail'){
+					alert('加载失败');
+				}else{
+					var list=data.list;
+					var html='';
+					$(list).each(function(){
+						html+='<tr>';
+						if (typeof(this.articleid)!=='undefined'&& this.articleid !== null && this.articleid.length> 0) {
+							html+='<td><a title="'+ this.title +'" target="_blank" href="/articles/reading/'+this.articleid+'">'+this.title.substring(0,15)+'</a></td>';
+						}else{
+							html+='<td></td>';
+						}
+						html+='<td>'+this.cusername+'</td>';
+						html+='<td><time>'+moment(this.create_date).format('YYYY-MM-DD HH:mm')+'</time></td>';
+						html+='<td>'+this.content+'</td>';
+						html+='<td><span title="删除评论" onclick="deleteComment(\''+this.id+'\',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>';
+					});
+					$('#comment_list').html(html);
+				}
+			},
+			error: function(){
+				alert('加载失败');
+			}
+		})
+	});
+}
+
+function previous(){
+    select(PageTool.getCurrentPage()-1);
+}
+
+function next(){
+    select(PageTool.getCurrentPage()+1);
+}
+
+function deleteComment(id,obj){
+	if(!confirm('是否确定删除？')){
+		return;
+	}
+	$.ajax({
+		type: "GET",
+		url: "/comments/deleteComment",
+		data: {commentid:id},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				$(obj).parent().parent().fadeOut();
+			}
+		},
+		error: function(){
+			alert("删除失败");
+		}
+	})
+}
+</script>

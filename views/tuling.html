@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>图灵机器人</title>
+    <%- partial('common/header') %>
+    <link rel='stylesheet' href='/stylesheets/w2r/tuling/tuling.css' />
+    <script src="/javascripts/w2r/tuling/tuling.js"></script>
+  </head>
+  <body>
+	<div class="yue">
+        <h1>聊天机器人</h1>
+        <hr>
+        <div id="mainMeaasge" class="m_exp_dia">
+        </div>
+        <br>
+        <textarea  id="ask_massage" style="font-size:16px;width:100%;height:130px;border-radius:5px 5px 5px 0px;outline:none;" ></textarea>
+        <button type="button" title="发送 (Enter)"  onclick="getAnswer()" class="btn btn-primary" style="margin-top:-15px;">发送(Enter)</button>
+    </div>
+    <%- partial('common/footer') %>
+  </body>
+</html>

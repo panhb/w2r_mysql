@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>联系我</title>
+    <%- partial('common/header') %>
+	<style>
+	ul.social_profiles{
+		margin-top:100px;
+	}
+	
+	ul.social_profiles li{
+		display: inline-block;
+	}
+
+	ul.social_profiles li a{
+		width: 50px;
+		height: 40px;
+//		padding:0 10px 0 0;
+		margin-right: 16px; 
+		display: inline-block;
+	}
+
+	ul.social_profiles .weibo a{
+		background: url('../images/weibo_32.png') no-repeat;
+	}
+
+
+	ul.social_profiles .weibo a:hover{
+		background: url('../images/weibo_h_32.png') no-repeat;
+	}
+
+	ul.social_profiles .twitter a{
+		background: url('../images/twitter_32.png') no-repeat;
+	}
+
+
+	ul.social_profiles .twitter a:hover{
+		background: url('../images/twitter_h_32.png') no-repeat;
+	}
+	
+	ul.social_profiles .qq a{
+		background: url('../images/qq_32.png') no-repeat;
+	}
+
+	ul.social_profiles .qq a:hover{
+		background: url('../images/qq_h_32.png') no-repeat;
+	}
+	
+	ul.social_profiles .email a{
+		background: url('../images/email_32.png') no-repeat;
+	}
+
+	ul.social_profiles .email a:hover{
+		background: url('../images/email_h_32.png') no-repeat;
+	}
+	</style>
+  </head>
+  <body>
+	<div class="yue">
+		<h2>追求极致的在线书写和阅读体验<h2>
+		<hr>
+		<ul class="social_profiles">
+            <li class="twitter"><a title="推特" href="http://twitter.com/panhongbo" target="_blink"></a></li>
+            <li class="weibo"><a title="新浪微博" href="http://weibo.com/panhongbo" target="_blink"></a></li>
+            <!--
+			<li class="qq"><a title="QQ" href="http://b.qq.com/webc.htm?new=0&sid=391400311&o=w2r&q=7" target="_blink"></a></li>
+            <li class="email"><a title="邮件" href="mailto:panhongbo891010@gmail.com"></a></li>
+			-->
+		</ul>
+	</div>
+  <%- partial('common/footer') %>
+  </body>
+</html>

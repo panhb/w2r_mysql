@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>文章管理</title>
+<%- partial('../common/header') %>
+</head>
+<body>
+<div class="yue">
+<h1>文章管理</h1>
+<form class="navbar-form navbar-left" role="search" action="/articles/articleControl">
+<div class="form-group">
+	<% if (typeof(title) !== 'undefined' && title !== null) { %>
+		<input type="text" id="article_title" name="title" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" value="<%= title %>" placeholder="文章名">	
+	<% } else {%>
+		<input type="text" id="article_title" name="title" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" placeholder="文章名">
+	<% } %>				
+</div>
+<button type="submit" class="btn btn-default" style="background:#F0EFEF; font-family:Microsoft YaHei;">搜索</button>
+</form>
+<br>
+<hr>
+<input type="hidden" id="pageSize" value="<%= pageSize %>">
+<input type="hidden" id="totalCount" value="<%= totalCount %>">
+<table class="table table-hover">
+      <thead>
+        <tr>
+          <th width="150">文章名</th>
+		  <th width="160">创建时间</th>
+		  <th width="160">最后更新</th>
+          <th >作者</th>
+          <th width="70">状态</th>
+		  <th width="130">操作</th>
+        </tr>
+      </thead>
+      <tbody id="article_list">
+        <% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+		<% list.forEach(function (v, k){ %>
+			<tr>
+				<td><a title="<%= v.title %>" target="_blank" href="/articles/reading/<%= v.id %>"><%= v.title.substring(0,15) %></a></td>
+				<td><time><%= v.create_date %></time></td>
+				<td><time><%= v.update_date %></time></td>
+				<td><%= v.username %></td>
+				<% if (v.status==0) { %>
+					<td>未分享</td>
+				<% } else { %>
+					<td>已分享</td>
+				<% } %>
+				<td>
+				<span title="编辑" onclick="editArticle('<%= v.id %>')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+				<% if (v.status === 0||v.status === '0') { %>
+					<span title="分享" onclick="shareArticle('<%= v.id %>','1',this)" class="glyphicon glyphicon-share-alt" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+				<% } else { %>
+					<span title="取消分享" onclick="shareArticle('<%= v.id %>','0',this)" class="glyphicon glyphicon-ban-circle" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+				<% }  %>
+				<span title="删除文章" onclick="deleteArticle('<%= v.id %>',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>
+			</tr>
+		<% })%>
+		<% } %>
+      </tbody>
+    </table>
+	<ul id="page" class="pagination" ></ul>
+</div>
+<%- partial('../common/footer') %>
+</body>
+</html>
+<script>
+
+$(function(){
+	$("time").each(function(){
+		if(typeof($(this).html())!=='undefined'&& $(this).html()!=='undefined'&& $(this).html()!=='' && $(this).html()!==null){
+			$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+		}else{
+			$(this).html('');
+		}
+	});
+	
+	PageTool.init({
+        totalCount:$('#totalCount').val(),
+        pageSize:$('#pageSize').val(), 
+        pageMax:10 
+    },function(){});
+})
+
+
+
+function select(index){
+    PageTool.setPage(index,function(){
+		$.ajax({
+			type: "GET",
+			url: "/articles/getArticlelist",
+			data: {pageIndex:index,pageSize:$('#pageSize').val(),condition:$('#article_title').val()},
+			dataType: "json",
+			success: function(json){
+				var data=eval(json)
+				if(data.status==='fail'){
+					alert('加载失败');
+				}else{
+					var list=data.list;
+					var html='';
+					$(list).each(function(){
+						html+='<tr>'+
+						'<td><a '+ this.title +' target="_blank" href="/articles/reading/'+this.id+'">'+this.title.substring(0,15)+'</a></td>'+
+						'<td><time>'+moment(this.create_date).format('YYYY-MM-DD HH:mm')+'</time></td>'+
+						'<td><time>'+moment(this.update_date).format('YYYY-MM-DD HH:mm')+'</time></td>'+
+						'<td>'+this.author_name+'</td>';
+						if(this.status == 0){
+							html+='<td>分享</td>';				
+						}else{
+							html+='<td>取消分享</td>';
+						}
+						html+='<td><span title="编辑" onclick="editArticle(\''+this.id+'\')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+						if(this.status == 0){
+							html+='<span title="分享" onclick="shareArticle(\''+this.id+'\',\'1\',this)" class="glyphicon glyphicon-share-alt" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+						}else{
+							html+='<span title="取消分享" onclick="shareArticle(\''+this.id+'\',\'0\',this)" class="glyphicon glyphicon-ban-circle" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+						}
+						html+='<span title="删除" onclick="deleteArticle(\''+this.id+'\')" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td></tr>';
+					});
+					$('#article_list').html(html);
+				}
+			},
+			error: function(){
+				alert('加载失败');
+			}
+		})
+	});
+}
+
+function previous(){
+    select(PageTool.getCurrentPage()-1);
+}
+
+function next(){
+    select(PageTool.getCurrentPage()+1);
+}
+
+function editArticle(id){
+//	window.location.href="/articles/editArticle/"+id;
+	window.open("/articles/editArticle/"+id);
+}
+
+function shareArticle(id,status,obj){
+	$.ajax({
+		type: "GET",
+		url: "/articles/shareArticle",
+		data: {id:id,status:status},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+				var nstatus='0';
+				var ntitle='取消分享';
+				var ntd='已分享';
+				var nclass='glyphicon glyphicon-ban-circle';
+				if(status=='0'){
+					 nstatus='1';
+					 ntitle='分享';
+					 ntd='未分享';
+					 nclass='glyphicon glyphicon-share-alt';
+				}
+				$(obj).parent().prev().html(ntd);
+				$(obj).before('<span title="'+ntitle+'" onclick=shareArticle("'+id+'","'+nstatus+'",this) class="'+nclass+'" style="cursor:pointer;"></span>')
+				$(obj).remove();
+				//location.reload();
+			}
+		},
+		error: function(){
+			alert("操作失败");
+		}
+	})
+}
+
+function deleteArticle(id,obj){
+	if(!confirm('是否确定删除？')){
+		return;
+	}
+	$.ajax({
+		type: "GET",
+		url: "/articles/deleteArticle",
+		data: {id:id},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+			//	$(obj).parent().parent().fadeOut();
+			window.location.reload();
+			}
+		},
+		error: function(){
+			alert("删除失败");
+		}
+	})
+}
+</script>

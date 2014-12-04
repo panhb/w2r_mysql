@@ -1,0 +1,180 @@
+<style>
+	.line {width:100%; margin-top:20px;margin-bottom:5px;border-bottom:2px solid #8c96a0;}
+	.div_common {padding: 0 0 8px 0;margin-left:50px;width:95%;height:auto;word-wrap: break-word; word-break: normal;}
+</style>
+<script src="/javascripts/shortcut.js"></script>
+<div style="margin-top:150px;"></div>
+<div id="comment_thread">
+	<div id="comment_mainDiv">
+	<% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+		<% list.forEach(function (v, k){ %>
+			<div class='line'></div>
+			<div style='width:100%;'><div style='float:left;width:50px;'>
+			<% if (typeof(v.avatar)!=='undefined'&&v.avatar !== null&& v.avatar !== '') { %>
+				<img src='<%= v.avatar%>' title='<%= v.username%>' height='30' width='30' style='border-radius:5px;'></div>
+			<% } else { %>
+				<img src='http://gravatar.com/avatar?size=30' title='<%= v.username%>' height='30' width='30' style='border-radius:5px;'></div>
+			<% } %>
+			<div class='div_common' id='<%= v._id%>'>
+			<span style='font-size:16px;'><%- v.content%>
+			</span></div><div style='text-align:right;width:100%;'>
+			<% if (typeof(session.user) !== 'undefined' && session.user !== null && session.user.id == article.author_id) { %>
+				<span title="删除评论" onclick="deleteComment('<%= v.id %>',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span>&nbsp;&nbsp;
+			<% } %>
+			<span style='font-size:5px;font-family:Microsoft YaHei;'><%= v.username%>&nbsp;&nbsp;&nbsp;&nbsp;<%= k+1 %>楼&nbsp;&nbsp;<time><%= v.create_date%></time></span></div></div>
+		<% })%>
+	<% } else { %>
+	  <!--暂无评论-->
+	<% } %>
+	</div>
+	
+	<% if (typeof(has_more) !== 'undefined' && has_more !== null&& has_more === true) { %>
+		<div id="pagediv" style="text-align:center;margin-top:50px;">
+		<a style="cursor:pointer;" onclick="loadAllComment('<%= article.id%>')">所有回复</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a style="cursor:pointer;" onclick="loadComment('<%= pageIndex%>','<%= pageSize%>','<%= article.id%>')">更多回复...</a>
+		</div>
+	<% } %>
+	
+	<div style="width:100%;margin-top:50px;">
+	<% if (typeof(session.user) !== 'undefined' && session.user !== null) { %>
+            <textarea id="mainTextArea" placeholder="回复 (Ctrl + Enter)" style="font-size:16px;width:100%;height:200px;border-radius:5px 5px 5px 0px;outline:none;" ></textarea>
+			<br>
+			<button type="button"  data-shortcut="ctrl+enter" title="回复 (Ctrl + Enter)" onclick="mainComments()" class="btn btn-primary">发表评论</button>
+	<% } else { %>
+			您想参与评论吗？赶紧点击<a href="/users/login?articleid=<%= article.id%>"><b>登录</b></a>/<a href="/users/reg"><b>注册</b></a>吧
+	<% } %>
+	</div>
+</div>
+<script>
+$(function(){
+//	$("#mainTextArea").focus();
+	$("time").each(function(){
+		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+	});
+})
+var cnum=1;
+function mainComments(){
+	var cd=moment().format('YYYY-MM-DD HH:mm');
+	var textarea=$("#mainTextArea").val();
+	if(textarea===null||textarea===''){
+		alert("写点什么东西再发表吧");
+		return;
+	}
+	textarea=textarea.replace(/\r\n/g,'<br>');
+	textarea=textarea.replace(/\n/g,'<br>');
+	var avatar=$("#currentAvatar").val();
+	if(avatar===null||avatar===''){
+		avatar="http://gravatar.com/avatar?size=30"
+	}
+	var username=$("#currentUsername").val();
+	var articleid=$("#currentArticleid").val();
+	var cid="comment_"+cnum;
+	cnum++;
+	
+	$.ajax({
+			type: "GET",
+			url: "/comments/addComment",
+			data: {content:textarea,articleid:articleid},
+			dataType: "json",
+			success: function(json){
+				var data=eval(json)	
+				alert(data.message);				
+				if(data.status==='success'){
+					/*
+					var div="<div class='line'></div>"+
+						"<div style='width:100%;'><div style='float:left;width:50px;'><img src='"+avatar+"' title='"+username+"' height='30' width='30' style='border-radius:5px;'></div>"+
+						"<div class='div_common' id='"+cid+"'>"+
+						"<span style='font-size:16px;'>"+textarea+
+						"</span></div><div style='text-align:right;width:100%;'><span style='font-size:5px;font-family:Microsoft YaHei;'>"+username+"&nbsp;&nbsp;&nbsp;&nbsp;<time>"+cd+"</time></span></div></div>";
+					$("#comment_mainDiv").append(div);
+					$("#"+cid).fadeIn("slow");
+					*/
+					$("#mainTextArea").val("");
+					window.location.reload();
+				}else{
+					alert(data.message);
+				}
+			},
+			error: function(){
+				alert("评论失败");
+			}
+		})	
+}
+
+function loadAllComment(articleid){
+	window.location.href="/articles/allComment/reading/"+articleid;
+}
+
+function loadComment(pageIndex,pageSize,articleid){
+	$.ajax({
+		type: "GET",
+		url: "/comments/getCommentlist",
+		data: {pageIndex:pageIndex,pageSize:pageSize,articleid:articleid},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			if(data.status==='fail'){
+				alert('加载失败');
+			}else{
+				var list=data.list;
+				var html='';
+				$(list).each(function(i){
+					 var avatar='';
+					 if(this.cuserid[0].avatar===null||this.cuserid[0].avatar===''){
+						avatar='http://gravatar.com/avatar?size=30';
+					 }else{
+						avatar=this.cuserid[0].avatar;
+					 }
+					 var currentUserid=$('#currentUserid').val();
+					 html+="<div class='line'></div>"+
+						"<div style='width:100%;'><div style='float:left;width:50px;'><img src='"+avatar+"' title='"+this.cuserid[0].username+"' height='30' width='30' style='border-radius:5px;'></div>"+
+						"<div class='div_common' id='"+this._id+"'>"+
+						"<span style='font-size:16px;'>"+this.content+"</span></div><div style='text-align:right;width:100%;'>";
+					 if(typeof(currentUserid)!=='undefined'&& currentUserid!==null && currentUserid!=='' && currentUserid===this.carticleid[0].author_id){
+						 html+="<span title='删除评论' onclick='deleteComment('"+this._id+"',this)' class='glyphicon glyphicon-trash' style='cursor:pointer;'></span>&nbsp;&nbsp;";
+					 }
+					 html+="<span style='font-size:5px;font-family:Microsoft YaHei;'>"+this.cuserid[0].username+"&nbsp;&nbsp;&nbsp;&nbsp;"+((pageIndex-1)*pageSize+i+1)+"楼&nbsp;&nbsp;<time>"+moment(this.create_date).format('YYYY-MM-DD HH:mm')+"</time></span></div></div>";
+				});
+				var pagehtml='';
+				if(data.has_more){
+					pagehtml='<a style="cursor:pointer;" onclick="loadAllComment(\''+this.carticleid[0]._id+'\')">所有回复</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a style="cursor:pointer;" onclick="loadComment(\''+data.pageIndex+'\',\''+data.pageSize+'\',\''+this.carticleid[0]._id+'\')">更多回复...</a>';
+				}else{
+					pagehtml="加载完了，还加载条毛啊";
+				}
+				$('#comment_mainDiv').append(html);
+				$('#pagediv').html(pagehtml);
+			}
+		},
+		error: function(){
+			alert('加载失败');
+		}
+	})
+}
+
+function deleteComment(id,obj){
+	if(!confirm('是否确定删除？')){
+		return;
+	}
+	$.ajax({
+		type: "GET",
+		url: "/comments/deleteComment",
+		data: {commentid:id},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+			//	$(obj).parent().parent().prev().fadeOut();
+			//	$(obj).parent().parent().fadeOut();
+				window.location.reload();
+			}
+		},
+		error: function(){
+			alert("删除失败");
+		}
+	})
+}
+</script>
+
+
+
+

@@ -1,0 +1,20 @@
+<% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+<% list.forEach(function (v, k){ %>
+<li class="entry-item">
+    <div class="entry-meta">
+	  create:<time><%= v.create_date %></time>&nbsp;&nbsp;
+      update:<time><%= v.update_date %></time>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  <span title="编辑" onclick="editArticle('<%= v.id %>')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;
+	  <% if (v.status === 0||v.status === '0') { %>
+		<span title="分享" onclick="shareArticle('<%= v.id %>','1',this)" class="glyphicon glyphicon-share-alt" style="cursor:pointer;"></span>&nbsp;
+	  <% } else { %>
+		<span title="取消分享" onclick="shareArticle('<%= v.id %>','0',this)" class="glyphicon glyphicon-ban-circle" style="cursor:pointer;"></span>&nbsp;
+	  <% }  %>  
+	  <span title="删除" onclick="deleteArticle('<%= v.id %>')" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span>
+    </div>
+    <div>
+      <h2><a title="<%= v.title %>" target="_blank" href="/articles/reading/<%= v.id %>"><%= v.title %></a></h2>
+    </div>
+  </li>
+<% })%>
+<% } %>

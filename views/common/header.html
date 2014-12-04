@@ -1,0 +1,144 @@
+<header>
+	<!--
+	<link rel="icon" href="/favicon.ico">
+	-->
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+	<link rel='stylesheet' href='/stylesheets/yue.css' />
+	<link rel='stylesheet' href='/stylesheets/w2r/common.css' />	
+	<script src="/javascripts/jquery-1.11.1.min.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>
+	<script src="/javascripts/pageTool.js"></script>
+	<script src="/javascripts/moment.2.8.3.min.js"></script>
+	<script src="/javascripts/md5.js"></script>
+	<nav class="navbar navbar-inverse navbar-fixed-top" style="background: #efefef;border-bottom: 1px solid" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"  data-toggle="collapse" data-target="#bs-example-navbar-collapse-6">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">w2r</a>
+        </div>
+
+        <div class="collapse navbar-collapse"  id="bs-example-navbar-collapse-6">
+			 <form class="navbar-form navbar-left" role="search" action="/articles/search/articlelist">
+				<div class="form-group">
+					<% if (typeof(session.user) !== 'undefined' && session.user !== null) { %>
+						<% if (typeof(condition) !== 'undefined' && condition !== null) { %>
+							<input type="text" id="condition" name="condition" class="form-control" style="width:400px;background:#efefef;font-family:Microsoft YaHei;" value="<%= condition %>" placeholder="文章名:my/all">	
+						<% } else {%>
+							<input type="text" id="condition" name="condition" class="form-control" style="width:400px;background:#efefef;font-family:Microsoft YaHei;" placeholder="文章名:my/all">
+						<% } %>	  
+					<% } else {%>
+						<% if (typeof(condition) !== 'undefined' && condition !== null) { %>
+							<input type="text" id="condition" name="condition" class="form-control" style="width:400px;background:#efefef;font-family:Microsoft YaHei;" value="<%= condition %>" placeholder="文章名">	
+						<% } else {%>
+							<input type="text" id="condition" name="condition" class="form-control" style="width:400px;background:#efefef;font-family:Microsoft YaHei;" placeholder="文章名">
+						<% } %>
+					<% } %>	  
+				</div>
+				<button type="submit" class="btn btn-default" style="background:#F0EFEF; font-family:Microsoft YaHei;">搜索</button>
+			  </form>
+			 
+			  <ul class="nav navbar-nav navbar-right">
+				<% if (typeof(session.user) !== 'undefined' && session.user !== null) { %>
+					<input hidden id="currentUsername" value="<%= session.user.username %>">
+					<input hidden id="currentUserid" value="<%= session.user.id %>">
+					<input hidden id="currentAvatar" value="<%= session.user.avatar %>">
+					<% if (session.user.role_type === 1) { %>
+						<li id="fat-menu" class="dropdown">
+						  <a id="drop" style="font-family:Microsoft YaHei;font-size:16px;" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							功能管理<span class="caret"></span>
+						  </a>
+						  <ul id="dropdown-menu" class="dropdown-menu" style="background:#F0EFEF;" role="menu" aria-labelledby="drop">
+							<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/users/userlist">账号管理</a></li>
+							<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/articles/articleControl">文章管理</a></li>
+							<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/comments/commentlist">评论管理</a></li>
+							<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/messages/messagelist">站内信管理</a></li>
+							<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/logins/loginlist">登录管理</a></li>
+						  </ul>
+						</li>
+					<% } %>
+                  <% if (session.user.role_type === 1||session.user.status === 1) { %>
+                      <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/articles/writing">writing</a></li>
+                  <% } %>
+                  <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/tuling">聊天机器人</a></li>
+                  <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/contact">关于</a></li>
+                  <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/help">使用帮助</a></li>
+                  <li id="fat-usermenu" class="dropdown">
+                      <a id="drop_userinfo" style="font-family:Microsoft YaHei;font-size:16px;" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <% if (typeof(session.user.avatar) !== 'undefined'&& session.user.avatar !== null&& session.user.avatar !== '') { %>
+                            <img class="avatar" height="30" title="<%= session.user.username %>" width="30" src="<%= session.user.avatar %>" >
+                          <% } else { %>
+                            <img class="avatar" height="30" title="<%= session.user.username %>" width="30" src="http://gravatar.com/avatar?size=30" >
+                          <% } %>
+                          <%= session.user.username %>
+                      </a>
+                      <ul id="drop-userinfo-menu" class="dropdown-menu" style="background:#F0EFEF;" role="menu" aria-labelledby="drop_userinfo">
+                          <% if (session.user.role_type === 1||session.user.status === 1) { %>
+                          <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/articles/myArticle">我的文章</a></li>
+                          <% } %>
+                          <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/messages/message">站内信
+                              <% if (session.message_count === 0) { %>
+                              (<span style="font-weight:bold;"><%= session.message_count %></span>)
+                              <% } else { %>
+                              (<span style="font-weight:bold;color:red;"><%= session.message_count %></span>)
+                              <% } %>
+                          </a></li>
+                          <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/users/user/userinfo">个人信息</a></li>
+                          <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/users/loginOut">登出</a></li>
+                      </ul>
+                  </li>
+				<% } else {%>
+					<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/users/login">登录</a></li>
+					<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/users/reg">注册</a></li>
+                  <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/tuling">聊天机器人</a></li>
+					<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/contact">关于</a></li>
+				<% } %>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+			 </ul>
+        </div>
+	</nav>
+</header>
+<script>
+$(function(){
+	$("#drop").mouseover(function(){
+		$("#dropdown-menu").show();
+	})
+	
+	$("#drop").mouseout(function(){
+		$("#dropdown-menu").hide();
+	});
+	
+	$("#dropdown-menu").mouseover(function(){
+		$("#dropdown-menu").show();
+	})
+	
+	$("#dropdown-menu").mouseout(function(){
+		$("#dropdown-menu").hide();
+	});
+
+
+
+    $("#drop_userinfo").mouseover(function(){
+        $("#drop-userinfo-menu").show();
+    })
+
+    $("#drop_userinfo").mouseout(function(){
+        $("#drop-userinfo-menu").hide();
+    });
+
+    $("#drop-userinfo-menu").mouseover(function(){
+        $("#drop-userinfo-menu").show();
+    })
+
+    $("#drop-userinfo-menu").mouseout(function(){
+        $("#drop-userinfo-menu").hide();
+    });
+})
+</script>
+<!-- Header End -->
+
+
