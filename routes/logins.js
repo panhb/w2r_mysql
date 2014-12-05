@@ -3,6 +3,7 @@ var router = express.Router();
 var Url = require('url');
 var config = require('../config');
 var mysqlUtil = require('../utils/mysqlUtil');
+var log = require('../log').logger('w2r');
 var login = 'login';
 
 /* 用户登录管理 */
@@ -17,19 +18,19 @@ router.get('/loginlist', function(req, res) {
 	
 	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
 		pageIndex=1;
-	 }else{
+	}else{
 		pageIndex=pageIndex*1;
-	 }
-	 if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
+	}
+	if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
 		pageSize=config.user_pageSize;
-	 }else{
+	}else{
 		pageSize=pageSize*1;
-	 }
+	}
 	mysqlUtil.countBySql(csql,function (err, count) {
 		if(!err){
 			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
 				if(err){
-					console.log(err);
+					log.error(err);
 					res.render('error', {
 						message: '搜索/查询用户登录列表出错',
 						error: {}
@@ -39,7 +40,7 @@ router.get('/loginlist', function(req, res) {
 				}
 			});
 		}else{
-			console.log(err);
+			log.error(err);
 			res.render('error', {
 				message: '搜索/查询用户登录列表出错',
 				error: {}
@@ -64,13 +65,14 @@ router.get('/getLoginlist', function(req, res) {
 	}else{
 		pageSize=pageSize*1;
 	}
-	var obj=null;
+	var obj='';
 	if(typeof(condition)!=='undefined'&&condition!==null&&condition!==''){
-		obj=' where u.username like "%'+condition+'%" ';
+		obj=' and u.username like "%'+condition+'%" ';
 	}
-	var sql='select l.*,u.username,u.avatar from login l , user u '+obj + 'order by login_date desc ';	
+	var sql='select l.*,u.username,u.avatar from login l , user u where l.userid=u.id '+obj + 'order by login_date desc ';	
 	mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
 		if(err){
+			log.error(err);
 			res.send({status:'fail'});
 		}else{
 			res.send({list:docs,status:'success'});
@@ -84,6 +86,7 @@ router.get('/login/delete', function(req, res) {
 	var loginid=params.loginid;
 	mysqlUtil.deleteById(login,loginid,function(err){
 		if(err){
+			log.error(err);
 			res.send({status:'fail',message:'删除失败'});
 		}else{
 			res.send({status:'success',message:'删除成功'});

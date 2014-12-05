@@ -8,6 +8,7 @@ var config = require('../config');
 var superagent = require('superagent');
 var qs = require('querystring');
 var _ = require('lodash');
+var log = require('../log').logger('w2r');
 
 var tuling_error = [
     { 'code': 40001,  'text': 'key的长度错误（32位' },
@@ -40,6 +41,7 @@ router.get('/getAnswer', function(req, res) {
     superagent.get(apiURL).end(function (err, sres) {
         // 常规的错误处理
         if (err) {
+			log.error(err);
             return next(err);
         }
         var text = sres.text;
@@ -49,7 +51,7 @@ router.get('/getAnswer', function(req, res) {
         if(index<0){
             res.send({status:'success',json:json});
         }else{
-            console.log(tuling_error[index]);
+            log.info(tuling_error[index]);
             res.send({status:'fail'});
         }
     })

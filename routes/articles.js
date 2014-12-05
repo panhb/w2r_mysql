@@ -8,6 +8,7 @@ var multipartMiddleware = multipart();
 var config = require('../config');
 var mysqlUtil = require('../utils/mysqlUtil');
 var util = require('../utils/util');
+var log = require('../log').logger('w2r');
 var article = 'article';
 var comment = 'comment';
 
@@ -43,15 +44,32 @@ router.get('/myArticle', function(req, res) {
 	var csql = 'select count(*) count from article a , user u where a.author_id=u.id and a.author_id="'+author_id+'"'; 
 	var sql='select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.author_id="'+author_id+'" order by update_date desc'; 
 	mysqlUtil.countBySql(csql,function (err,count) {
-		mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err,docs) {
-			var has_more=false;
-			if(count.count<=pageIndex*pageSize){
-				has_more=false;
-			}else{
-				has_more=true;
-			}
-			res.render('article/articlelist', {type:'my',has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,count:count.count,list:docs});
-		});
+		if(err){
+			log.error(err);
+			res.render('error', {
+				message: '访问失败',
+				error: {}
+			});
+		}else{
+			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err,docs) {
+				if(err){
+					log.error(err);
+					res.render('error', {
+						message: '访问失败',
+						error: {}
+					});
+				}else{
+					var has_more=false;
+					if(count.count<=pageIndex*pageSize){
+						has_more=false;
+					}else{
+						has_more=true;
+					}
+					res.render('article/articlelist', {type:'my',has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,count:count.count,list:docs});
+				}
+			});
+		}
+		
 	});
 });
 
@@ -71,7 +89,7 @@ router.get('/getArticlelist', function(req, res) {
 	}else{
 		pageSize=pageSize*1;
 	}
-	var obj=null;
+	var obj='';
 	if(typeof(loadType)!=='undefined'&&loadType!==null&&loadType!==''){
 		if(loadType==='share'){
 			obj = 'where status = 1';
@@ -81,7 +99,7 @@ router.get('/getArticlelist', function(req, res) {
 	}
 	if(typeof(condition)!=='undefined'&&condition!==null&&condition!==''){
         var arr = condition.split(':');
-		if(obj===null){
+		if(obj===''){
 			obj = 'where title like "%'+arr[0]+'%"';
 		}else {
 			obj += ' and  title like "%'+arr[0]+'%"';
@@ -91,22 +109,24 @@ router.get('/getArticlelist', function(req, res) {
 	var sql = 'select a.*,u.username,u.avatar count from (select * from article '+obj+') a , user u where a.author_id=u.id order by a.update_date desc'; 
 	mysqlUtil.countBySql(csql,function (err, count) {
 		if(err){
+			log.error(err);
 			res.send({status:'fail'});
-			return;
-		}
-		mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
-			if(err){
-				res.send({status:'fail'});
-			}else{
-				var has_more=false;
-				if(count.count<=pageIndex*pageSize){
-					has_more=false;
-				}else{
-					has_more=true;
-				}
-				res.send({has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,list:docs,status:'success'});
-			}
-		});
+		}else{
+            mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+                if(err){
+                    log.error(err);
+                    res.send({status:'fail'});
+                }else{
+                    var has_more=false;
+                    if(count.count<=pageIndex*pageSize){
+                        has_more=false;
+                    }else{
+                        has_more=true;
+                    }
+                    res.send({has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,list:docs,status:'success'});
+                }
+            });
+        }
 	});
 })
 
@@ -130,13 +150,13 @@ router.get('/search/articlelist', function(req, res) {
 	 //看是否需要在标题中限制特殊符号
 	 var arr=condition.split(':');
 	 var type='';
-	 var obj=null;
+	 var obj='';
 	 if(arr.length<2||arr[1]==null||arr[1]==''||arr[1]=='all'||arr[1].replace(' ','')==''||!req.session.user){
-		console.log('所有公开文章搜索');
+		log.info('所有公开文章搜索');
 		type='share';
 		obj = ' status = 1';
 	 }else{
-		console.log('我的文章搜索');
+		log.info('我的文章搜索');
 		obj = ' author_id = "'+req.session.user.id+'"';
 		type='my';
 	 }  
@@ -146,15 +166,30 @@ router.get('/search/articlelist', function(req, res) {
 	 var sql = 'select a.*,u.username,u.avatar count from (select * from article where '+obj+') a , user u where a.author_id=u.id order by a.update_date desc';
 	
 	 mysqlUtil.countBySql(csql,function (err, count) {
-		mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
-			var has_more=false;
-			if(count.count<=pageIndex*pageSize){
-				has_more=false;
-			}else{
-				has_more=true;
-			}
-			res.render('article/articlelist', {condition:condition,type:type,has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,count:count.count,list:docs});
-		});
+		if(err){
+			log.error(err);
+			res.render('error', {
+				message: '访问失败',
+				error: {}
+			});
+		}else{
+            mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+                if(err){
+                    log.error(err);
+                    res.render('error', {
+                        message: '访问失败',
+                        error: {}
+                    });
+                }
+                var has_more=false;
+                if(count.count<=pageIndex*pageSize){
+                    has_more=false;
+                }else{
+                    has_more=true;
+                }
+                res.render('article/articlelist', {condition:condition,type:type,has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,count:count.count,list:docs});
+            });
+        }
 	});
 });
 
@@ -177,12 +212,22 @@ router.get('/addArticle', function(req, res) {
   obj.update_date = date;
   if(article_id!==null&&article_id!==''){
 	mysqlUtil.updateById(article,article_id, updateString,function(err){
-		res.send({id:article_id,message:'保存成功'});
+		if(err){
+			log.error(err);
+			res.send({id:article_id,message:'保存失败'});
+		}else{
+			res.send({id:article_id,message:'保存成功'});
+		}
 	});
   }else{
 	mysqlUtil.insert(article,obj,function(err,doc){
-		console.log(doc)
-		res.send({id:doc._id,message:'保存成功'});
+		if(err){
+			log.error(err);
+			res.send({id:obj.id,message:'保存失败'});
+		}else{
+			log.info(doc);
+			res.send({id:doc.id,message:'保存成功'});
+		}
 	});
   }
 });
@@ -190,56 +235,102 @@ router.get('/addArticle', function(req, res) {
 /* 根据id获取文章内容 */
 router.get('/reading/:id', function(req, res) {
     var id=req.params.id;
-    console.log('文章id:'+id);
+    log.info('文章id:'+id);
 	var sql='select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.id="'+id+'"'; 
-	var csql = 'select c.*,u.username,u.avatar from comment c , user u where c.userid=u.id and c.articleid="'+id+'"'; 
-	mysqlUtil.query(sql,function (err, article) {
-		if(err||article===null){
-			res.render('error', {
-				message: '页面不存在',
-				error: {}
-			});
-		}else{
-			if(article[0].status==1){
-				mysqlUtil.count(comment,'articleid="'+id+'"',function (err,count) {
-					mysqlUtil.queryWithPage(1,config.user_pageSize*1,csql,function (err, docs) {
-						article[0].content=marked(article[0].content);
-						var has_more=false;
-						if(count.count<=config.user_pageSize*1){
-							has_more=false;
-						}else{
-							has_more=true;
-						}
-						res.render('article/article', {article:article[0],has_more:has_more,pageIndex:2,pageSize:config.user_pageSize*1,count:count.count,list:docs});
-					});
-				});
-			}else{
-				if (!req.session.user) {
-					return res.render('user/login');
-				}else{
-					if(req.session.user.id===article[0].author_id||req.session.user.role_type=='1'){
-						mysqlUtil.count(comment,'articleid="'+id+'"',function (err,count) {
-							mysqlUtil.queryWithPage(1,config.user_pageSize*1,csql,function (err, docs) {
-								article[0].content=marked(article[0].content);
-								var has_more=false;
-								if(count.count<=config.user_pageSize*1){
-									has_more=false;
-								}else{
-									has_more=true;
-								}
-								res.render('article/article', {article:article[0],has_more:has_more,pageIndex:2,pageSize:config.user_pageSize*1,count:count.count,list:docs});
-							});
-						});
-					}else{
-						res.render('error', {
-							message: '您没有权限访问该页面',
-							error: {}
-						});
-					}
-				}
-			}
-		}	
-	});
+	var csql = 'select c.*,u.username,u.avatar from comment c , user u where c.userid=u.id and c.articleid="'+id+'"';
+    var usql = ' update article set visit_count = visit_count+1  where id = "'+id+'"';
+    mysqlUtil.query(usql,function (err){
+        if(err){
+            log.error(err);
+            res.render('error', {
+                message: '页面不存在',
+                error: {}
+            });
+        }else{
+            mysqlUtil.query(sql,function (err, article) {
+                log.info(article);
+                if(err||typeof(article)==='undefined'||article.length===0){
+                    log.error(err);
+                    res.render('error', {
+                        message: '页面不存在',
+                        error: {}
+                    });
+                }else{
+                    if(article[0].status==1){
+                        mysqlUtil.count(comment,'articleid="'+id+'"',function (err,count) {
+                            if(err){
+                                log.error(err);
+                                res.render('error', {
+                                    message: '页面不存在',
+                                    error: {}
+                                });
+                            }else{
+                                mysqlUtil.queryWithPage(1,config.user_pageSize*1,csql,function (err, docs) {
+                                    if(err){
+                                        log.error(err);
+                                        res.render('error', {
+                                            message: '页面不存在',
+                                            error: {}
+                                        });
+                                    }else{
+                                        article[0].content=marked(article[0].content);
+                                        var has_more=false;
+                                        if(count.count<=config.user_pageSize*1){
+                                            has_more=false;
+                                        }else{
+                                            has_more=true;
+                                        }
+                                        res.render('article/article', {article:article[0],has_more:has_more,pageIndex:2,pageSize:config.user_pageSize*1,count:count.count,list:docs});
+                                    }
+                                });
+                            }
+                        });
+                    }else{
+                        if (!req.session.user) {
+                            return res.render('user/login');
+                        }else{
+                            if(req.session.user.id===article[0].author_id||req.session.user.role_type=='1'){
+                                mysqlUtil.count(comment,'articleid="'+id+'"',function (err,count) {
+                                    if(err){
+                                        log.error(err);
+                                        res.render('error', {
+                                            message: '页面不存在',
+                                            error: {}
+                                        });
+                                    }else{
+                                        mysqlUtil.queryWithPage(1,config.user_pageSize*1,csql,function (err, docs) {
+                                            if(err){
+                                                log.error(err);
+                                                res.render('error', {
+                                                    message: '页面不存在',
+                                                    error: {}
+                                                });
+                                            }else{
+                                                article[0].content=marked(article[0].content);
+                                                var has_more=false;
+                                                if(count.count<=config.user_pageSize*1){
+                                                    has_more=false;
+                                                }else{
+                                                    has_more=true;
+                                                }
+                                                res.render('article/article', {article:article[0],has_more:has_more,pageIndex:2,pageSize:config.user_pageSize*1,count:count.count,list:docs});
+                                            }
+                                        });
+                                    }
+                                });
+                            }else{
+                                res.render('error', {
+                                    message: '您没有权限访问该页面',
+                                    error: {}
+                                });
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    })
+
 });
 
 
@@ -248,20 +339,29 @@ router.get('/reading/:id', function(req, res) {
 /* 根据id获取文章内容 */
 router.get('/allComment/reading/:id', function(req, res) {
     var id=req.params.id;
-    console.log('文章id:'+id);
+    log.info('获取文章内容  文章id:'+id);
 	var sql='select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.id="'+id+'"'; 
 	var csql = 'select c.*,u.username,u.avatar from comment c , user u where c.userid=u.id and c.articleid="'+id+'"'; 
 	mysqlUtil.query(sql,function (err, article) {
-		if(err||article===null){
+		if(err||typeof(article)==='undefined'||article.length===0){
+			log.error(err);
 			res.render('error', {
 				message: '页面不存在',
 				error: {}
 			});
 		}else{
 			if(article[0].status==1){
-				mysqlUtil.query(csql,function (err, docs) {	
-					article[0].content=marked(article[0].content);
-					res.render('article/article', {article:article[0],list:docs});
+				mysqlUtil.query(csql,function (err, docs) {
+					if(err){
+						log.error(err);
+						res.render('error', {
+							message: '页面不存在',
+							error: {}
+						});
+					}else{
+						article[0].content=marked(article[0].content);
+						res.render('article/article', {article:article[0],list:docs});
+					}
 				});
 			}else{
 				if (!req.session.user) {
@@ -269,8 +369,16 @@ router.get('/allComment/reading/:id', function(req, res) {
 				}else{
 					if(req.session.user.id===article[0].author_id||req.session.user.role_type=='1'){
 						mysqlUtil.query(csql,function (err, docs) {	
-							article[0].content=marked(article[0].content);
-							res.render('article/article', {article:article[0],list:docs});
+							if(err){
+								log.error(err);
+								res.render('error', {
+									message: '页面不存在',
+									error: {}
+								});
+							}else{
+								article[0].content=marked(article[0].content);
+								res.render('article/article', {article:article[0],list:docs});
+							}
 						});
 					}else{
 						res.render('error', {
@@ -287,9 +395,10 @@ router.get('/allComment/reading/:id', function(req, res) {
 /* 根据id获取文章内容 */
 router.get('/editArticle/:id', function(req, res) {
     var id=req.params.id;
-    console.log('文章id:'+id);
+    log.info('获取文章内容  文章id:'+id);
 	mysqlUtil.getById(article,id, function (err, article) {
-		if(article===null){
+		if(err||typeof(article)==='undefined'){
+			log.error(err);
 			res.render('error', {
 				message: '页面不存在',
 				error: {}
@@ -306,9 +415,10 @@ router.get('/shareArticle', function(req, res) {
 	var id = params.id;
 	var status = params.status;
 	var updateString = 'status='+status+',update_date="'+util.getDate()+'"'
-    console.log('文章id:'+id+',状态:'+status);
+    log.info('文章id:'+id+',状态:'+status);
 	mysqlUtil.updateById(article,id,updateString,function(err){
-		if(err){			
+		if(err){
+			log.error(err);
 			res.send({status:'fail',message:'操作失败'});
 		}else{
 			res.send({status:'success',message:'操作成功'});
@@ -320,9 +430,10 @@ router.get('/shareArticle', function(req, res) {
 router.get('/deleteArticle', function(req, res) {
     var params = Url.parse(req.url,true).query;
 	var id = params.id;
-    console.log('文章id:'+id);
+    log.info('文章id:'+id);
 	mysqlUtil.deleteById(article,id,function (err) {
-		if(err){	
+		if(err){
+			log.error(err);
 			res.send({status:'fail',message:'删除失败'});
 		}else{
 			res.send({status:'success',message:'删除成功'});
@@ -355,7 +466,7 @@ router.get('/articleControl', function(req, res) {
 		if(!err){
 			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
 				if(err){
-					console.log(err);
+					log.error(err);
 					res.render('error', {
 						message: '搜索/查询文章列表出错',
 						error: {}
@@ -365,7 +476,7 @@ router.get('/articleControl', function(req, res) {
 				}
 			});
 		}else{
-			console.log(err);
+			log.error(err);
 			res.render('error', {
 				message: '搜索/查询文章列表出错',
 				error: {}
@@ -376,16 +487,16 @@ router.get('/articleControl', function(req, res) {
 
 /* 导入 */
 router.post('/import', multipartMiddleware,function(req, res) {
-  console.log(req.body);
-  console.log(req.files);
+  log.info(req.body);
+  log.info(req.files);
   var temp = req.files.file;
-  console.log(temp);
+  log.info(temp);
   var path = req.files.file[0].path; 
-  console.log(path);
+  log.info(path);
 	if (path) {  
 		fs.readFile(path,'utf-8', function(err, content) {
 			//文件的内容
-			console.log(content);
+			log.info(content);
 			res.send(content);
 			// 删除临时文件
 			fs.unlink(path);

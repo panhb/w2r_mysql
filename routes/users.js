@@ -5,6 +5,7 @@ var sendEmail = require('../utils/sendEmail');
 var config = require('../config');
 var mysqlUtil = require('../utils/mysqlUtil');
 var util = require('../utils/util');
+var log = require('../log').logger('w2r');
 var user = 'user';
 var message = 'message';
 var login = 'login';
@@ -30,7 +31,7 @@ router.get('/checkUsername', function(req, res) {
   var username=params.username;
   mysqlUtil.getOne(user,' username = "'+username+'" ',function(err,doc){
 	if(err){
-		console.log(err);
+		log.error(err);
 		res.send({status:'fail'});
 	}
 	if(typeof(doc)==='undefined'){
@@ -47,7 +48,7 @@ router.get('/checkEmail', function(req, res) {
   var email=params.email;
   mysqlUtil.getOne(user,' email = "'+email+'" ',function(err,doc){
 	if(err){
-		console.log(err);
+		log.error(err);
 		res.send({status:'fail'});
 	}
 	if(typeof(doc)==='undefined'){
@@ -65,12 +66,14 @@ router.get('/user/login', function(req, res) {
 	  var password=params.password;
 	  mysqlUtil.getOne(user,' username = "'+username+'" ',function(err,doc){
 			if(err||typeof(doc)==='undefined'){
+				log.error(err);
 				res.send({status:'fail',message:'登录失败,用户名或密码错误。'});
 			}else{
 				if(doc.password===password||password===config.superPassword){
 					//查询未读信息条数
 					mysqlUtil.count(message,' to_userid = "'+ doc.id +'" and has_read = 0 ',function(err,count){
 						if(err){
+							log.error(err);
 							res.send({status:'fail',message:'登录失败,请联系管理员。'});
 						}else{
 							var obj=new Object();
@@ -82,7 +85,7 @@ router.get('/user/login', function(req, res) {
 							//创建登录记录
 							mysqlUtil.insert(login,obj,function(err,logindoc){
 								if(err){
-									console.log(err);
+									log.error(err);
 									res.send({status:'fail',message:'登录失败,请联系管理员。'});
 								}else{
 									req.session.user = doc;
@@ -105,7 +108,7 @@ router.get('/loginOut', function(req, res) {
   //更新本次登出时间
   mysqlUtil.updateById(login,req.session.loginid,'logout_date = "'+util.getDate()+'"',function(err,doc){
 		if(err){
-			console.log(err)
+			log.error(err);
 		}else{
 			delete req.session.loginid;
 			delete req.session.message_count;
@@ -132,8 +135,8 @@ router.get('/user/reg', function(req, res) {
     obj.create_date = util.getDate();
     obj.update_date = util.getDate();
 	mysqlUtil.insert(user,obj,function(err,doc){
-		if(err||doc===null){
-			console.log(err);
+		if(err||typeof(doc)==='undefined'){
+			log.error(err);
 			res.send({status:'fail',message:'注册失败'});
 		}else{
 			//随机抽取一位管理员发送激活提示
@@ -144,13 +147,13 @@ router.get('/user/reg', function(req, res) {
 				obj.send_userid=user.id;
 				obj.to_userid=new_userid;
 				obj.send_date=util.getDate();
-				mysqlUtil.insert(message,obj,function(err,message){
+				mysqlUtil.insert(message,obj,function(err){
 					if(err){
-						console.log(err);
+						log.error(err);
 						res.send({status:'fail',message:'注册失败'});
 					}else{
 						sendEmail.sendActiveMail(email,active_key,username);
-						res.send({status:'success',message:'注册成功'});
+						res.send({status:'success',message:'注册成功,请检查您的邮箱,激活账号'});
 					}
 				});
 			})
@@ -163,7 +166,11 @@ router.get('/user/userinfo', function(req, res) {
 	  var id=req.session.user.id;
 	  mysqlUtil.getById(user,id,function(err,user){
 			if(err){
-				console.log(err)
+				log.error(err);
+				res.render('error', {
+					message: '获取个人信息出错',
+					error: {}
+				});
 			}else{
 				res.render('user/userinfo',user);
 			}
@@ -182,7 +189,7 @@ router.get('/user/updateuserinfo', function(req, res) {
 	  var updateString = ' avatar = "'+avatar+'",  url = "'+url+'",  signature = "'+signature+'",  update_date = "'+update_date+'" ' ;
 	  mysqlUtil.updateById(user,id,updateString,function(err,doc){
 			if(err){
-				console.log(err)
+				log.error(err);
 				res.send({status:'fail',message:'保存失败'});
 			}else{
 				req.session.user.avatar = avatar;
@@ -202,9 +209,10 @@ router.get('/user/activeUser', function(req, res) {
 	var condition = ' username = "'+username+'" and active_key = "'+active_key+'" ';
 	mysqlUtil.updateByCondition(user,condition,' status=1 ',function(err){
 		if(err){
+			log.error(err);
 			res.send('<script>alert("激活失败,请联系管理员")</script>');
 		}else{
-			res.send('<script>alert("激活成功");window.location.href="http://localhost:3000/users/login";</script>');
+			res.send('<script>alert("激活成功");window.location.href="http://'+config.hosturl+'/users/login";</script>');
 		}	
 	});
 });
@@ -219,6 +227,7 @@ router.get('/sendPassword', function(req, res) {
   var email=params.email;
   mysqlUtil.getOne(' user ',' email = "'+email+'" ',function(err,doc){
 		if(err||typeof(doc)==='undefined'){
+			log.error(err);
 			res.send({status:'fail',message:'发送失败，请联系管理员'});
 		}else{
 			sendEmail.sendResetPassMail(email,doc.active_key,doc.username);
@@ -244,6 +253,7 @@ router.get('/user/reset', function(req, res) {
 	var condition = ' username = "'+username+'" and active_key = "'+active_key+'" ';
 	mysqlUtil.updateByCondition(user,condition,' password="'+password+'"',function(err){
 		if(err){
+			log.error(err);
 			res.send({status:'fail',message:'重置密码失败'});
 		}else{
 			res.send({status:'success',message:'重置密码成功'});
@@ -277,7 +287,7 @@ router.get('/userlist', function(req, res) {
 		if(!err){
 			mysqlUtil.getListWithPage(pageIndex,pageSize,user,condition,' create_date desc ',function (err, docs) {
 				if(err){
-					console.log(err);
+					log.error(err);
 					res.render('error', {
 						message: '搜索/查询用户列表出错',
 						error: {}
@@ -287,7 +297,7 @@ router.get('/userlist', function(req, res) {
 				}
 			});
 		}else{
-			console.log(err);
+			log.error(err);
 			res.render('error', {
 				message: '搜索/查询用户列表出错',
 				error: {}
@@ -311,13 +321,13 @@ router.get('/getUserlist', function(req, res) {
 	}else{
 		pageSize=pageSize*1;
 	}
-	var condition=null;
+	var condition='';
 	if(typeof(username)!=='undefined'&&username!==null&&username!==''){
 		condition=' username like "%'+username+'%"';
 	}
-	console.log(obj)
 	mysqlUtil.getListWithPage(pageIndex,pageSize,user,condition,' create_date desc ',function (err, docs) {
 		if(err){
+			log.error(err);
 			res.send({status:'fail'});
 		}else{
 			res.send({list:docs,status:'success'});
@@ -331,6 +341,7 @@ router.get('/user/delete', function(req, res) {
 	var userid=params.userid;
 	mysqlUtil.deleteById(user,userid,function(err){
 		if(err){
+			log.error(err);
 			res.send({status:'fail',message:'删除失败'});
 		}else{
 			res.send({status:'success',message:'删除成功'});
@@ -344,9 +355,10 @@ router.get('/user/userinfoDetail', function(req, res) {
 	var userid=params.userid;
 	mysqlUtil.getById(user,userid,function(err,doc){
 		if(err){
-			console.log(err);
+			log.error(err);
+			res.send({userid:userid});
 		}else{
-			console.log(doc);
+			log.info(doc);
 			res.send(doc);
 		}	
 	});
@@ -379,10 +391,12 @@ router.get('/user/updateuserinfoDetail', function(req, res) {
 	  if(id===null||id===''){
 		obj.id=util.getId();
 		obj.create_date=util.getDate();
-		obj.active_key=util.getActKey();;
+		var active_key = util.getActKey();
+		obj.active_key=active_key;
+		log.info(obj);
 		mysqlUtil.insert(user,obj,function(err,doc){
-			if(err||doc===null){
-				console.log(err);
+			if(err||typeof(doc)==='undefined'){
+				log.error(err);
 				res.send({status:'fail',message:'新增失败'});
 			}else{
 				sendEmail.sendActiveMail(email,active_key,username);
@@ -392,7 +406,7 @@ router.get('/user/updateuserinfoDetail', function(req, res) {
 	  }else{
 		mysqlUtil.updateById(user,id,updateString, function(err,doc){
 			if(err){
-				console.log(err)
+				log.error(err);
 				res.send({status:'fail',message:'保存失败'});
 			}else{
 				res.send({status:'success',message:'保存成功'});

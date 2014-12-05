@@ -13,6 +13,7 @@ var articles = require('./routes/articles');
 var comments = require('./routes/comments');
 var messages = require('./routes/messages');
 var logins = require('./routes/logins');
+var log = require('./log');
 var session = require('express-session');
 
 //需要登录
@@ -54,9 +55,11 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(log.useLog());
+
 app.use(function(req, res, next) {
-    console.log('++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++');
-    console.log(req.url);
+    log.logger('w2r').info('++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++');
+    log.logger('w2r').info(req.url);
 	if(!req.session.user){
 		if(_.indexOf(nofree_url,req.url)!==-1){
 			res.redirect('/users/login');
@@ -116,7 +119,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(config.port, function () {
-    console.log("w2r listening on port %d", config.port);
+    log.logger('w2r').info("w2r listening on port %d", config.port);
 });
 
 module.exports = app;

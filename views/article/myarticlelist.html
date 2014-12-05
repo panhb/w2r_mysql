@@ -8,8 +8,10 @@
 	  <% if (v.status === 0||v.status === '0') { %>
 		<span title="分享" onclick="shareArticle('<%= v.id %>','1',this)" class="glyphicon glyphicon-share-alt" style="cursor:pointer;"></span>&nbsp;
 	  <% } else { %>
+        <!--
 		<span title="取消分享" onclick="shareArticle('<%= v.id %>','0',this)" class="glyphicon glyphicon-ban-circle" style="cursor:pointer;"></span>&nbsp;
-	  <% }  %>  
+	    -->
+	  <% }  %>
 	  <span title="删除" onclick="deleteArticle('<%= v.id %>')" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span>
     </div>
     <div>

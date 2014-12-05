@@ -84,10 +84,20 @@ function select(index){
 					var list=data.list;
 					var html='';
 					$(list).each(function(){
+						if(this.login_date!==null){
+							this.login_date = moment(this.login_date).format('YYYY-MM-DD HH:mm');
+						}else{
+							this.login_date = '';
+						}
+						if(this.logout_date!==null){
+							this.logout_date = moment(this.logout_date).format('YYYY-MM-DD HH:mm');
+						}else{
+							this.logout_date = '';
+						}
 						html+='<tr>';
 						html+='<td>'+this.username+'</td>';
-						html+='<td><time>'+moment(this.login_date).format('YYYY-MM-DD HH:mm')+'</time></td>';
-						html+='<td><time>'+moment(this.logout_date).format('YYYY-MM-DD HH:mm')+'</time></td>';
+						html+='<td><time>'+this.login_date+'</time></td>';
+						html+='<td><time>'+this.logout_date+'</time></td>';
 						html+='<td>'+this.ip+'</td>';
 						html+='<td><span title="删除" onclick="deleteLogin(\''+this.id+'\',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>';
 					});

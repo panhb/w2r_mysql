@@ -80,20 +80,30 @@ function loadArtcile(pageIndex,pageSize,loadType){
 				var html='';
 				$(list).each(function(){
 					if(loadType==='my'){
+                        if(this.create_date!==null){
+                            this.create_date = moment(this.create_date).format('YYYY-MM-DD HH:mm');
+                        }else{
+                            this.create_date = '';
+                        }
+                        if(this.update_date!==null){
+                            this.update_date = moment(this.update_date).format('YYYY-MM-DD HH:mm');
+                        }else{
+                            this.update_date = '';
+                        }
 						html+='<li class="entry-item"><div class="entry-meta">'+
-						'create:<time>'+moment(this.create_date).format('YYYY-MM-DD HH:mm')+'</time>&nbsp;&nbsp;'+
-						'update:<time>'+moment(this.update_date).format('YYYY-MM-DD HH:mm')+'</time>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
-						'<span title="编辑" onclick="editArticle(\''+this.create_date+'\')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;';
+						'create:<time>'+this.create_date+'</time>&nbsp;&nbsp;'+
+						'update:<time>'+this.update_date+'</time>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+						'<span title="编辑" onclick="editArticle(\''+this.id+'\')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;';
 						if(this.status == 0){
 							html+='<span title="分享" onclick="shareArticle(\''+this.id+'\',\'1\',this)" class="glyphicon glyphicon-share-alt" style="cursor:pointer;"></span>&nbsp;&nbsp;'
 						}else{
-							html+='<span title="取消分享" onclick="shareArticle(\''+this.id+'\',\'0\',this)" class="glyphicon glyphicon-ban-circle" style="cursor:pointer;"></span>&nbsp;&nbsp;'
+							//html+='<span title="取消分享" onclick="shareArticle(\''+this.id+'\',\'0\',this)" class="glyphicon glyphicon-ban-circle" style="cursor:pointer;"></span>&nbsp;&nbsp;'
 						}
 						html+='<span title="删除" onclick="deleteArticle(\''+this.id+'\')" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span>'+
 						'</div><div><h2><a target="_blank" href="/articles/reading/'+this.id+'">'+this.title+'</a></h2></div></li>';
 					}else{
 						html+='<li class="entry-item"><div class="entry-meta">'+this.username+
-						'&nbsp;&nbsp;&nbsp;&nbsp;<time>'+moment(this.update_date).format('YYYY-MM-DD HH:mm')+'</time></div>'+
+						'&nbsp;&nbsp;&nbsp;&nbsp;<time>'+this.update_date+'</time>&nbsp;&nbsp;&nbsp;&nbsp;点击数&nbsp;&nbsp;'+this.visit_count+'&nbsp;&nbsp;&nbsp;&nbsp;回复数&nbsp;&nbsp;'+this.reply_count+'</div>'+
 						'<div><h2><a target="_blank" href="/articles/reading/'+this.id+'">'+this.title+'</a></h2></div></li>';
 					}
 				});

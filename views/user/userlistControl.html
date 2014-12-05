@@ -160,7 +160,11 @@
 
 $(function(){
 	$("time").each(function(){
-		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+		if(typeof($(this).html()) !== 'undefined' && $(this).html() !== 'undefined' && $(this).html() !== '' && $(this).html() !== null && $(this).html() !== 'null'){
+			$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+		}else{
+			$(this).html('');
+		}
 	});
 	
 	PageTool.init({
@@ -185,6 +189,11 @@ function select(index){
 					var list=data.list;
 					var html='';
 					$(list).each(function(){
+						if(this.create_date!==null){
+							this.create_date = moment(this.create_date).format('YYYY-MM-DD HH:mm');
+						}else{
+							this.create_date = '';
+						}
 						html+='<tr>';
 						html+='<td>'+this.username+'</td>';
 						html+='<td>'+this.email+'</td>';
@@ -202,7 +211,7 @@ function select(index){
 						}else{
 							html+='<td>冻结</td>';
 						}
-						html+='<td><time>'+moment(this.create_date).format('YYYY-MM-DD HH:mm')+'</time></td>';
+						html+='<td><time>'+this.create_date+'</time></td>';
 						html+='<td><span title="编辑用户" onclick="editUser(\''+this.id+'\')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span title="删除用户" onclick="deleteUser(\''+this.id+'\',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>';
 					});
 					$('#user_list').html(html);

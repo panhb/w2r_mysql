@@ -4,6 +4,7 @@ var Url = require('url');
 var config = require('../config');
 var mysqlUtil = require('../utils/mysqlUtil');
 var util = require('../utils/util');
+var log = require('../log').logger('w2r');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -24,20 +25,30 @@ router.get('/', function(req, res) {
 	var sql = 'select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc'; 
 	mysqlUtil.countBySql(csql,function (err,count) {
 		if(err){
-			console.log(err);
+			log.error(err);
+			res.render('error', {
+				message: '访问失败',
+				error: {}
+			});
+		}else{
+			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+				if(err){
+					log.error(err);
+					res.render('error', {
+						message: '访问失败',
+						error: {}
+					});
+				}else{
+					var has_more=false;
+					if(count.count<=pageIndex*pageSize){
+						has_more=false;
+					}else{
+						has_more=true;
+					}
+					res.render('index', {has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,title: config.name,count:count.count,list:docs});
+				}
+			});
 		}
-		mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
-			if(err){
-				console.log(err);
-			}
-			var has_more=false;
-			if(count.count<=pageIndex*pageSize){
-				has_more=false;
-			}else{
-				has_more=true;
-			}
-			res.render('index', {has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,title: config.name,count:count.count,list:docs});
-		});
 	});
 });
 

@@ -99,11 +99,21 @@ function select(index){
 					var list=data.list;
 					var html='';
 					$(list).each(function(){
+						if(this.create_date!==null){
+							this.create_date = moment(this.create_date).format('YYYY-MM-DD HH:mm');
+						}else{
+							this.create_date = '';
+						}
+						if(this.update_date!==null){
+							this.update_date = moment(this.update_date).format('YYYY-MM-DD HH:mm');
+						}else{
+							this.update_date = '';
+						}
 						html+='<tr>'+
 						'<td><a '+ this.title +' target="_blank" href="/articles/reading/'+this.id+'">'+this.title.substring(0,15)+'</a></td>'+
-						'<td><time>'+moment(this.create_date).format('YYYY-MM-DD HH:mm')+'</time></td>'+
-						'<td><time>'+moment(this.update_date).format('YYYY-MM-DD HH:mm')+'</time></td>'+
-						'<td>'+this.author_name+'</td>';
+						'<td><time>'+this.create_date+'</time></td>'+
+						'<td><time>'+this.update_date+'</time></td>'+
+						'<td>'+this.username+'</td>';
 						if(this.status == 0){
 							html+='<td>分享</td>';				
 						}else{
