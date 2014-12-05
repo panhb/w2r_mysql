@@ -111,7 +111,7 @@
 	  <br>
 	  <div class="input-group">
 		  <span class="input-group-addon" style="min-width:81px;"><b>密码</b></span>
-		  <input type="text" class="form-control" id="password">
+		  <input type="text" class="form-control" readonly id="password">
 	  </div>
 	  <br>
 	  <div class="input-group">
@@ -255,6 +255,7 @@ function deleteUser(id,obj){
 }
 
 function editUser(id){
+    $("#password").attr("readonly","readonly");
 	$.ajax({
 		 type: "GET",
 		 url: "/users/user/userinfoDetail",
@@ -282,6 +283,7 @@ function addUser(){
 	 $("#userId").val('');
 	 $("#userName").val('');
 	 $("#password").val('');
+     $("#password").removeAttr("readonly");
 	 $("#email").val('');
 	 $("#status").val('');
 	 $("#role_type").val('');

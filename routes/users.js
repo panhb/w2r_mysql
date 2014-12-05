@@ -378,7 +378,7 @@ router.get('/user/updateuserinfoDetail', function(req, res) {
 	  var id=params.userId;
 	 
 	  var obj=new Object();
-	  var updateString = ' username = "'+username+'",  email = "'+email+'",  password = "'+password+'",  role_type = '+role_type+',  status = '+status+',  avatar = "'+avatar+'",  url = "'+url+'",  signature = "'+signature+'",  update_date = "'+util.getDate()+'" ' ;
+	  var updateString = ' username = "'+username+'",  email = "'+email+'", role_type = '+role_type+',  status = '+status+',  avatar = "'+avatar+'",  url = "'+url+'",  signature = "'+signature+'",  update_date = "'+util.getDate()+'" ' ;
 	  obj.username=username;
 	  obj.email=email;
 	  obj.password=password;

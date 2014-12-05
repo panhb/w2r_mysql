@@ -1671,3 +1671,202 @@ Error: ER_BAD_FIELD_ERROR: Unknown column 'userid' in 'where clause'
 [2014-12-05 20:17:56.168] [INFO] w2r - 统计执行: select count(*) count from  comment where articleid="20141204210359470"
 [2014-12-05 20:17:56.169] [INFO] w2r - sql执行: select c.*,u.username,u.avatar from comment c , user u where c.userid=u.id and c.articleid="20141204210359470" limit 0,10
 [2014-12-05 20:17:56.175] [WARN] w2r - GET /articles/reading/20141204210359470
+[2014-12-05 20:27:46.038] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:27:46.039] [INFO] w2r - /
+[2014-12-05 20:27:46.040] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2014-12-05 20:27:46.041] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2014-12-05 20:27:46.047] [INFO] w2r - GET /
+[2014-12-05 20:27:47.053] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:27:47.055] [INFO] w2r - /users/login
+[2014-12-05 20:27:47.063] [WARN] w2r - GET /users/login
+[2014-12-05 20:27:56.707] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:27:56.711] [INFO] w2r - /users/user/login?username=admin&password=b206e95a4384298962649e58dc7b39d4
+[2014-12-05 20:27:56.712] [INFO] w2r - 条件查询: select * from  user where  username = "admin" 
+[2014-12-05 20:27:56.714] [INFO] w2r - 统计执行: select count(*) count from  message where  to_userid = "0" and has_read = 0 
+[2014-12-05 20:27:56.718] [INFO] w2r - 新增: insert  into login set `id` = '20141205202756715', `userid` = '0', `login_date` = '2014-12-05 20:27:56', `ip` = '127.0.0.1'
+[2014-12-05 20:27:56.759] [WARN] w2r - GET /users/user/login?username=admin&password=b206e95a4384298962649e58dc7b39d4
+[2014-12-05 20:27:56.766] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:27:56.767] [INFO] w2r - /
+[2014-12-05 20:27:56.767] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2014-12-05 20:27:56.768] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2014-12-05 20:27:56.773] [INFO] w2r - GET /
+[2014-12-05 20:27:58.419] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:27:58.419] [INFO] w2r - /users/userlist
+[2014-12-05 20:27:58.420] [INFO] w2r - 统计执行: select count(*) count from  user where  username like "%"
+[2014-12-05 20:27:58.421] [INFO] w2r - 分页条件查询: select * from  user where  username like "%" order by  create_date desc  limit 0,10
+[2014-12-05 20:27:58.432] [INFO] w2r - GET /users/userlist
+[2014-12-05 20:27:59.777] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:27:59.778] [INFO] w2r - /users/user/userinfoDetail?userid=20141204212134080
+[2014-12-05 20:27:59.780] [INFO] w2r - 主键查询: select * from  user where id="20141204212134080"
+[2014-12-05 20:27:59.784] [INFO] w2r - { id: '20141204212134080',
+  username: 'panhb456',
+  password: '17e26e71bc8044c81583fe23b098deee',
+  email: '391400311@qq.com',
+  url: null,
+  signature: null,
+  avatar: null,
+  score: 0,
+  fans: 0,
+  following: 0,
+  create_date: Thu Dec 04 2014 21:21:34 GMT+0800 (中国标准时间),
+  update_date: Thu Dec 04 2014 21:21:34 GMT+0800 (中国标准时间),
+  status: 1,
+  active_key: 'be1a713f12d5e567f12ba500f3760026',
+  role_type: 0 }
+[2014-12-05 20:27:59.786] [INFO] w2r - GET /users/user/userinfoDetail?userid=20141204212134080
+[2014-12-05 20:30:23.217] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:30:23.219] [INFO] w2r - /users/user/userinfoDetail?userid=20141204212134080
+[2014-12-05 20:30:23.220] [INFO] w2r - 主键查询: select * from  user where id="20141204212134080"
+[2014-12-05 20:30:23.223] [INFO] w2r - { id: '20141204212134080',
+  username: 'panhb456',
+  password: '17e26e71bc8044c81583fe23b098deee',
+  email: '391400311@qq.com',
+  url: null,
+  signature: null,
+  avatar: null,
+  score: 0,
+  fans: 0,
+  following: 0,
+  create_date: Thu Dec 04 2014 21:21:34 GMT+0800 (中国标准时间),
+  update_date: Thu Dec 04 2014 21:21:34 GMT+0800 (中国标准时间),
+  status: 1,
+  active_key: 'be1a713f12d5e567f12ba500f3760026',
+  role_type: 0 }
+[2014-12-05 20:30:23.227] [WARN] w2r - GET /users/user/userinfoDetail?userid=20141204212134080
+[2014-12-05 20:31:10.250] [INFO] w2r - w2r listening on port 3000
+[2014-12-05 20:31:14.598] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:14.599] [INFO] w2r - /users/userlist
+[2014-12-05 20:31:14.603] [WARN] w2r - GET /users/userlist
+[2014-12-05 20:31:14.604] [INFO] w2r - 统计执行: select count(*) count from  user where  username like "%"
+[2014-12-05 20:31:14.611] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:14.612] [INFO] w2r - /users/login
+[2014-12-05 20:31:14.624] [WARN] w2r - GET /users/login
+[2014-12-05 20:31:14.626] [INFO] w2r - 分页条件查询: select * from  user where  username like "%" order by  create_date desc  limit 0,10
+[2014-12-05 20:31:23.066] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:23.069] [INFO] w2r - /users/user/login?username=admin&password=b206e95a4384298962649e58dc7b39d4
+[2014-12-05 20:31:23.071] [INFO] w2r - 条件查询: select * from  user where  username = "admin" 
+[2014-12-05 20:31:23.073] [INFO] w2r - 统计执行: select count(*) count from  message where  to_userid = "0" and has_read = 0 
+[2014-12-05 20:31:23.078] [INFO] w2r - 新增: insert  into login set `id` = '20141205203123076', `userid` = '0', `login_date` = '2014-12-05 20:31:23', `ip` = '127.0.0.1'
+[2014-12-05 20:31:23.194] [WARN] w2r - GET /users/user/login?username=admin&password=b206e95a4384298962649e58dc7b39d4
+[2014-12-05 20:31:23.208] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:23.209] [INFO] w2r - /
+[2014-12-05 20:31:23.210] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2014-12-05 20:31:23.213] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2014-12-05 20:31:23.238] [WARN] w2r - GET /
+[2014-12-05 20:31:25.073] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:25.076] [INFO] w2r - /users/userlist
+[2014-12-05 20:31:25.078] [INFO] w2r - 统计执行: select count(*) count from  user where  username like "%"
+[2014-12-05 20:31:25.079] [INFO] w2r - 分页条件查询: select * from  user where  username like "%" order by  create_date desc  limit 0,10
+[2014-12-05 20:31:25.090] [INFO] w2r - GET /users/userlist
+[2014-12-05 20:31:35.807] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:35.808] [INFO] w2r - /users/user/updateuserinfoDetail?userId=&userName=eqweqwe&password=47467759aeb811883525a389a225f838&email=eqwe&status=1&role_type=1&avatar=&url=&signature=
+[2014-12-05 20:31:35.808] [INFO] w2r - { username: 'eqweqwe',
+  email: 'eqwe',
+  password: '47467759aeb811883525a389a225f838',
+  role_type: '1',
+  status: '1',
+  avatar: '',
+  url: '',
+  signature: '',
+  update_date: '2014-12-05 20:31:35',
+  id: '20141205203135808',
+  create_date: '2014-12-05 20:31:35',
+  active_key: '039800e3128e3cd34080ccf109743cc0' }
+[2014-12-05 20:31:35.810] [INFO] w2r - 新增: insert  into user set `username` = 'eqweqwe', `email` = 'eqwe', `password` = '47467759aeb811883525a389a225f838', `role_type` = '1', `status` = '1', `avatar` = '', `url` = '', `signature` = '', `update_date` = '2014-12-05 20:31:35', `id` = '20141205203135808', `create_date` = '2014-12-05 20:31:35', `active_key` = '039800e3128e3cd34080ccf109743cc0'
+[2014-12-05 20:31:35.870] [INFO] w2r - GET /users/user/updateuserinfoDetail?userId=&userName=eqweqwe&password=47467759aeb811883525a389a225f838&email=eqwe&status=1&role_type=1&avatar=&url=&signature=
+[2014-12-05 20:31:36.806] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:36.807] [INFO] w2r - /users/userlist
+[2014-12-05 20:31:36.808] [INFO] w2r - 统计执行: select count(*) count from  user where  username like "%"
+[2014-12-05 20:31:36.808] [INFO] w2r - 分页条件查询: select * from  user where  username like "%" order by  create_date desc  limit 0,10
+[2014-12-05 20:31:36.816] [INFO] w2r - GET /users/userlist
+[2014-12-05 20:31:38.373] [INFO] w2r - sender address :panhongbo891010@gmail.com
+[2014-12-05 20:31:38.374] [INFO] w2r - to address :eqwe
+[2014-12-05 20:31:38.374] [INFO] w2r - username :w2r
+[2014-12-05 20:31:38.374] [ERROR] w2r - { [RecipientError: Can't send mail - all recipients were rejected]
+  name: 'RecipientError',
+  data: '555 5.5.2 Syntax error. w5sm20429589pdj.13 - gsmtp',
+  stage: 'rcpt' }
+RecipientError: Can't send mail - all recipients were rejected
+    at SMTPClient._actionRCPT (e:\nodejs-workspace\w2r_mysql\node_modules\nodemailer\node_modules\simplesmtp\lib\client.js:1052:27)
+    at SMTPClient._onData (e:\nodejs-workspace\w2r_mysql\node_modules\nodemailer\node_modules\simplesmtp\lib\client.js:354:29)
+    at CleartextStream.emit (events.js:95:17)
+    at CleartextStream.<anonymous> (_stream_readable.js:764:14)
+    at CleartextStream.emit (events.js:92:17)
+    at emitReadable_ (_stream_readable.js:426:10)
+    at _stream_readable.js:419:7
+    at process._tickDomainCallback (node.js:463:13)
+[2014-12-05 20:31:38.756] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:38.757] [INFO] w2r - /users/user/userinfoDetail?userid=20141205203135808
+[2014-12-05 20:31:38.757] [INFO] w2r - 主键查询: select * from  user where id="20141205203135808"
+[2014-12-05 20:31:38.758] [INFO] w2r - { id: '20141205203135808',
+  username: 'eqweqwe',
+  password: '47467759aeb811883525a389a225f838',
+  email: 'eqwe',
+  url: '',
+  signature: '',
+  avatar: '',
+  score: 0,
+  fans: 0,
+  following: 0,
+  create_date: Fri Dec 05 2014 20:31:35 GMT+0800 (中国标准时间),
+  update_date: Fri Dec 05 2014 20:31:35 GMT+0800 (中国标准时间),
+  status: 1,
+  active_key: '039800e3128e3cd34080ccf109743cc0',
+  role_type: 1 }
+[2014-12-05 20:31:38.759] [INFO] w2r - GET /users/user/userinfoDetail?userid=20141205203135808
+[2014-12-05 20:31:44.362] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:44.362] [INFO] w2r - /users/user/updateuserinfoDetail?userId=20141205203135808&userName=eqweqwe&password=0d0ae69a9ce5284d5943770ea58ff233&email=eqwe&status=1&role_type=0&avatar=&url=&signature=
+[2014-12-05 20:31:44.363] [INFO] w2r - 主键更新: update  user set  username = "eqweqwe",  email = "eqwe", role_type = 0,  status = 1,  avatar = "",  url = "",  signature = "",  update_date = "2014-12-05 20:31:44"  where id="20141205203135808"
+[2014-12-05 20:31:44.403] [INFO] w2r - GET /users/user/updateuserinfoDetail?userId=20141205203135808&userName=eqweqwe&password=0d0ae69a9ce5284d5943770ea58ff233&email=eqwe&status=1&role_type=0&avatar=&url=&signature=
+[2014-12-05 20:31:45.457] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:45.459] [INFO] w2r - /users/userlist
+[2014-12-05 20:31:45.461] [INFO] w2r - 统计执行: select count(*) count from  user where  username like "%"
+[2014-12-05 20:31:45.462] [INFO] w2r - 分页条件查询: select * from  user where  username like "%" order by  create_date desc  limit 0,10
+[2014-12-05 20:31:45.476] [INFO] w2r - GET /users/userlist
+[2014-12-05 20:31:47.357] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:47.359] [INFO] w2r - /users/user/userinfoDetail?userid=20141205203135808
+[2014-12-05 20:31:47.359] [INFO] w2r - 主键查询: select * from  user where id="20141205203135808"
+[2014-12-05 20:31:47.364] [INFO] w2r - { id: '20141205203135808',
+  username: 'eqweqwe',
+  password: '47467759aeb811883525a389a225f838',
+  email: 'eqwe',
+  url: '',
+  signature: '',
+  avatar: '',
+  score: 0,
+  fans: 0,
+  following: 0,
+  create_date: Fri Dec 05 2014 20:31:35 GMT+0800 (中国标准时间),
+  update_date: Fri Dec 05 2014 20:31:44 GMT+0800 (中国标准时间),
+  status: 1,
+  active_key: '039800e3128e3cd34080ccf109743cc0',
+  role_type: 0 }
+[2014-12-05 20:31:47.366] [INFO] w2r - GET /users/user/userinfoDetail?userid=20141205203135808
+[2014-12-05 20:31:52.038] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:52.038] [INFO] w2r - /users/user/updateuserinfoDetail?userId=20141205203135808&userName=eqweqwe&password=0d0ae69a9ce5284d5943770ea58ff233&email=eqwe&status=1&role_type=1&avatar=&url=&signature=
+[2014-12-05 20:31:52.039] [INFO] w2r - 主键更新: update  user set  username = "eqweqwe",  email = "eqwe", role_type = 1,  status = 1,  avatar = "",  url = "",  signature = "",  update_date = "2014-12-05 20:31:52"  where id="20141205203135808"
+[2014-12-05 20:31:52.127] [INFO] w2r - GET /users/user/updateuserinfoDetail?userId=20141205203135808&userName=eqweqwe&password=0d0ae69a9ce5284d5943770ea58ff233&email=eqwe&status=1&role_type=1&avatar=&url=&signature=
+[2014-12-05 20:31:53.006] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:53.006] [INFO] w2r - /users/userlist
+[2014-12-05 20:31:53.006] [INFO] w2r - 统计执行: select count(*) count from  user where  username like "%"
+[2014-12-05 20:31:53.007] [INFO] w2r - 分页条件查询: select * from  user where  username like "%" order by  create_date desc  limit 0,10
+[2014-12-05 20:31:53.015] [INFO] w2r - GET /users/userlist
+[2014-12-05 20:31:54.022] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2014-12-05 20:31:54.025] [INFO] w2r - /users/user/userinfoDetail?userid=20141205203135808
+[2014-12-05 20:31:54.025] [INFO] w2r - 主键查询: select * from  user where id="20141205203135808"
+[2014-12-05 20:31:54.027] [INFO] w2r - { id: '20141205203135808',
+  username: 'eqweqwe',
+  password: '47467759aeb811883525a389a225f838',
+  email: 'eqwe',
+  url: '',
+  signature: '',
+  avatar: '',
+  score: 0,
+  fans: 0,
+  following: 0,
+  create_date: Fri Dec 05 2014 20:31:35 GMT+0800 (中国标准时间),
+  update_date: Fri Dec 05 2014 20:31:52 GMT+0800 (中国标准时间),
+  status: 1,
+  active_key: '039800e3128e3cd34080ccf109743cc0',
+  role_type: 1 }
+[2014-12-05 20:31:54.030] [INFO] w2r - GET /users/user/userinfoDetail?userid=20141205203135808
