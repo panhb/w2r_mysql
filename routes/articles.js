@@ -193,6 +193,35 @@ router.get('/search/articlelist', function(req, res) {
 	});
 });
 
+/* 搜索文章列表 */
+router.get('/user/articlelist', function(req, res) {
+    var params = Url.parse(req.url,true).query;
+    var userid=params.userid;
+    var csql = 'select count(*) count from (select * from article where author_id = "'+userid+'" and status = 1) a , user u where a.author_id=u.id ';
+    var sql = 'select a.*,u.username,u.avatar count from (select * from article where author_id = "'+userid+'" and status = 1) a , user u where a.author_id=u.id order by a.update_date desc';
+    mysqlUtil.countBySql(csql,function (err, count) {
+        if(err){
+            log.error(err);
+            res.render('error', {
+                message: '访问失败',
+                error: {}
+            });
+        }else{
+            mysqlUtil.query(sql,function (err, docs) {
+                if(err){
+                    log.error(err);
+                    res.render('error', {
+                        message: '访问失败',
+                        error: {}
+                    });
+                }
+                var username = docs[0].username;
+                res.render('article/user_sharearticlelist', {username:username,count:count.count,list:docs});
+            });
+        }
+    });
+});
+
 /* 保存文章 */
 router.get('/addArticle', function(req, res) {
   var params = Url.parse(req.url,true).query; 

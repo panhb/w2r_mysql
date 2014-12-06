@@ -11,11 +11,12 @@
 			<div class='line'></div>
 			<div style='width:100%;'><div style='float:left;width:50px;'>
 			<% if (typeof(v.avatar)!=='undefined'&&v.avatar !== null&& v.avatar !== '') { %>
-				<img src='<%= v.avatar%>' title='<%= v.username%>' height='30' width='30' style='border-radius:5px;'></div>
+				<a target="_blank" href="/relations/follow/<%= v.userid%>"><img src='<%= v.avatar%>' title='<%= v.username%>' height='30' width='30' style='border-radius:5px;'></a>
 			<% } else { %>
-				<img src='http://gravatar.com/avatar?size=30' title='<%= v.username%>' height='30' width='30' style='border-radius:5px;'></div>
+                <a target="_blank" href="/relations/follow/<%= v.userid%>"><img src='http://gravatar.com/avatar?size=30' title='<%= v.username%>' height='30' width='30' style='border-radius:5px;'></a>
 			<% } %>
-			<div class='div_common' id='<%= v._id%>'>
+            </div>
+			<div class='div_common' id='<%= v.id%>'>
 			<span style='font-size:16px;'><%- v.content%>
 			</span></div><div style='text-align:right;width:100%;'>
 			<% if (typeof(session.user) !== 'undefined' && session.user !== null && session.user.id == article.author_id) { %>
@@ -119,24 +120,24 @@ function loadComment(pageIndex,pageSize,articleid){
 				var html='';
 				$(list).each(function(i){
 					 var avatar='';
-					 if(this.cuserid[0].avatar===null||this.cuserid[0].avatar===''){
+					 if(this.avatar===null||this.avatar===''){
 						avatar='http://gravatar.com/avatar?size=30';
 					 }else{
-						avatar=this.cuserid[0].avatar;
+						avatar=this.avatar;
 					 }
 					 var currentUserid=$('#currentUserid').val();
 					 html+="<div class='line'></div>"+
-						"<div style='width:100%;'><div style='float:left;width:50px;'><img src='"+avatar+"' title='"+this.cuserid[0].username+"' height='30' width='30' style='border-radius:5px;'></div>"+
-						"<div class='div_common' id='"+this._id+"'>"+
+						"<div style='width:100%;'><div style='float:left;width:50px;'><a target='_blank' href='/relations/follow/"+this.userid+"'><img src='"+avatar+"' title='"+this.username+"' height='30' width='30' style='border-radius:5px;'></a></div>"+
+						"<div class='div_common' id='"+this.id+"'>"+
 						"<span style='font-size:16px;'>"+this.content+"</span></div><div style='text-align:right;width:100%;'>";
-					 if(typeof(currentUserid)!=='undefined'&& currentUserid!==null && currentUserid!=='' && currentUserid===this.carticleid[0].author_id){
-						 html+="<span title='删除评论' onclick='deleteComment('"+this._id+"',this)' class='glyphicon glyphicon-trash' style='cursor:pointer;'></span>&nbsp;&nbsp;";
+					 if(typeof(currentUserid)!=='undefined'&& currentUserid!==null && currentUserid!=='' && currentUserid===this.author_id){
+						 html+="<span title='删除评论' onclick='deleteComment('"+this.id+"',this)' class='glyphicon glyphicon-trash' style='cursor:pointer;'></span>&nbsp;&nbsp;";
 					 }
-					 html+="<span style='font-size:5px;font-family:Microsoft YaHei;'>"+this.cuserid[0].username+"&nbsp;&nbsp;&nbsp;&nbsp;"+((pageIndex-1)*pageSize+i+1)+"楼&nbsp;&nbsp;<time>"+moment(this.create_date).format('YYYY-MM-DD HH:mm')+"</time></span></div></div>";
+					 html+="<span style='font-size:5px;font-family:Microsoft YaHei;'>"+this.username+"&nbsp;&nbsp;&nbsp;&nbsp;"+((pageIndex-1)*pageSize+i+1)+"楼&nbsp;&nbsp;<time>"+moment(this.create_date).format('YYYY-MM-DD HH:mm')+"</time></span></div></div>";
 				});
 				var pagehtml='';
 				if(data.has_more){
-					pagehtml='<a style="cursor:pointer;" onclick="loadAllComment(\''+this.carticleid[0]._id+'\')">所有回复</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a style="cursor:pointer;" onclick="loadComment(\''+data.pageIndex+'\',\''+data.pageSize+'\',\''+this.carticleid[0]._id+'\')">更多回复...</a>';
+					pagehtml='<a style="cursor:pointer;" onclick="loadAllComment(\''+data.articleid+'\')">所有回复</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a style="cursor:pointer;" onclick="loadComment(\''+data.pageIndex+'\',\''+data.pageSize+'\',\''+data.articleid+'\')">更多回复...</a>';
 				}else{
 					pagehtml="加载完了，还加载条毛啊";
 				}

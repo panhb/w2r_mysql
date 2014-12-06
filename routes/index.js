@@ -3,7 +3,6 @@ var router = express.Router();
 var Url = require('url');
 var config = require('../config');
 var mysqlUtil = require('../utils/mysqlUtil');
-var util = require('../utils/util');
 var log = require('../log').logger('w2r');
 
 /* GET home page. */

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>关注</title>
+    <%- partial('../common/header') %>
+  </head>
+  <body>
+	<div class="yue">
+		<h2>关注他</h2>
+		<hr>
+            <div style='float:left;width:400px;'>
+                <% if (typeof(user.avatar) !== 'undefined' && user.avatar !== null && user.avatar !== '') { %>
+                    <img src='<%= user.avatar%>' title='<%= user.username%>' height='300' width='300' style='border-radius:5px;'>
+                <% } else { %>
+                    <img src='http://gravatar.com/avatar?size=300' title='<%= user.username%>' height='300' width='300' style='border-radius:5px;'>
+                <% } %>
+            </div>
+            <div>
+                <h1><%= user.username%></h1>
+
+                <h2>注册时间&nbsp;:&nbsp;<time><%= user.create_date%></time></h2>
+                <br>
+                <% if ( shareNum === 0 ) { %>
+                    <h2>共&nbsp;<%= shareNum%>&nbsp;篇分享文章</h2>
+                <% } else { %>
+                    <h2>共&nbsp;<a target="_blank" href="/articles/user/articlelist?userid=<%= user.id%>"><%= shareNum%></a>&nbsp;篇分享文章</h2>
+                <% } %>
+
+                <br>
+                <div id="focus_button">
+                <% if (typeof(has_relation) !== 'undefined' && has_relation ) { %>
+                    <button type="button" onclick="relation_focus('0','<%= user.id%>')" class="btn btn-primary btn-lg">取消关注</button>
+                <% } else { %>
+                    <button type="button" onclick="relation_focus('1','<%= user.id%>')" class="btn btn-success btn-lg">关注</button>
+                <% } %>
+                </div>
+            </div>
+	</div>
+  <%- partial('../common/footer') %>
+  </body>
+</html>
+<script>
+    $(function(){
+        $("time").each(function(){
+            if(typeof($(this).html()) !== 'undefined' && $(this).html() !== 'undefined' && $(this).html() !== '' && $(this).html() !== null && $(this).html() !== 'null'){
+                $(this).html(moment($(this).html()).format('YYYY-MM-DD'))
+            }else{
+                $(this).html('');
+            }
+        });
+    })
+
+    function relation_focus(type,followid){
+        $.ajax({
+            type: "GET",
+            url: "/relations/focus",
+            data: {type: type, followid: followid },
+            dataType: "json",
+            success: function (json) {
+                var data = eval(json)
+                if (data.status === 'fail') {
+                    alert('关注失败');
+                } else {
+                    var html = '';
+                    if ( type === '0' ) {
+                        html = '<button type="button" onclick="relation_focus(\'1\',\''+followid+'\')" class="btn btn-success btn-lg">关注</button>';
+                    } else {
+                        html = '<button type="button" onclick="relation_focus(\'0\',\''+followid+'\')" class="btn btn-primary btn-lg">取消关注</button>';
+                    }
+                    $('#focus_button').html(html);
+                }
+            },
+            error: function () {
+                alert('关注失败');
+            }
+        })
+    }
+</script>

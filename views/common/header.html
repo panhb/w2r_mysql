@@ -58,6 +58,7 @@
 							<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/comments/commentlist">评论管理</a></li>
 							<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/messages/messagelist">站内信管理</a></li>
 							<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/logins/loginlist">登录管理</a></li>
+							<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/relations/followControl">关注管理</a></li>
 						  </ul>
 						</li>
 					<% } %>
@@ -78,6 +79,7 @@
                       </a>
                       <ul id="drop-userinfo-menu" class="dropdown-menu" style="background:#F0EFEF;" role="menu" aria-labelledby="drop_userinfo">
                           <% if (session.user.role_type === 1||session.user.status === 1) { %>
+                          <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/relations/myfollowlist">我的关注</a></li>
                           <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/articles/myArticle">我的文章</a></li>
                           <% } %>
                           <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/messages/message">站内信

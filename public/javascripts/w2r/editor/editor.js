@@ -51,48 +51,12 @@ $(function(){
 	});
 
     $("#save").click(function(){
-        var title=$(".title").val();
-        if(title===null||title===''){
-            $(".title").focus();
-            return;
-        }
-        var article_id=$("#article_id").val();
-        var content=$("#editor").val();
-        var height=$("#editor").height();
-        $.ajax({
-            type: "GET",
-            url: "/articles/addArticle",
-            data: {article_id:article_id,content:content,title:title,height:height},
-            dataType: "json",
-            success: function(json){
-                var data=eval(json)
-                $("#article_id").val(data.id);
-                alert(data.message);
-            }
-        })
+        saveArticle();
     });
 
 
 	$(".glyphicon-floppy-disk").click(function(){
-		var title=$(".title").val();
-		if(title===null||title===''){
-			$(".title").focus();
-			return;
-		}
-		var article_id=$("#article_id").val();
-		var content=$("#editor").val();
-		var height=$("#editor").height();
-		$.ajax({
-			type: "GET",
-			url: "/articles/addArticle",
-			data: {article_id:article_id,content:content,title:title,height:height},
-			dataType: "json",
-			success: function(json){
-				var data=eval(json)
-				$("#article_id").val(data.id);
-				alert(data.message);
-			}
-		})
+        saveArticle();
 	});
 	
 	
@@ -166,9 +130,30 @@ $(function(){
     }
 })
 
+function saveArticle(){
+    var title=$(".title").val();
+    if(title===null||title===''){
+        $(".title").focus();
+        return;
+    }
+    var article_id=$("#article_id").val();
+    var content=$("#editor").val();
+    var height=$("#editor").height();
+    $.ajax({
+        type: "GET",
+        url: "/articles/addArticle",
+        data: {article_id:article_id,content:content,title:title,height:height},
+        dataType: "json",
+        success: function(json){
+            var data=eval(json)
+            $("#article_id").val(data.id);
+            alert(data.message);
+        }
+    })
+}
+
 function previewShow(){
 	var data=$("#editor").val();
-	
 	$.ajax({
 		async:false,
 		type: "GET",
@@ -180,10 +165,9 @@ function previewShow(){
 			$("#preview").html(data.html);
 		}
 	})
-	
 	var p_height=$("#preview").height();
 	var e_scrollHeight=document.getElementById("editor").scrollHeight;
-	
+
 	if(p_height>e_scrollHeight){
 		$("#preview").height(p_height);
 	}else{

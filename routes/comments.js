@@ -141,7 +141,7 @@ router.get('/getCommentlist', function(req, res) {
 	}
 	var obj='';
 	if(typeof(condition)!=='undefined'&&condition!==null&&condition!==''){
-		obj=' and u.username like "%'+condition+'%" ';
+		obj = '  and u.username like "%'+condition+'%" ';
 	}
 	if(typeof(articleid)!=='undefined'&&articleid!==null&&articleid!==''){
 		if(obj===''){
@@ -150,8 +150,8 @@ router.get('/getCommentlist', function(req, res) {
 			obj += ' and c.articleid = "'+articleid+'"' ;
 		}
 	}
-	var csql='select count(*) count from comment c , user u '+obj;
-	var sql='select c.*,u.username,u.avatar from comment c , user u where c.userid = u.id '+obj + 'order by create_date desc ';
+	var csql='select count(*) count from comment c , user u where u.id=c.userid '+obj;
+	var sql='select c.*,u.username,u.avatar,a.author_id from comment c , user u, article a where a.id=c.articleid and c.userid = u.id '+obj + ' order by create_date desc ';
 	mysqlUtil.countBySql(csql,function (err, count) {
 		if(err){
 			log.error(err);
@@ -169,7 +169,8 @@ router.get('/getCommentlist', function(req, res) {
 				}else{
 					has_more=true;
 				}
-				res.send({has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,list:docs,status:'success'});
+                var articleid = docs[0].articleid;
+				res.send({has_more:has_more,articleid:articleid,pageIndex:(pageIndex+1),pageSize:pageSize,list:docs,status:'success'});
 			}
 		});
 	});

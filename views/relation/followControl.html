@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>关注管理</title>
+<%- partial('../common/header') %>
+</head>
+<body>
+<div class="yue">
+<h1>关注管理</h1>
+<form class="navbar-form navbar-left" role="search" action="/relations/followControl">
+<div class="form-group">
+	<% if (typeof(username) !== 'undefined' && username !== null) { %>
+		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" value="<%= username %>" placeholder="被/关注人">
+	<% } else {%>
+		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" placeholder="被/关注人">
+	<% } %>				
+</div>
+<button type="submit" class="btn btn-default" style="background:#F0EFEF; font-family:Microsoft YaHei;">搜索</button>
+</form>
+<br>
+<hr>
+<input type="hidden" id="pageSize" value="<%= pageSize %>">
+<input type="hidden" id="totalCount" value="<%= totalCount %>">
+<table class="table table-hover">
+      <thead>
+        <tr>
+          <th >关注人</th>
+		  <th >被关注人</th>
+		  <th width="160">关注时间</th>
+		  <th width="70">操作</th>
+        </tr>
+      </thead>
+      <tbody id="follow_list">
+        <% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+		<% list.forEach(function (v, k){ %>
+			<tr>
+                <td><%= v.username %></td>
+                <td><%= v.followname %></td>
+                <td><time><%= v.create_date %></time></td>
+				<td>
+				<span title="删除" onclick="deleteFollow('<%= v.id %>')" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span>
+                </td>
+			</tr>
+		<% })%>
+		<% } %>
+      </tbody>
+    </table>
+	<ul id="page" class="pagination" ></ul>
+</div>
+<%- partial('../common/footer') %>
+</body>
+</html>
+<script>
+
+$(function(){
+	$("time").each(function(){
+		if(typeof($(this).html())!=='undefined'&& $(this).html()!=='undefined'&& $(this).html()!=='' && $(this).html()!==null){
+			$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+		}else{
+			$(this).html('');
+		}
+	});
+	
+	PageTool.init({
+        totalCount:$('#totalCount').val(),
+        pageSize:$('#pageSize').val(), 
+        pageMax:10 
+    },function(){});
+})
+
+
+
+function select(index){
+    PageTool.setPage(index,function(){
+		$.ajax({
+			type: "GET",
+			url: "/relations/getFollowlist",
+			data: {pageIndex:index,pageSize:$('#pageSize').val(),condition:$('#username').val()},
+			dataType: "json",
+			success: function(json){
+				var data=eval(json)
+				if(data.status==='fail'){
+					alert('加载失败');
+				}else{
+					var list=data.list;
+					var html='';
+					$(list).each(function(){
+						if(this.create_date!==null){
+							this.create_date = moment(this.create_date).format('YYYY-MM-DD HH:mm');
+						}else{
+							this.create_date = '';
+						}
+						html+='<tr>'+
+						'<td>'+this.username+'</td>'+
+						'<td>'+this.followname+'</td>'+
+                        '<td><time>'+this.create_date+'</time></td>'+
+						'<span title="删除" onclick="deleteFollow(\''+this.id+'\')" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td></tr>';
+					});
+					$('#follow_list').html(html);
+				}
+			},
+			error: function(){
+				alert('加载失败');
+			}
+		})
+	});
+}
+
+function previous(){
+    select(PageTool.getCurrentPage()-1);
+}
+
+function next(){
+    select(PageTool.getCurrentPage()+1);
+}
+
+function deleteFollow(id){
+	if(!confirm('是否确定删除？')){
+		return;
+	}
+	$.ajax({
+		type: "GET",
+		url: "/relations/deleteFollow",
+		data: {id:id},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			alert(data.message);
+			if(data.status==='success'){
+			window.location.reload();
+			}
+		},
+		error: function(){
+			alert("删除失败");
+		}
+	})
+}
+</script>

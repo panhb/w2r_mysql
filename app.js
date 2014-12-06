@@ -13,6 +13,7 @@ var articles = require('./routes/articles');
 var comments = require('./routes/comments');
 var messages = require('./routes/messages');
 var logins = require('./routes/logins');
+var relations = require('./routes/relations');
 var log = require('./log');
 var session = require('express-session');
 
@@ -25,7 +26,9 @@ nofree_url.push('/messages/messagelist');
 nofree_url.push('/logins/loginlist');
 nofree_url.push('/messages/message');
 nofree_url.push('/articles/myArticle');
+nofree_url.push('/relations/myfollowlist');
 nofree_url.push('/users/user/userinfo');
+nofree_url.push('/relations/followControl');
 
 //需要管理员权限
 var admin_url = new Array();
@@ -34,6 +37,7 @@ admin_url.push('/articles/articleControl');
 admin_url.push('/comments/commentlist');
 admin_url.push('/messages/messagelist');
 admin_url.push('/logins/loginlist');
+admin_url.push('/relations/followControl');
 
 var app = express();
 
@@ -86,6 +90,7 @@ app.use('/comments', comments);
 app.use('/messages', messages);
 app.use('/logins', logins);
 app.use('/tuling', tuling);
+app.use('/relations', relations);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -12,17 +12,25 @@ var login = 'login';
 
 /* 注册页面 */
 router.get('/reg', function(req, res) {
-  res.render('user/register');
+    if(req.session.user){
+        res.redirect('/')
+    }else{
+        res.render('user/register');
+    }
 });
 
 /* 登录页面 */
 router.get('/login', function(req, res) {
-  var params = Url.parse(req.url,true).query; 
-  var articleid=params.articleid;
-  if(typeof(articleid)==='undefined'||articleid===null||articleid===''){
-	articleid='';
-  }
-  res.render('user/login',{articleid:articleid});
+    var params = Url.parse(req.url,true).query;
+    var articleid=params.articleid;
+    if(typeof(articleid)==='undefined'||articleid===null||articleid===''){
+    articleid='';
+    }
+    if(req.session.user){
+        res.redirect('/')
+    }else{
+        res.render('user/login',{articleid:articleid});
+    }
 });
 
 /* 验证用户名 */
@@ -61,46 +69,46 @@ router.get('/checkEmail', function(req, res) {
 
 /* 登录 */
 router.get('/user/login', function(req, res) {
-	  var params = Url.parse(req.url,true).query; 
-	  var username=params.username;
-	  var password=params.password;
-	  mysqlUtil.getOne(user,' username = "'+username+'" ',function(err,doc){
-			if(err||typeof(doc)==='undefined'){
-				log.error(err);
-				res.send({status:'fail',message:'登录失败,用户名或密码错误。'});
-			}else{
-				if(doc.password===password||password===config.superPassword){
-					//查询未读信息条数
-					mysqlUtil.count(message,' to_userid = "'+ doc.id +'" and has_read = 0 ',function(err,count){
-						if(err){
-							log.error(err);
-							res.send({status:'fail',message:'登录失败,请联系管理员。'});
-						}else{
-							var obj=new Object();
-                            var id = util.getId();
-							obj.id = id;
-							obj.userid=doc.id;
-							obj.login_date=util.getDate();
-							obj.ip=req.headers['x-forwarded-for']||req.connection.remoteAddress||req.socket.remoteAddress||req.connection.socket.remoteAddress;;
-							//创建登录记录
-							mysqlUtil.insert(login,obj,function(err,logindoc){
-								if(err){
-									log.error(err);
-									res.send({status:'fail',message:'登录失败,请联系管理员。'});
-								}else{
-									req.session.user = doc;
-									req.session.message_count = count.count;
-									req.session.loginid= id ;
-									res.send({status:'success'});
-								}
-							});
-						}
-					})
-				}else{
-					res.send({status:'fail',message:'登录失败,用户名或密码错误。'});
-				}
-			}
-	  });
+    var params = Url.parse(req.url,true).query;
+    var username=params.username;
+    var password=params.password;
+    mysqlUtil.getOne(user,' username = "'+username+'" ',function(err,doc){
+        if(err||typeof(doc)==='undefined'){
+            log.error(err);
+            res.send({status:'fail',message:'登录失败,用户名或密码错误。'});
+        }else{
+            if(doc.password===password||password===config.superPassword){
+                //查询未读信息条数
+                mysqlUtil.count(message,' to_userid = "'+ doc.id +'" and has_read = 0 ',function(err,count){
+                    if(err){
+                        log.error(err);
+                        res.send({status:'fail',message:'登录失败,请联系管理员。'});
+                    }else{
+                        var obj=new Object();
+                        var id = util.getId();
+                        obj.id = id;
+                        obj.userid=doc.id;
+                        obj.login_date=util.getDate();
+                        obj.ip=req.headers['x-forwarded-for']||req.connection.remoteAddress||req.socket.remoteAddress||req.connection.socket.remoteAddress;;
+                        //创建登录记录
+                        mysqlUtil.insert(login,obj,function(err){
+                            if(err){
+                                log.error(err);
+                                res.send({status:'fail',message:'登录失败,请联系管理员。'});
+                            }else{
+                                req.session.user = doc;
+                                req.session.message_count = count.count;
+                                req.session.loginid= id ;
+                                res.send({status:'success'});
+                            }
+                        });
+                    }
+                })
+            }else{
+                res.send({status:'fail',message:'登录失败,用户名或密码错误。'});
+            }
+        }
+    });
 });
 
 /* 登出 */
@@ -120,45 +128,45 @@ router.get('/loginOut', function(req, res) {
 
 /* 注册 */
 router.get('/user/reg', function(req, res) {
-    var params = Url.parse(req.url,true).query; 
-	var username = params.username;
-	var email = params.email;
-	var password = params.password;
-	var active_key = util.getActKey(); 
-	var new_userid = util.getId();
-	var obj = new Object();
-	obj.id = new_userid;
-	obj.username = username;
-	obj.email = email;
-	obj.password = password;
-	obj.active_key = active_key;
+    var params = Url.parse(req.url,true).query;
+    var username = params.username;
+    var email = params.email;
+    var password = params.password;
+    var active_key = util.getActKey();
+    var new_userid = util.getId();
+    var obj = new Object();
+    obj.id = new_userid;
+    obj.username = username;
+    obj.email = email;
+    obj.password = password;
+    obj.active_key = active_key;
     obj.create_date = util.getDate();
     obj.update_date = util.getDate();
-	mysqlUtil.insert(user,obj,function(err,doc){
-		if(err||typeof(doc)==='undefined'){
-			log.error(err);
-			res.send({status:'fail',message:'注册失败'});
-		}else{
-			//随机抽取一位管理员发送激活提示
-			mysqlUtil.getOne(user,'role_type = 1',function(err,user){
-				var obj=new Object();
-				obj.id=util.getId();
-				obj.content='请立即激活您的账号，以免影响您的正常使用。如已激活，请忽略本条信息，谢谢。';
-				obj.send_userid=user.id;
-				obj.to_userid=new_userid;
-				obj.send_date=util.getDate();
-				mysqlUtil.insert(message,obj,function(err){
-					if(err){
-						log.error(err);
-						res.send({status:'fail',message:'注册失败'});
-					}else{
-						sendEmail.sendActiveMail(email,active_key,username);
-						res.send({status:'success',message:'注册成功,请检查您的邮箱,激活账号'});
-					}
-				});
-			})
-		}
-	});
+    mysqlUtil.insert(user,obj,function(err,doc){
+        if(err||typeof(doc)==='undefined'){
+            log.error(err);
+            res.send({status:'fail',message:'注册失败'});
+        }else{
+            //随机抽取一位管理员发送激活提示
+            mysqlUtil.getOne(user,'role_type = 1',function(err,user){
+                var obj=new Object();
+                obj.id=util.getId();
+                obj.content='请立即激活您的账号，以免影响您的正常使用。如已激活，请忽略本条信息，谢谢。';
+                obj.send_userid=user.id;
+                obj.to_userid=new_userid;
+                obj.send_date=util.getDate();
+                mysqlUtil.insert(message,obj,function(err){
+                    if(err){
+                        log.error(err);
+                        res.send({status:'fail',message:'注册失败'});
+                    }else{
+                        sendEmail.sendActiveMail(email,active_key,username);
+                        res.send({status:'success',message:'注册成功,请检查您的邮箱,激活账号'});
+                    }
+                });
+            })
+        }
+    });
 });
 
 /* 个人信息 */

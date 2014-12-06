@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>关注人列表</title>
+    <%- partial('../common/header') %>
+  </head>
+  <body>
+	<div class="yue">
+		<h2>关注人列表</h2>
+		<hr>
+        <% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+        <% list.forEach(function (v, k){ %>
+        <div style='margin-top: 50px;'>
+            <div style='float:left;width:180px;'>
+                <% if (typeof(v.avatar) !== 'undefined' && v.avatar !== null && v.avatar !== '') { %>
+                    <img src='<%= v.avatar%>' title='<%= v.username%>' height='140' width='140' style='border-radius:5px;'>
+                <% } else { %>
+                    <img src='http://gravatar.com/avatar?size=140' title='<%= v.username%>' height='140' width='140' style='border-radius:5px;'>
+                <% } %>
+            </div>
+            <div>
+                <h4><a target="_blank" href="/articles/user/articlelist?userid=<%= v.followid%>"><%= v.username%></a></h4>
+                <h4>关注时间&nbsp;:&nbsp;<time><%= v.create_date%></time></h4>
+                <div id="<%= v.id%>">
+                    <button type="button" onclick="relation_focus('0','<%= v.followid%>','<%= v.id%>')" class="btn btn-primary">取消关注</button>
+                </div>
+            </div>
+            </div>
+        <% })%>
+        <% } %>
+	</div>
+  <%- partial('../common/footer') %>
+  </body>
+</html>
+<script>
+    $(function(){
+        $("time").each(function(){
+            if(typeof($(this).html()) !== 'undefined' && $(this).html() !== 'undefined' && $(this).html() !== '' && $(this).html() !== null && $(this).html() !== 'null'){
+                $(this).html(moment($(this).html()).format('YYYY-MM-DD'))
+            }else{
+                $(this).html('');
+            }
+        });
+    })
+
+    function relation_focus(type,followid,id){
+        $.ajax({
+            type: "GET",
+            url: "/relations/focus",
+            data: {type: type, followid: followid },
+            dataType: "json",
+            success: function (json) {
+                var data = eval(json)
+                if (data.status === 'fail') {
+                    alert('关注失败');
+                } else {
+                    var html = '';
+                    if ( type === '0' ) {
+                        html = '<button type="button" onclick="relation_focus(\'1\',\''+followid+'\',\''+id+'\')" class="btn btn-success ">关注</button>';
+                    } else {
+                        html = '<button type="button" onclick="relation_focus(\'0\',\''+followid+'\',\''+id+'\')" class="btn btn-primary ">取消关注</button>';
+                    }
+                    $('#'+id).html(html);
+                }
+            },
+            error: function () {
+                alert('关注失败');
+            }
+        })
+    }
+</script>

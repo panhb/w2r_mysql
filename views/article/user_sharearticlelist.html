@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>文章</title>
+<%- partial('../common/header') %>
+<style>
+.subheader {
+//	background: #fbfbfa;
+	padding: 16px 0;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	text-align: center;
+}
+.entry-list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+.entry-list .entry-item {
+	margin: 25px 0 35px;
+	line-height: 25px;
+	min-height: 50px;
+}
+.entry-list .entry-meta {
+	font-size: 14px;
+	font-family: Optima,"Helvetica Neue",sans-serif;
+	color: #999;
+}
+</style>
+</head>
+<body>
+<div class="yue">
+<div class="subheader"><%= username %>&nbsp;&nbsp;共
+<%= count %>
+篇分享文章</div>
+<ul id="article_list" class="entry-list">
+    <%- partial('../article/sharearticlelist') %>
+</ul>
+<div>
+<%- partial('../common/footer') %>
+</body>
+</html>
+<script>
+$(function(){
+	$("time").each(function(){
+		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+	});
+})
+</script>
