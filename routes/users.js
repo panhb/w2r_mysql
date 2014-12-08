@@ -13,7 +13,7 @@ var login = 'login';
 /* 注册页面 */
 router.get('/reg', function(req, res) {
     if(req.session.user){
-        res.redirect('/')
+        res.redirect('/');
     }else{
         res.render('user/register');
     }
@@ -72,6 +72,7 @@ router.get('/user/login', function(req, res) {
     var params = Url.parse(req.url,true).query;
     var username=params.username;
     var password=params.password;
+    var type=params.type;
     mysqlUtil.getOne(user,' username = "'+username+'" ',function(err,doc){
         if(err||typeof(doc)==='undefined'){
             log.error(err);
@@ -82,7 +83,15 @@ router.get('/user/login', function(req, res) {
                 mysqlUtil.count(message,' to_userid = "'+ doc.id +'" and has_read = 0 ',function(err,count){
                     if(err){
                         log.error(err);
-                        res.send({status:'fail',message:'登录失败,请联系管理员。'});
+						if(typeof(type) !== 'undefined' && type === 'github' ){
+							res.render('error', {
+								message: 'github登录出错',
+								error: {}
+							});
+						}else{
+							res.send({status:'fail',message:'登录失败,请联系管理员。'});
+						}
+                        
                     }else{
                         var obj=new Object();
                         var id = util.getId();
@@ -94,12 +103,24 @@ router.get('/user/login', function(req, res) {
                         mysqlUtil.insert(login,obj,function(err){
                             if(err){
                                 log.error(err);
-                                res.send({status:'fail',message:'登录失败,请联系管理员。'});
+								if(typeof(type) !== 'undefined' && type === 'github' ){
+									res.render('error', {
+										message: 'github登录出错',
+										error: {}
+									});
+								}else{
+									res.send({status:'fail',message:'登录失败,请联系管理员。'});
+								}
                             }else{
                                 req.session.user = doc;
                                 req.session.message_count = count.count;
                                 req.session.loginid= id ;
-                                res.send({status:'success'});
+								if(typeof(type) !== 'undefined' && type === 'github' ){
+									res.redirect('/');
+								}else{
+									res.send({status:'success'});
+								}
+                                
                             }
                         });
                     }

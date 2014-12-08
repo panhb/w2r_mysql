@@ -13,9 +13,11 @@ var articles = require('./routes/articles');
 var comments = require('./routes/comments');
 var messages = require('./routes/messages');
 var logins = require('./routes/logins');
+var auth = require('./routes/auth');
 var relations = require('./routes/relations');
 var log = require('./log');
 var session = require('express-session');
+var passport = require('passport');
 
 //需要登录
 var nofree_url = new Array();
@@ -57,6 +59,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(log.useLog());
@@ -91,6 +94,7 @@ app.use('/messages', messages);
 app.use('/logins', logins);
 app.use('/tuling', tuling);
 app.use('/relations', relations);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

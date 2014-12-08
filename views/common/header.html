@@ -65,8 +65,10 @@
                   <% if (session.user.role_type === 1||session.user.status === 1) { %>
                       <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/articles/writing">writing</a></li>
                   <% } %>
+				  <!--
                   <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/tuling">聊天机器人</a></li>
-                  <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/contact">关于</a></li>
+                  -->
+				  <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/contact">关于</a></li>
                   <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/help">使用帮助</a></li>
                   <li id="fat-usermenu" class="dropdown">
                       <a id="drop_userinfo" style="font-family:Microsoft YaHei;font-size:16px;" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -89,6 +91,7 @@
                               (<span style="font-weight:bold;color:red;"><%= session.message_count %></span>)
                               <% } %>
                           </a></li>
+						  <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/users/user/resetPass?key=<%= session.user.active_key %>&username=<%= session.user.username %>">修改密码</a></li>
                           <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/users/user/userinfo">个人信息</a></li>
                           <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/users/loginOut">登出</a></li>
                       </ul>
@@ -96,7 +99,9 @@
 				<% } else {%>
 					<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/users/login">登录</a></li>
 					<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/users/reg">注册</a></li>
-                  <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/tuling">聊天机器人</a></li>
+					<!--
+					<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/tuling">聊天机器人</a></li>
+					-->
 					<li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/contact">关于</a></li>
 				<% } %>
 				<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>

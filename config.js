@@ -12,6 +12,12 @@ var config = {
     port: 3306
   },
 
+  // github 登陆的配置
+  github_oauth: {
+    clientID: '8d3f384b322349398e6d',
+    clientSecret: '684bf395d7651c7496ce9417aaee17404555c8fe',
+    callbackURL: 'http://localhost:3000/auth/github/callback'
+  },
   //域名
   hostname: 'localhost',
   // 程序运行的端口

@@ -39,6 +39,27 @@
 		cursor: pointer;
 		vertical-align: middle;
 	}
+
+	ul.social_profiles li{
+		margin-top: 30px;
+		margin-left: 30px;
+		display: inline-block;
+	}
+
+	ul.social_profiles li a{
+		width: 30px;
+		height: 30px;
+		display: inline-block;
+	}
+
+	ul.social_profiles .github a{
+		background: url('../images/github_24.png') no-repeat;
+	}
+
+
+	ul.social_profiles .github a:hover{
+		background: url('../images/github_h_24.png') no-repeat;
+	}
 	</style>
   </head>
   <body>
@@ -54,6 +75,9 @@
 	<button id="loginBtn" onclick="login()" data-loading-text="登录中..." class="button">登录</button>
 	<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 	<a href="/users/forget_password" style="text-decoration:underline;">忘记密码?</a>
+	<ul class="social_profiles">
+        <li class="github"><a title="github登录" href="/auth/github"></a></li>  
+	</ul>
 	</div>
   <%- partial('../common/footer') %>
   </body>
