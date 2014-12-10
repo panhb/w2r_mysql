@@ -12,7 +12,7 @@ var relation = 'relation';
 router.get('/follow/:userid', function(req, res) {
     var userid=req.params.userid;
     if (!req.session.user) {
-        return res.render('user/login');
+        res.redirect('/users/login');
     }else{
         var current_user = req.session.user.id;
         //统计分享的文章数

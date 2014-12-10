@@ -316,7 +316,7 @@ router.get('/reading/:id', function(req, res) {
                         });
                     }else{
                         if (!req.session.user) {
-                            return res.render('user/login');
+                            res.redirect('/users/login');
                         }else{
                             if(req.session.user.id===article[0].author_id||req.session.user.role_type=='1'){
                                 mysqlUtil.count(comment,'articleid="'+id+'"',function (err,count) {
@@ -394,7 +394,7 @@ router.get('/allComment/reading/:id', function(req, res) {
 				});
 			}else{
 				if (!req.session.user) {
-					return res.render('user/login');
+					res.redirect('/users/login');
 				}else{
 					if(req.session.user.id===article[0].author_id||req.session.user.role_type=='1'){
 						mysqlUtil.query(csql,function (err, docs) {	
