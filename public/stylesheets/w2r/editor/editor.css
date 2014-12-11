@@ -11,12 +11,14 @@
   border-style:none; 
   min-height:700px;
   outline:none;
+
 }
 .preview{ 
   position:absolute;
 //  left: 327px; 
   top: 182px;
-  overflow:hidden;
+  overflow-y:auto;
+  overflow-x:auto;
   width:770px; 
   padding-top:10px;	  
   padding-right:20px; 

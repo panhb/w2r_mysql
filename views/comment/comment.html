@@ -1,14 +1,21 @@
 <style>
 	.line {width:100%; margin-top:20px;margin-bottom:5px;border-bottom:2px solid #8c96a0;}
+	.line_red {width:100%; margin-top:20px;margin-bottom:5px;border-bottom:2px solid #DC143C;}
 	.div_common {padding: 0 0 8px 0;margin-left:50px;width:95%;height:auto;word-wrap: break-word; word-break: normal;}
 </style>
 <script src="/javascripts/shortcut.js"></script>
+<script src="/javascripts/w2r/editor/comment_editor.js"></script>
+<link rel='stylesheet' href='/stylesheets/w2r/editor/comment_editor.css' />
 <div style="margin-top:150px;"></div>
 <div id="comment_thread">
 	<div id="comment_mainDiv">
 	<% if (typeof(list) !== 'undefined' && list.length > 0) { %>
 		<% list.forEach(function (v, k){ %>
-			<div class='line'></div>
+			<% if (typeof(session.user) !== 'undefined' && session.user !== null && session.user.id === v.userid ) { %>
+				<div class='line_red'></div>
+			<% } else { %>
+				<div class='line'></div>
+			<% } %>
 			<div style='width:100%;'><div style='float:left;width:50px;'>
 			<% if (typeof(v.avatar)!=='undefined'&&v.avatar !== null&& v.avatar !== '') { %>
 				<a target="_blank" href="/relations/follow/<%= v.userid%>"><img src='<%= v.avatar%>' title='<%= v.username%>' height='30' width='30' style='border-radius:5px;'></a>
@@ -37,7 +44,19 @@
 	
 	<div style="width:100%;margin-top:50px;">
 	<% if (typeof(session.user) !== 'undefined' && session.user !== null) { %>
-            <textarea id="mainTextArea" placeholder="回复 (Ctrl + Enter)" style="font-size:16px;width:100%;height:200px;border-radius:5px 5px 5px 0px;outline:none;" ></textarea>
+			<div class="editor-toolbar">
+			<a title="加粗 CTRL+B" data-shortcut="ctrl+b" class="glyphicon glyphicon-bold"></a>
+			<a title="斜体 CTRL+I" data-shortcut="ctrl+i" class="glyphicon glyphicon-italic"></a>
+			<a title="无序列表 CTRL+ALT+L" data-shortcut="ctrl+alt+l" class="glyphicon glyphicon-list"></a>
+			<i class="separator">|</i>
+			<a title="超链接 CTRL+K" data-shortcut="ctrl+k" class="glyphicon glyphicon-link"></a>
+			<a title="图片 CTRL+ALT+I" data-shortcut="ctrl+alt+i" class="glyphicon glyphicon-picture"></a>
+			<a title="预览 CTRL+ALT+P" id="glyphicon-eye" data-shortcut="ctrl+alt+p" class="glyphicon glyphicon-eye-open"></a>
+			<i class="separator">|</i>
+			<a title="使用帮助" href="/help" target="_blank" class="glyphicon glyphicon-question-sign"></a>
+			</div>
+            <textarea id="editor" placeholder="回复 (Ctrl + Enter)" style="font-size:16px;width:100%;height:200px;border-radius:5px 5px 5px 0px;outline:none;" ></textarea>
+			<div id="preview" class="preview"></div>
 			<br>
 			<button type="button"  data-shortcut="ctrl+enter" title="回复 (Ctrl + Enter)" onclick="mainComments()" class="btn btn-primary">发表评论</button>
 	<% } else { %>
@@ -47,7 +66,7 @@
 </div>
 <script>
 $(function(){
-//	$("#mainTextArea").focus();
+//	$("#editor").focus();
 	$("time").each(function(){
 		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
 	});
@@ -55,7 +74,7 @@ $(function(){
 var cnum=1;
 function mainComments(){
 	var cd=moment().format('YYYY-MM-DD HH:mm');
-	var textarea=$("#mainTextArea").val();
+	var textarea=$("#editor").val();
 	if(textarea===null||textarea===''){
 		alert("写点什么东西再发表吧");
 		return;
@@ -89,8 +108,9 @@ function mainComments(){
 					$("#comment_mainDiv").append(div);
 					$("#"+cid).fadeIn("slow");
 					*/
-					$("#mainTextArea").val("");
-					window.location.reload();
+					$("#editor").val("");
+					//window.location.reload();
+					window.location.href="/articles/allComment/reading/"+articleid;
 				}else{
 					alert(data.message);
 				}
