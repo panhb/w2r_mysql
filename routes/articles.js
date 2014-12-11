@@ -45,19 +45,11 @@ router.get('/myArticle', function(req, res) {
 	var sql='select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.author_id="'+author_id+'" order by update_date desc'; 
 	mysqlUtil.countBySql(csql,function (err,count) {
 		if(err){
-			log.error(err);
-			res.render('error', {
-				message: '访问失败',
-				error: {}
-			});
+			util.renderError(err,res,'访问失败');
 		}else{
 			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err,docs) {
 				if(err){
-					log.error(err);
-					res.render('error', {
-						message: '访问失败',
-						error: {}
-					});
+					util.renderError(err,res,'访问失败');
 				}else{
 					var has_more=false;
 					if(count.count<=pageIndex*pageSize){
@@ -167,19 +159,11 @@ router.get('/search/articlelist', function(req, res) {
 	
 	 mysqlUtil.countBySql(csql,function (err, count) {
 		if(err){
-			log.error(err);
-			res.render('error', {
-				message: '访问失败',
-				error: {}
-			});
+			util.renderError(err,res,'访问失败');
 		}else{
             mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
                 if(err){
-                    log.error(err);
-                    res.render('error', {
-                        message: '访问失败',
-                        error: {}
-                    });
+                    util.renderError(err,res,'访问失败');
                 }
                 var has_more=false;
                 if(count.count<=pageIndex*pageSize){
@@ -201,19 +185,11 @@ router.get('/user/articlelist', function(req, res) {
     var sql = 'select a.*,u.username,u.avatar count from (select * from article where author_id = "'+userid+'" and status = 1) a , user u where a.author_id=u.id order by a.update_date desc';
     mysqlUtil.countBySql(csql,function (err, count) {
         if(err){
-            log.error(err);
-            res.render('error', {
-                message: '访问失败',
-                error: {}
-            });
+			util.renderError(err,res,'访问失败');
         }else{
             mysqlUtil.query(sql,function (err, docs) {
                 if(err){
-                    log.error(err);
-                    res.render('error', {
-                        message: '访问失败',
-                        error: {}
-                    });
+					util.renderError(err,res,'访问失败');
                 }
                 var username = docs[0].username;
                 res.render('article/user_sharearticlelist', {username:username,count:count.count,list:docs});
@@ -274,37 +250,21 @@ router.get('/reading/:id', function(req, res) {
     var usql = ' update article set visit_count = visit_count+1  where id = "'+id+'"';
     mysqlUtil.query(usql,function (err){
         if(err){
-            log.error(err);
-            res.render('error', {
-                message: '页面不存在',
-                error: {}
-            });
+            util.renderError(err,res,'页面不存在');
         }else{
             mysqlUtil.query(sql,function (err, article) {
                 log.info(article);
                 if(err||typeof(article)==='undefined'||article.length===0){
-                    log.error(err);
-                    res.render('error', {
-                        message: '页面不存在',
-                        error: {}
-                    });
+                    util.renderError(err,res,'页面不存在');
                 }else{
                     if(article[0].status==1){
                         mysqlUtil.count(comment,'articleid="'+id+'"',function (err,count) {
                             if(err){
-                                log.error(err);
-                                res.render('error', {
-                                    message: '页面不存在',
-                                    error: {}
-                                });
+                                util.renderError(err,res,'页面不存在');
                             }else{
                                 mysqlUtil.queryWithPage(1,config.user_pageSize*1,csql,function (err, docs) {
                                     if(err){
-                                        log.error(err);
-                                        res.render('error', {
-                                            message: '页面不存在',
-                                            error: {}
-                                        });
+                                        util.renderError(err,res,'页面不存在');
                                     }else{
                                         article[0].content=marked(article[0].content);
                                         var has_more=false;
@@ -325,19 +285,11 @@ router.get('/reading/:id', function(req, res) {
                             if(req.session.user.id===article[0].author_id||req.session.user.role_type=='1'){
                                 mysqlUtil.count(comment,'articleid="'+id+'"',function (err,count) {
                                     if(err){
-                                        log.error(err);
-                                        res.render('error', {
-                                            message: '页面不存在',
-                                            error: {}
-                                        });
+                                        util.errorRender(err,res,'页面不存在');
                                     }else{
                                         mysqlUtil.queryWithPage(1,config.user_pageSize*1,csql,function (err, docs) {
                                             if(err){
-                                                log.error(err);
-                                                res.render('error', {
-                                                    message: '页面不存在',
-                                                    error: {}
-                                                });
+                                                util.renderError(err,res,'页面不存在');
                                             }else{
                                                 article[0].content=marked(article[0].content);
                                                 var has_more=false;
@@ -352,10 +304,7 @@ router.get('/reading/:id', function(req, res) {
                                     }
                                 });
                             }else{
-                                res.render('error', {
-                                    message: '您没有权限访问该页面',
-                                    error: {}
-                                });
+								util.renderError(err,res,'您没有权限访问该页面');
                             }
                         }
                     }
@@ -377,20 +326,12 @@ router.get('/allComment/reading/:id', function(req, res) {
 	var csql = 'select c.*,u.username,u.avatar from comment c , user u where c.userid=u.id and c.articleid="'+id+'"'; 
 	mysqlUtil.query(sql,function (err, article) {
 		if(err||typeof(article)==='undefined'||article.length===0){
-			log.error(err);
-			res.render('error', {
-				message: '页面不存在',
-				error: {}
-			});
+			util.renderError(err,res,'页面不存在');
 		}else{
 			if(article[0].status==1){
 				mysqlUtil.query(csql,function (err, docs) {
 					if(err){
-						log.error(err);
-						res.render('error', {
-							message: '页面不存在',
-							error: {}
-						});
+						util.renderError(err,res,'页面不存在');
 					}else{
 						article[0].content=marked(article[0].content);
 						res.render('article/article', {article:article[0],list:docs});
@@ -403,21 +344,14 @@ router.get('/allComment/reading/:id', function(req, res) {
 					if(req.session.user.id===article[0].author_id||req.session.user.role_type=='1'){
 						mysqlUtil.query(csql,function (err, docs) {	
 							if(err){
-								log.error(err);
-								res.render('error', {
-									message: '页面不存在',
-									error: {}
-								});
+								util.renderError(err,res,'页面不存在');
 							}else{
 								article[0].content=marked(article[0].content);
 								res.render('article/article', {article:article[0],list:docs});
 							}
 						});
 					}else{
-						res.render('error', {
-							message: '您没有权限访问该页面',
-							error: {}
-						});
+						util.renderError(err,res,'您没有权限访问该页面');
 					}
 				}
 			}
@@ -434,11 +368,7 @@ router.get('/editArticle/:id', function(req, res) {
 		log.info('获取文章内容  文章id:'+id);
 		mysqlUtil.getById(article,id, function (err, article) {
 			if(err||typeof(article)==='undefined'){
-				log.error(err);
-				res.render('error', {
-					message: '页面不存在',
-					error: {}
-				});
+				util.renderError(err,res,'页面不存在');
 			}else{
 				res.render('article/editor', article);
 			}
@@ -454,12 +384,7 @@ router.get('/shareArticle', function(req, res) {
 	var updateString = 'status='+status+',update_date="'+util.getDate()+'"'
     log.info('文章id:'+id+',状态:'+status);
 	mysqlUtil.updateById(article,id,updateString,function(err){
-		if(err){
-			log.error(err);
-			res.send({status:'fail',message:'操作失败'});
-		}else{
-			res.send({status:'success',message:'操作成功'});
-		}
+		util.send(err,res,'操作成功','操作失败');
 	});
 });
 
@@ -469,12 +394,7 @@ router.get('/deleteArticle', function(req, res) {
 	var id = params.id;
     log.info('文章id:'+id);
 	mysqlUtil.deleteById(article,id,function (err) {
-		if(err){
-			log.error(err);
-			res.send({status:'fail',message:'删除失败'});
-		}else{
-			res.send({status:'success',message:'删除成功'});
-		}
+		util.send(err,res,'删除成功','删除失败');
 	});
 });
 
@@ -503,21 +423,13 @@ router.get('/articleControl', function(req, res) {
 		if(!err){
 			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
 				if(err){
-					log.error(err);
-					res.render('error', {
-						message: '搜索/查询文章列表出错',
-						error: {}
-					});
+					util.renderError(err,res,'搜索/查询文章列表出错');
 				}else{
 					res.render('article/articlelistControl', {title:title,pageSize:pageSize,totalCount:count.count,list:docs});
 				}
 			});
 		}else{
-			log.error(err);
-			res.render('error', {
-				message: '搜索/查询文章列表出错',
-				error: {}
-			});
+			util.renderError(err,res,'搜索/查询文章列表出错');
 		}
 	});
 });

@@ -14,7 +14,7 @@ router.get('/addMessage', function(req, res) {
 	var content = params.content;
 	content = util.xss(content);
 	content = util.escape(content);
-	content = marked(content);
+	//content = marked(content);
 	var roletype = params.roletype;
 	var send_date = util.getDate();
 	var roles = '"'+roletype.replace(',','","')+'"';
@@ -31,13 +31,14 @@ router.get('/addMessage', function(req, res) {
 				obj.send_userid=req.session.user.id;
 				obj.to_userid=docs[i].id;
 				obj.send_date=send_date;
-				setTimeout(mysqlUtil.insert(message,obj,function(err,doc){
+				mysqlUtil.insert(message,obj,function(err,doc){
 					if(err){
 						log.error(err);
 						res.send({status:'fail',message:'发送失败'});
 					}
-				}),10);
+				});
 			}
+			/**/
 			setTimeout(mysqlUtil.count(message,'to_userid="'+req.session.user.id+'" and has_read=0',function(err,count){
 				if(err){
 					log.error(err);
@@ -57,7 +58,7 @@ router.get('/addMessageByUsername', function(req, res) {
 	var content = params.content;
 	content = util.xss(content);
 	content = util.escape(content);
-	content = marked(content);
+	//content = marked(content);
 	var tousername = params.tousername.split(',');
 	var send_date = util.getDate();
 	for(var i in tousername){
@@ -72,16 +73,17 @@ router.get('/addMessageByUsername', function(req, res) {
 				obj.send_userid=req.session.user.id;
 				obj.to_userid=doc.id;
 				obj.send_date=send_date;
-				setTimeout(mysqlUtil.insert(message,obj,function(err,doc){
+				mysqlUtil.insert(message,obj,function(err,doc){
 					if(err){
 						log.error(err);
 						res.send({status:'fail',message:'发送失败'});
 						return;
 					}
-				}),10);
+				})
 			}
 		})
 	}
+	/**/
 	setTimeout(mysqlUtil.count(message,'to_userid="'+req.session.user.id+'" and has_read=0',function(err,count){
 		if(err){
 			log.error(err);
@@ -141,21 +143,16 @@ router.get('/messagelist', function(req, res) {
 		if(!err){
 			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
 				if(err){
-					log.error(err);
-					res.render('error', {
-						message: '搜索/查询站内信列表出错',
-						error: {}
-					});
+					util.renderError(err,res,'搜索/查询站内信列表出错');
 				}else{
+					for(var i in docs){
+						docs[i].content = marked(docs[i].content)
+					}
 					res.render('message/messageControl', {username:username,pageSize:pageSize,totalCount:count.count,list:docs});
 				}
 			});
 		}else{
-			log.error(err);
-			res.render('error', {
-				message: '搜索/查询站内信列表出错',
-				error: {}
-			});
+			util.renderError(err,res,'搜索/查询站内信列表出错');
 		}
 	});
 });
@@ -184,6 +181,9 @@ router.get('/getMessagelist', function(req, res) {
 			log.error(err);
 			res.send({status:'fail'});
 		}else{
+			for(var i in docs){
+				docs[i].content = marked(docs[i].content)
+			}
 			res.send({list:docs,status:'success'});
 		}
 	});
@@ -195,12 +195,11 @@ router.get('/message', function(req, res) {
 	var sql=' select m.* ,u.username send_username ,u.avatar from message m ,user u where m.send_userid = u.id and  m.to_userid = "'+userid+'" order by send_date desc ';
 	mysqlUtil.query(sql,function(err,docs){
 		if(err){
-			log.error(err);
-			res.render('error', {
-				message: '站内信列表出错',
-				error: {}
-			});
+			util.renderError(err,res,'站内信列表出错');
 		}else{
+			for(var i in docs){
+				docs[i].content = marked(docs[i].content)
+			}
 			log.info(docs);
 			res.render('message/message',{list:docs});
 		}	
@@ -237,14 +236,18 @@ router.get('/saveMessage', function(req, res) {
 	var content = params.content;
 	content = util.xss(content);
 	content = util.escape(content);
-	content = marked(content);
+	//content = marked(content);
 	mysqlUtil.updateById(message,messageid,'content="'+content+'"',function(err){
-		if(err){
-			log.error(err);
-			res.send({status:'fail',message:'保存失败'});
-		}else{
-			res.send({status:'success',message:'保存成功'});
-		}
+		util.send(err,res,'保存成功','保存失败');
+	});
+});
+
+/* 获取站内信内容 */
+router.get('/getMessageContent', function(req, res) {
+	var params = Url.parse(req.url,true).query; 
+	var messageid=params.messageid;
+	mysqlUtil.getById(message,messageid,function(err,message){
+		res.send(message);
 	});
 });
 

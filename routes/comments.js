@@ -73,12 +73,7 @@ router.get('/deleteComment', function(req, res) {
 	var commentid=params.commentid;
 	log.info(commentid);
 	mysqlUtil.deleteById(comment,commentid,function(err){
-		if(err){
-			log.error(err);
-			res.send({status:'fail',message:'删除失败'});
-		}else{
-			res.send({status:'success',message:'删除成功'});
-		}	
+		util.send(err,res,'删除成功','删除失败');
 	});
 });
 
@@ -106,21 +101,13 @@ router.get('/commentlist', function(req, res) {
 		if(!err){
 			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err,docs) {
 				if(err){
-					log.error(err);
-					res.render('error', {
-						message: '搜索/查询评论列表出错',
-						error: {}
-					});
+					util.renderError(err,res,'搜索/查询评论列表出错');
 				}else{
 					res.render('comment/commentControl', {cusername:cusername,pageSize:pageSize,totalCount:count.count,list:docs});
 				}
 			});
 		}else{
-			log.error(err);
-			res.render('error', {
-				message: '搜索/查询评论列表出错',
-				error: {}
-			});
+			util.renderError(err,res,'搜索/查询评论列表出错');
 		}
 	});
 });

@@ -199,12 +199,22 @@ function addMessageByUsername(){
 }
 
 
-function editMessage(id,obj){
+function editMessage(id){
 	$("#messageid").val(id);
-	var html=$(obj).parent().prev().html();
-	html=html.replace(/<br>/g,'\r\n');
-	$("#editContent").val(html);
-	$("#myeditModal").modal("show");
+	$.ajax({
+		type: "GET",
+		url: "/messages/getMessageContent",
+		data: {messageid:id},
+		dataType: "json",
+		success: function(json){
+			var data=eval(json)
+			$("#editContent").val(data.content);
+			$("#myeditModal").modal("show");
+		},
+		error: function(){
+			alert("获取失败");
+		}
+	})
 }
 
 

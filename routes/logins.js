@@ -30,21 +30,13 @@ router.get('/loginlist', function(req, res) {
 		if(!err){
 			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
 				if(err){
-					log.error(err);
-					res.render('error', {
-						message: '搜索/查询用户登录列表出错',
-						error: {}
-					});
+					util.renderError(err,res,'搜索/查询用户登录列表出错');
 				}else{
 					res.render('login/loginlistControl', {username:username,pageSize:pageSize,totalCount:count.count,list:docs});
 				}
 			});
 		}else{
-			log.error(err);
-			res.render('error', {
-				message: '搜索/查询用户登录列表出错',
-				error: {}
-			});
+			util.renderError(err,res,'搜索/查询用户登录列表出错');
 		}
 	});
 });
@@ -85,12 +77,7 @@ router.get('/login/delete', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var loginid=params.loginid;
 	mysqlUtil.deleteById(login,loginid,function(err){
-		if(err){
-			log.error(err);
-			res.send({status:'fail',message:'删除失败'});
-		}else{
-			res.send({status:'success',message:'删除成功'});
-		}	
+		util.send(err,res,'删除成功','删除失败');
 	});
 });
 

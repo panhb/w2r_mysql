@@ -24,19 +24,11 @@ router.get('/', function(req, res) {
 	var sql = 'select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc'; 
 	mysqlUtil.countBySql(csql,function (err,count) {
 		if(err){
-			log.error(err);
-			res.render('error', {
-				message: '访问失败',
-				error: {}
-			});
+			util.renderError(err,res,'访问失败');
 		}else{
 			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
 				if(err){
-					log.error(err);
-					res.render('error', {
-						message: '访问失败',
-						error: {}
-					});
+					util.renderError(err,res,'访问失败');
 				}else{
 					var has_more=false;
 					if(count.count<=pageIndex*pageSize){

@@ -18,29 +18,17 @@ router.get('/follow/:userid', function(req, res) {
         //统计分享的文章数
         mysqlUtil.count(article,' author_id = "'+userid+'" and status = 1 ',function (err,count) {
             if(err){
-                log.error(err);
-                res.render('error', {
-                    message: '访问失败',
-                    error: {}
-                });
+                util.renderError(err,res,'访问失败');
             }else{
                 //获取用户信息
                 mysqlUtil.getById(user, userid ,function (err,user) {
                     if(err){
-                        log.error(err);
-                        res.render('error', {
-                            message: '访问失败',
-                            error: {}
-                        });
+                        util.renderError(err,res,'访问失败');
                     }else{
                         //查询是否已关注
                         mysqlUtil.getOne(relation, ' followid = "'+userid+'" and userid = "'+current_user+'" ' ,function (err,relation) {
                             if(err){
-                                log.error(err);
-                                res.render('error', {
-                                    message: '访问失败',
-                                    error: {}
-                                });
+                                util.renderError(err,res,'访问失败');
                             }else{
                                 var has_relation = true ;
                                 if( typeof (relation) === 'undefined' ){
@@ -70,21 +58,11 @@ router.get('/focus', function(req, res) {
 
     if(type === '1'){
         mysqlUtil.insert(relation , obj , function (err) {
-            if(err){
-                log.error(err);
-                res.send({status:'fail',message:'关注失败'});
-            }else{
-                res.send({status:'success',message:'关注成功'});
-            }
+            util.send(err,res,'关注成功','关注失败');
         })
     } else {
         mysqlUtil.query( 'delete from relation where userid = "'+userid+'" and followid = "'+followid+'" ' ,function (err) {
-            if(err){
-                log.error(err);
-                res.send({status:'fail',message:'取消关注失败'});
-            }else{
-                res.send({status:'success',message:'取消关注成功'});
-            }
+            util.send(err,res,'取消关注成功','取消关注失败');
         })
     }
 });
@@ -94,11 +72,7 @@ router.get('/myfollowlist', function(req, res) {
     var sql = ' select r.*,u.username,u.avatar from relation r ,user u where r.followid = u.id and r.userid = "'+userid+'" order by create_date desc ';
     mysqlUtil.query(sql ,function (err,docs) {
         if(err){
-            log.error(err);
-            res.render('error', {
-                message: '访问失败',
-                error: {}
-            });
+            util.renderError(err,res,'访问失败');
         }else{
             res.render('relation/myfollowlist', {list : docs})
         }
@@ -154,12 +128,7 @@ router.get('/deleteFollow', function(req, res) {
     var id = params.id;
     log.info('关注id:'+id);
     mysqlUtil.deleteById(relation,id,function (err) {
-        if(err){
-            log.error(err);
-            res.send({status:'fail',message:'删除失败'});
-        }else{
-            res.send({status:'success',message:'删除成功'});
-        }
+        util.send(err,res,'删除成功','删除失败');
     });
 });
 
@@ -186,21 +155,13 @@ router.get('/followControl', function(req, res) {
         if(!err){
             mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
                 if(err){
-                    log.error(err);
-                    res.render('error', {
-                        message: '搜索/查询关注列表出错',
-                        error: {}
-                    });
+                    util.renderError(err,res,'搜索/查询关注列表出错');
                 }else{
                     res.render('relation/followControl', {username:username,pageSize:pageSize,totalCount:count.count,list:docs});
                 }
             });
         }else{
-            log.error(err);
-            res.render('error', {
-                message: '搜索/查询关注列表出错',
-                error: {}
-            });
+            util.renderError(err,res,'搜索/查询关注列表出错');
         }
     });
 });

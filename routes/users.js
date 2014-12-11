@@ -82,12 +82,8 @@ router.get('/user/login', function(req, res) {
                 //查询未读信息条数
                 mysqlUtil.count(message,' to_userid = "'+ doc.id +'" and has_read = 0 ',function(err,count){
                     if(err){
-                        log.error(err);
 						if(typeof(type) !== 'undefined' && type === 'github' ){
-							res.render('error', {
-								message: 'github登录出错',
-								error: {}
-							});
+							util.renderError(err,res,'github登录出错');
 						}else{
 							res.send({status:'fail',message:'登录失败,请联系管理员。'});
 						}
@@ -102,12 +98,8 @@ router.get('/user/login', function(req, res) {
                         //创建登录记录
                         mysqlUtil.insert(login,obj,function(err){
                             if(err){
-                                log.error(err);
 								if(typeof(type) !== 'undefined' && type === 'github' ){
-									res.render('error', {
-										message: 'github登录出错',
-										error: {}
-									});
+									util.renderError(err,res,'github登录出错');
 								}else{
 									res.send({status:'fail',message:'登录失败,请联系管理员。'});
 								}
@@ -195,11 +187,7 @@ router.get('/user/userinfo', function(req, res) {
 	  var id=req.session.user.id;
 	  mysqlUtil.getById(user,id,function(err,user){
 			if(err){
-				log.error(err);
-				res.render('error', {
-					message: '获取个人信息出错',
-					error: {}
-				});
+				util.renderError(err,res,'获取个人信息出错');
 			}else{
 				res.render('user/userinfo',user);
 			}
@@ -281,12 +269,7 @@ router.get('/user/reset', function(req, res) {
 	var password=params.password;
 	var condition = ' username = "'+username+'" and active_key = "'+active_key+'" ';
 	mysqlUtil.updateByCondition(user,condition,' password="'+password+'"',function(err){
-		if(err){
-			log.error(err);
-			res.send({status:'fail',message:'重置密码失败'});
-		}else{
-			res.send({status:'success',message:'重置密码成功'});
-		}	
+		util.send(err,res,'重置密码成功','重置密码失败');		
 	});
 });
 
@@ -316,21 +299,13 @@ router.get('/userlist', function(req, res) {
 		if(!err){
 			mysqlUtil.getListWithPage(pageIndex,pageSize,user,condition,' create_date desc ',function (err, docs) {
 				if(err){
-					log.error(err);
-					res.render('error', {
-						message: '搜索/查询用户列表出错',
-						error: {}
-					});
+					util.renderError(err,res,'搜索/查询用户列表出错');
 				}else{
 					res.render('user/userlistControl', {username:username,pageSize:pageSize,totalCount:count.count,list:docs});
 				}
 			});
 		}else{
-			log.error(err);
-			res.render('error', {
-				message: '搜索/查询用户列表出错',
-				error: {}
-			});
+			util.renderError(err,res,'搜索/查询用户列表出错');
 		}
 	});
 });
@@ -369,12 +344,7 @@ router.get('/user/delete', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var userid=params.userid;
 	mysqlUtil.deleteById(user,userid,function(err){
-		if(err){
-			log.error(err);
-			res.send({status:'fail',message:'删除失败'});
-		}else{
-			res.send({status:'success',message:'删除成功'});
-		}	
+		util.send(err,res,'删除成功','删除失败');			
 	});
 });
 
@@ -434,12 +404,7 @@ router.get('/user/updateuserinfoDetail', function(req, res) {
 		});
 	  }else{
 		mysqlUtil.updateById(user,id,updateString, function(err,doc){
-			if(err){
-				log.error(err);
-				res.send({status:'fail',message:'保存失败'});
-			}else{
-				res.send({status:'success',message:'保存成功'});
-			}
+			util.send(err,res,'保存成功','保存失败');
 		});
 	  }
 });

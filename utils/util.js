@@ -1,6 +1,7 @@
 var moment = require('moment');
 var crypto = require('crypto');
 var xss = require('xss');
+var log = require('../log').logger('w2r');
 
 /**
  * 获取时间
@@ -20,7 +21,7 @@ exports.getDate = function (format) {
  * 生成id
  */
 exports.getId = function () {
-	return moment().format('YYYYMMDDHHmmssSSS');
+	return moment().format('YYYYMMDDHHmmssSSS')+Math.floor(Math.random()*100000+1);
 };
 
 /**
@@ -91,4 +92,39 @@ var xssOptions = {
  */
 exports.xss = function (html) {
   return xss(html, xssOptions);
+};
+
+/**
+ * 统一处理error
+ * @param {String} message
+ */
+exports.renderError = function (err,res,message) {
+	log.error('renderError');
+	log.error(err);
+	if( typeof(message) === 'undefined' || message === null || message === ''){
+		message = '访问失败';
+	}
+	res.render('error', {
+		message: message,
+		error: {}
+	});
+};
+
+/**
+ * 统一处理send
+ * @param {String} message
+ */
+exports.send = function (err,res,smessage,fmessage) {
+	if( typeof(smessage) === 'undefined' || smessage === null || smessage === ''){
+		smessage = '操作成功';
+	}
+	if( typeof(fmessage) === 'undefined' || fmessage === null || fmessage === ''){
+		fmessage = '操作失败';
+	}
+	if(err){
+		log.error(err);
+		res.send({status:'fail',message:fmessage});
+	}else{
+		res.send({status:'success',message:smessage});
+	}
 };
