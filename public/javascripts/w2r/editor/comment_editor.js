@@ -1,6 +1,6 @@
 var position=0;
 $(function(){
-	$("#editor").focus();
+	//$("#editor").focus();
 	
 	$("#editor").keyup(function(){
 		refresh();
