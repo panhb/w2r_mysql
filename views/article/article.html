@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="yue">
-<h1 title="<%= article.title%>" style="word-wrap:break-word;"><%= article.title%></h1>
+<h1 title="<%- article.title%>" style="word-wrap:break-word;"><%- article.title%></h1>
 <input hidden id="currentArticleid" value="<%= article.id %>">
 <p style="margin-bottom:50px;font-size:14px;">
 <% if (typeof(article.avatar) !== 'undefined'&& article.avatar !== null&& article.avatar !== '') { %>

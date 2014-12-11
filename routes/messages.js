@@ -5,14 +5,18 @@ var config = require('../config');
 var mysqlUtil = require('../utils/mysqlUtil');
 var util = require('../utils/util');
 var log = require('../log').logger('w2r');
+var marked = require('marked');
 var message = 'message';
 
 /* 根据角色发站内信 */
 router.get('/addMessage', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var content=params.content;
-	var roletype=params.roletype;
-	var send_date=util.getDate();
+	var content = params.content;
+	content = util.xss(content);
+	content = util.escape(content);
+	content = marked(content);
+	var roletype = params.roletype;
+	var send_date = util.getDate();
 	var roles = '"'+roletype.replace(',','","')+'"';
 	var sql = 'select * from user where role_type in ('+roles+')';
     mysqlUtil.query(sql,function(err,docs){
@@ -32,7 +36,7 @@ router.get('/addMessage', function(req, res) {
 						log.error(err);
 						res.send({status:'fail',message:'发送失败'});
 					}
-				}),1);
+				}),10);
 			}
 			setTimeout(mysqlUtil.count(message,'to_userid="'+req.session.user.id+'" and has_read=0',function(err,count){
 				if(err){
@@ -50,9 +54,12 @@ router.get('/addMessage', function(req, res) {
 /* 根据用户名发站内信 */
 router.get('/addMessageByUsername', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var content=params.content;
-	var tousername=params.tousername.split(',');
-	var send_date=util.getDate();
+	var content = params.content;
+	content = util.xss(content);
+	content = util.escape(content);
+	content = marked(content);
+	var tousername = params.tousername.split(',');
+	var send_date = util.getDate();
 	for(var i in tousername){
 		mysqlUtil.getOne('user',' username = "'+tousername[i]+'"',function(err,doc){
 			if(err){
@@ -71,7 +78,7 @@ router.get('/addMessageByUsername', function(req, res) {
 						res.send({status:'fail',message:'发送失败'});
 						return;
 					}
-				}),1);
+				}),10);
 			}
 		})
 	}
@@ -89,8 +96,8 @@ router.get('/addMessageByUsername', function(req, res) {
 /* 删除站内信 */
 router.get('/deleteMessage', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var messageid=params.messageid;
-	var userid=req.session.user.id;
+	var messageid = params.messageid;
+	var userid = req.session.user.id;
 	log.info(messageid);
 	mysqlUtil.deleteById(message,messageid,function(err){
 		if(err){
@@ -114,7 +121,7 @@ router.get('/deleteMessage', function(req, res) {
 /* 站内信管理 */
 router.get('/messagelist', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var username=params.username;
+	var username = params.username;
 	if(typeof(username)==='undefined'||username===null){
 		username='';
 	}
@@ -227,7 +234,10 @@ router.get('/changeRead', function(req, res) {
 router.get('/saveMessage', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var messageid=params.messageid;
-	var content=params.content;
+	var content = params.content;
+	content = util.xss(content);
+	content = util.escape(content);
+	content = marked(content);
 	mysqlUtil.updateById(message,messageid,'content="'+content+'"',function(err){
 		if(err){
 			log.error(err);

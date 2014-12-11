@@ -215,8 +215,8 @@ function saveMessage(){
 		alert('内容不能为空。');
 		return;
 	}
-	content=content.replace(/\r\n/g,'<br>');
-	content=content.replace(/\n/g,'<br>');
+	//content=content.replace(/\r\n/g,'<br>');
+	//content=content.replace(/\n/g,'<br>');
 	var messageid=$("#messageid").val();
 	$.ajax({
 		type: "GET",
@@ -243,8 +243,8 @@ function sendMessage(){
 		alert('内容不能为空。');
 		return;
 	}
-	content=content.replace(/\r\n/g,'<br>');
-	content=content.replace(/\n/g,'<br>');
+	//content=content.replace(/\r\n/g,'<br>');
+	//content=content.replace(/\n/g,'<br>');
 	var roletype='';
 	var f1=$("#checkbox1").is(':checked');
 	var f2=$("#checkbox2").is(':checked');
@@ -289,8 +289,8 @@ function sendMessageByUsername(){
 		alert('内容不能为空。');
 		return;
 	}
-	content=content.replace(/\r\n/g,'<br>');
-	content=content.replace(/\n/g,'<br>');
+	//content=content.replace(/\r\n/g,'<br>');
+	//content=content.replace(/\n/g,'<br>');
 
 	var tousername=$("#tousername").val();	
 	if(tousername===null||tousername===''){

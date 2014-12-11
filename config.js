@@ -4,6 +4,11 @@ var config = {
   // mongodb 配置
   session_secret: 'w2r',
   
+  redis_options:{
+	host: 'localhost',
+    port: 6379
+  },
+  
   mysql_options:{
 	host: 'localhost',
     user: 'root',

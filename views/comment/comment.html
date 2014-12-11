@@ -60,8 +60,8 @@ function mainComments(){
 		alert("写点什么东西再发表吧");
 		return;
 	}
-	textarea=textarea.replace(/\r\n/g,'<br>');
-	textarea=textarea.replace(/\n/g,'<br>');
+	//textarea=textarea.replace(/\r\n/g,'<br>');
+	//textarea=textarea.replace(/\n/g,'<br>');
 	var avatar=$("#currentAvatar").val();
 	if(avatar===null||avatar===''){
 		avatar="http://gravatar.com/avatar?size=30"

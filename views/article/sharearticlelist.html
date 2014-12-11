@@ -9,7 +9,7 @@
 	  <time><%= v.update_date %></time>&nbsp;&nbsp;&nbsp;&nbsp;点击数&nbsp;&nbsp;<%= v.visit_count %>&nbsp;&nbsp;&nbsp;&nbsp;回复数&nbsp;&nbsp;<%= v.reply_count %>
 	</div>
 	<div>
-	  <h2><a title="<%= v.title %>" target="_blank" href="/articles/reading/<%= v.id %>"><%= v.title %></a></h2>
+	  <h2><a title="<%- v.title %>" target="_blank" href="/articles/reading/<%= v.id %>"><%- v.title %></a></h2>
 	</div>
   </li>
 <% })%>

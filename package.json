@@ -25,6 +25,8 @@
 	"log4js": "0.6.21",
 	"passport": "0.2.1",
 	"passport-github": "0.1.5",
+	"xss": "0.1.15",
+	"connect-redis": "2.1.0",
 	"marked": "~0.3.2"
   }
 }

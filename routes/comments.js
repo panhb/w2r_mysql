@@ -5,6 +5,7 @@ var config = require('../config');
 var mysqlUtil = require('../utils/mysqlUtil');
 var util = require('../utils/util');
 var log = require('../log').logger('w2r');
+var marked = require('marked');
 var comment = 'comment';
 var user = 'user';
 var article = 'article';
@@ -13,9 +14,12 @@ var message = 'message';
 /* 新增评论 */
 router.get('/addComment', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var content=params.content;
-	var articleid=params.articleid;
-	var obj=new Object();
+	var content = params.content;
+	content = util.xss(content);
+	content = util.escape(content);
+	content = marked(content);
+	var articleid = params.articleid;
+	var obj = new Object();
 	obj.id = util.getId();
 	obj.content=content;
 	obj.userid=req.session.user.id;

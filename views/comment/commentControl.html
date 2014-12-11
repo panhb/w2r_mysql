@@ -37,7 +37,7 @@
 		<% list.forEach(function (v, k){ %>
 			<tr>
 				<% if (typeof(v.articleid)!=='undefined'&&v.articleid!== null&&v.articleid.length> 0) { %>
-					<td><a title="<%= v.title %>" target="_blank" href="/articles/reading/<%= v.articleid %>"><%= v.title.substring(0,15) %></a></td>
+					<td><a title="<%- v.title %>" target="_blank" href="/articles/reading/<%= v.articleid %>"><%- v.title.substring(0,15) %></a></td>
 				<% } else { %>
 					<td></td>
 				<% } %>

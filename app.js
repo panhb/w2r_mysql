@@ -18,6 +18,7 @@ var relations = require('./routes/relations');
 var log = require('./log');
 var session = require('express-session');
 var passport = require('passport');
+var redisStore = require('connect-redis')(session);
 
 //需要登录
 var nofree_url = new Array();
@@ -31,6 +32,12 @@ nofree_url.push('/articles/myArticle');
 nofree_url.push('/relations/myfollowlist');
 nofree_url.push('/users/user/userinfo');
 nofree_url.push('/relations/followControl');
+nofree_url.push('/articles/writing');
+
+var active_url = new Array();
+active_url.push('/articles/myArticle');
+active_url.push('/articles/writing');
+
 
 //需要管理员权限
 var admin_url = new Array();
@@ -57,7 +64,8 @@ app.use(cookieParser());
 app.use(session({
     secret: config.session_secret,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+	store: new redisStore(config.redis_options)
 }));
 app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -71,6 +79,12 @@ app.use(function(req, res, next) {
 		if(_.indexOf(nofree_url,req.url)!==-1){
 			res.redirect('/users/login');
 		}
+	}else if(_.indexOf(active_url,req.url) !== -1 && req.session.user.status !== 1){
+		res.render('error', {
+			message: '请先激活',
+			error: {}
+		});
+		return;
 	}else if(_.indexOf(admin_url,req.url) !== -1 && req.session.user.role_type !== 1){
 		res.render('error', {
 			message: '您没有权限访问该页面',

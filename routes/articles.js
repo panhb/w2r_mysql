@@ -21,16 +21,16 @@ router.get('/writing', function(req, res) {
 router.get('/article2html', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var content=params.content;
-    var html=marked(content);
+    var html= marked(content);
 	res.send({html:html});
 });
 
 /* 我的文章列表 */
 router.get('/myArticle', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var author_id=req.session.user.id; 
-	var pageIndex=params.pageIndex;
-	var pageSize=params.pageSize;
+	var author_id = req.session.user.id; 
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
 	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
 		pageIndex=1;
 	}else{
@@ -225,8 +225,12 @@ router.get('/user/articlelist', function(req, res) {
 /* 保存文章 */
 router.get('/addArticle', function(req, res) {
   var params = Url.parse(req.url,true).query; 
-  var content=params.content;
-  var title=params.title;
+  var content = params.content;
+  content = util.xss(content);
+  content = util.escape(content);
+  var title = params.title;
+  title = util.xss(title);
+  title = util.escape(title);
   var article_id=params.article_id;
   var height=params.height;
   var date = util.getDate();
@@ -423,19 +427,23 @@ router.get('/allComment/reading/:id', function(req, res) {
 
 /* 根据id获取文章内容 */
 router.get('/editArticle/:id', function(req, res) {
-    var id=req.params.id;
-    log.info('获取文章内容  文章id:'+id);
-	mysqlUtil.getById(article,id, function (err, article) {
-		if(err||typeof(article)==='undefined'){
-			log.error(err);
-			res.render('error', {
-				message: '页面不存在',
-				error: {}
-			});
-		}else{
-			res.render('article/editor', article);
-		}
-	});
+	if (!req.session.user) {
+		res.redirect('/users/login');
+	}else{
+		var id=req.params.id;
+		log.info('获取文章内容  文章id:'+id);
+		mysqlUtil.getById(article,id, function (err, article) {
+			if(err||typeof(article)==='undefined'){
+				log.error(err);
+				res.render('error', {
+					message: '页面不存在',
+					error: {}
+				});
+			}else{
+				res.render('article/editor', article);
+			}
+		});
+	}
 });
 
 /* 根据id分享文章 */
@@ -525,6 +533,8 @@ router.post('/import', multipartMiddleware,function(req, res) {
 	if (path) {  
 		fs.readFile(path,'utf-8', function(err, content) {
 			//文件的内容
+			content = util.xss(content);
+			content = util.escape(content);
 			log.info(content);
 			res.send(content);
 			// 删除临时文件

@@ -37,7 +37,7 @@
         <% if (typeof(list) !== 'undefined' && list.length > 0) { %>
 		<% list.forEach(function (v, k){ %>
 			<tr>
-				<td><a title="<%= v.title %>" target="_blank" href="/articles/reading/<%= v.id %>"><%= v.title.substring(0,15) %></a></td>
+				<td><a title="<%- v.title %>" target="_blank" href="/articles/reading/<%= v.id %>"><%- v.title.substring(0,15) %></a></td>
 				<td><time><%= v.create_date %></time></td>
 				<td><time><%= v.update_date %></time></td>
 				<td><%= v.username %></td>
