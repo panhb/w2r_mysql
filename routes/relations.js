@@ -81,19 +81,13 @@ router.get('/myfollowlist', function(req, res) {
 
 router.get('/getFollowlist', function(req, res) {
     var params = Url.parse(req.url,true).query;
-    var username=params.username;
-    var pageIndex=params.pageIndex;
-    var pageSize=params.pageSize;
-    if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-        pageIndex=1;
-    }else{
-        pageIndex=pageIndex*1;
-    }
-    if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-        pageSize=config.user_pageSize;
-    }else{
-        pageSize=pageSize*1;
-    }
+    var username = params.username;
+    var pageIndex = params.pageIndex;
+    var pageSize = params.pageSize;
+    var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
     if(typeof(username) === 'undefined' || username === null){
         username = '';
     }
@@ -104,18 +98,18 @@ router.get('/getFollowlist', function(req, res) {
             log.error(err);
             res.send({status:'fail'});
         }else{
-            mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+            mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err, docs) {
                 if(err){
                     log.error(err);
                     res.send({status:'fail'});
                 }else{
                     var has_more=false;
-                    if(count.count<=pageIndex*pageSize){
+                    if(count.count<=po.pageIndex*po.pageSize){
                         has_more=false;
                     }else{
                         has_more=true;
                     }
-                    res.send({has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,list:docs,status:'success'});
+                    res.send({has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,list:docs,status:'success'});
                 }
             });
         }
@@ -135,29 +129,25 @@ router.get('/deleteFollow', function(req, res) {
 /* 关注管理 */
 router.get('/followControl', function(req, res) {
     var params = Url.parse(req.url,true).query;
-    var username=params.username;
+    var username = params.username;
     if(typeof(username)==='undefined'||username===null){
         username='';
     }
-    if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-        pageIndex=1;
-    }else{
-        pageIndex=pageIndex*1;
-    }
-    if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-        pageSize=config.user_pageSize;
-    }else{
-        pageSize=pageSize*1;
-    }
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
+    var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
     var csql=' select count(*) count from  (select r.* ,u.username ,(select username from user where id=r.followid) followname from relation r ,user u where r.userid = u.id ) tab where tab.username like "%'+username+'%"  or tab.followname like "%'+username+'%" ';
     var sql=' select * from  (select r.* ,u.username ,(select username from user where id=r.followid) followname from relation r ,user u where r.userid = u.id ) tab where tab.username like "%'+username+'%"  or tab.followname like "%'+username+'%" order by create_date desc ';
     mysqlUtil.countBySql(csql,function (err, count) {
         if(!err){
-            mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+            mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err, docs) {
                 if(err){
                     util.renderError(err,res,'搜索/查询关注列表出错');
                 }else{
-                    res.render('relation/followControl', {username:username,pageSize:pageSize,totalCount:count.count,list:docs});
+                    res.render('relation/followControl', {username:username,pageSize:po.pageSize,totalCount:count.count,list:docs});
                 }
             });
         }else{

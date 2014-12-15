@@ -31,33 +31,27 @@ router.get('/myArticle', function(req, res) {
 	var author_id = req.session.user.id; 
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
-	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	}else{
-		pageIndex=pageIndex*1;
-	}
-	if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=config.user_pageSize;
-	}else{
-		pageSize=pageSize*1;
-	}
+	var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
 	var csql = 'select count(*) count from article a , user u where a.author_id=u.id and a.author_id="'+author_id+'"'; 
 	var sql='select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.author_id="'+author_id+'" order by update_date desc'; 
 	mysqlUtil.countBySql(csql,function (err,count) {
 		if(err){
 			util.renderError(err,res,'访问失败');
 		}else{
-			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err,docs) {
+			mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err,docs) {
 				if(err){
 					util.renderError(err,res,'访问失败');
 				}else{
 					var has_more=false;
-					if(count.count<=pageIndex*pageSize){
+					if(count.count<=po.pageIndex*po.pageSize){
 						has_more=false;
 					}else{
 						has_more=true;
 					}
-					res.render('article/articlelist', {type:'my',has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,count:count.count,list:docs});
+					res.render('article/articlelist', {type:'my',has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,count:count.count,list:docs});
 				}
 			});
 		}
@@ -67,20 +61,14 @@ router.get('/myArticle', function(req, res) {
 
 router.get('/getArticlelist', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var condition=params.condition;
-	var pageIndex=params.pageIndex;
-	var pageSize=params.pageSize;
-	var loadType=params.loadType;
-	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	}else{
-		pageIndex=pageIndex*1;
-	}
-	if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=config.user_pageSize;
-	}else{
-		pageSize=pageSize*1;
-	}
+	var condition = params.condition;
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
+	var loadType = params.loadType;
+	var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
 	var obj='';
 	if(typeof(loadType)!=='undefined'&&loadType!==null&&loadType!==''){
 		if(loadType==='share'){
@@ -104,18 +92,18 @@ router.get('/getArticlelist', function(req, res) {
 			log.error(err);
 			res.send({status:'fail'});
 		}else{
-            mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+            mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err, docs) {
                 if(err){
                     log.error(err);
                     res.send({status:'fail'});
                 }else{
                     var has_more=false;
-                    if(count.count<=pageIndex*pageSize){
+                    if(count.count<=po.pageIndex*po.pageSize){
                         has_more=false;
                     }else{
                         has_more=true;
                     }
-                    res.send({has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,list:docs,status:'success'});
+                    res.send({has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,list:docs,status:'success'});
                 }
             });
         }
@@ -125,19 +113,13 @@ router.get('/getArticlelist', function(req, res) {
 /* 搜索文章列表 */
 router.get('/search/articlelist', function(req, res) {
 	 var params = Url.parse(req.url,true).query; 
-	 var condition=params.condition;
-	 var pageIndex=params.pageIndex;
-	 var pageSize=params.pageSize;
-	 if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	 }else{
-		pageIndex=pageIndex*1;
-	 }
-	 if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=config.user_pageSize;
-	 }else{
-		pageSize=pageSize*1;
-	 }
+	 var condition = params.condition;
+	 var pageIndex = params.pageIndex;
+	 var pageSize = params.pageSize;
+	 var po = new Object();
+	 po.pageIndex = pageIndex;
+	 po.pageSize = pageSize;
+	 po = util.page(po);
 	 //这里会有漏洞   即使是lastindexof,如果标题中就是含有:my或者:all也会出错  所以暂时这样处理
 	 //看是否需要在标题中限制特殊符号
 	 var arr=condition.split(':');
@@ -161,17 +143,17 @@ router.get('/search/articlelist', function(req, res) {
 		if(err){
 			util.renderError(err,res,'访问失败');
 		}else{
-            mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+            mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err, docs) {
                 if(err){
                     util.renderError(err,res,'访问失败');
                 }
                 var has_more=false;
-                if(count.count<=pageIndex*pageSize){
+                if(count.count<=po.pageIndex*po.pageSize){
                     has_more=false;
                 }else{
                     has_more=true;
                 }
-                res.render('article/articlelist', {condition:condition,type:type,has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,count:count.count,list:docs});
+                res.render('article/articlelist', {condition:condition,type:type,has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,count:count.count,list:docs});
             });
         }
 	});
@@ -180,7 +162,7 @@ router.get('/search/articlelist', function(req, res) {
 /* 搜索文章列表 */
 router.get('/user/articlelist', function(req, res) {
     var params = Url.parse(req.url,true).query;
-    var userid=params.userid;
+    var userid = params.userid;
     var csql = 'select count(*) count from (select * from article where author_id = "'+userid+'" and status = 1) a , user u where a.author_id=u.id ';
     var sql = 'select a.*,u.username,u.avatar count from (select * from article where author_id = "'+userid+'" and status = 1) a , user u where a.author_id=u.id order by a.update_date desc';
     mysqlUtil.countBySql(csql,function (err, count) {
@@ -406,26 +388,21 @@ router.get('/articleControl', function(req, res) {
 		title='';
 	}
 	var obj=' where title like "%'+title+'%"';
-	
-	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	}else{
-		pageIndex=pageIndex*1;
-	}
-	if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=config.user_pageSize;
-	}else{
-		pageSize=pageSize*1;
-	}
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
+	var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
 	var csql = 'select count(*) count from (select * from article '+obj+') a , user u where a.author_id=u.id '; 
 	var sql = 'select a.*,u.username,u.avatar count from (select * from article '+obj+') a , user u where a.author_id=u.id order by a.update_date desc'; 
 	mysqlUtil.countBySql(csql,function (err, count) {
 		if(!err){
-			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+			mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err, docs) {
 				if(err){
 					util.renderError(err,res,'搜索/查询文章列表出错');
 				}else{
-					res.render('article/articlelistControl', {title:title,pageSize:pageSize,totalCount:count.count,list:docs});
+					res.render('article/articlelistControl', {title:title,pageSize:po.pageSize,totalCount:count.count,list:docs});
 				}
 			});
 		}else{

@@ -127,28 +127,24 @@ router.get('/messagelist', function(req, res) {
 	if(typeof(username)==='undefined'||username===null){
 		username='';
 	}
-	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	}else{
-		pageIndex=pageIndex*1;
-	}
-	if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=config.user_pageSize;
-	}else{
-		pageSize=pageSize*1;
-	}
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
+	var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
 	var csql=' select count(*) count from  (select m.* ,u.username send_username,(select username from user where id=m.to_userid) to_username from message m ,user u where m.send_userid = u.id ) tab where tab.send_username like "%'+username+'%"  or tab.to_username like "%'+username+'%" ';
 	var sql=' select * from  (select m.* ,u.username send_username,(select username from user where id=m.to_userid) to_username from message m ,user u where m.send_userid = u.id ) tab where tab.send_username like "%'+username+'%"  or tab.to_username like "%'+username+'%" order by send_date desc ';
 	mysqlUtil.countBySql(csql,function (err, count) {
 		if(!err){
-			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+			mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err, docs) {
 				if(err){
 					util.renderError(err,res,'搜索/查询站内信列表出错');
 				}else{
 					for(var i in docs){
 						docs[i].content = marked(docs[i].content)
 					}
-					res.render('message/messageControl', {username:username,pageSize:pageSize,totalCount:count.count,list:docs});
+					res.render('message/messageControl', {username:username,pageSize:po.pageSize,totalCount:count.count,list:docs});
 				}
 			});
 		}else{
@@ -159,24 +155,18 @@ router.get('/messagelist', function(req, res) {
 
 router.get('/getMessagelist', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var condition=params.condition;
-	var pageIndex=params.pageIndex;
-	var pageSize=params.pageSize;
-	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	}else{
-		pageIndex=pageIndex*1;
-	}
-	if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=config.user_pageSize;
-	}else{
-		pageSize=pageSize*1;
-	}
+	var condition = params.condition;
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
+	var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
 	if(typeof(condition)==='undefined'||condition===null){
 		condition='';
 	}
 	var sql=' select * from  (select m.* ,u.username send_username,(select username from user where id=m.to_userid) to_username from message m ,user u where m.send_userid = u.id ) tab where tab.send_username like "%'+condition+'%"  or tab.to_username like "%'+condition+'%" order by send_date desc ';
-	mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+	mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err, docs) {
 		if(err){
 			log.error(err);
 			res.send({status:'fail'});

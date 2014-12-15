@@ -2,6 +2,7 @@ var moment = require('moment');
 var crypto = require('crypto');
 var xss = require('xss');
 var log = require('../log').logger('w2r');
+var config = require('../config');
 
 /**
  * 获取时间
@@ -127,4 +128,22 @@ exports.send = function (err,res,smessage,fmessage) {
 	}else{
 		res.send({status:'success',message:smessage});
 	}
+};
+
+/**
+ * 统一处理分页对象
+ * @param {Object} po
+ */
+exports.page = function (po) {
+	if(typeof(po.pageIndex) === 'undefined' || po.pageIndex === null || po.pageIndex === ''){
+        po.pageIndex=1;
+    }else{
+        po.pageIndex=po.pageIndex*1;
+    }
+    if(typeof(po.pageSize) === 'undefined' || po.pageSize === null || po.pageSize === ''){
+        po.pageSize=config.user_pageSize;
+    }else{
+        po.pageSize=po.pageSize*1;
+    }
+	return po;
 };

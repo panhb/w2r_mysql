@@ -3,40 +3,35 @@ var router = express.Router();
 var Url = require('url');
 var config = require('../config');
 var mysqlUtil = require('../utils/mysqlUtil');
+var util = require('../utils/util');
 var log = require('../log').logger('w2r');
 
 /* GET home page. */
 router.get('/', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var pageIndex=params.pageIndex;
-	var pageSize=params.pageSize;
-	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	}else{
-		pageIndex=pageIndex*1;
-	}
-	if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=10;
-	}else{
-		pageSize=pageSize*1;
-	}
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
+	var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
 	var csql = 'select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id '; 
 	var sql = 'select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc'; 
 	mysqlUtil.countBySql(csql,function (err,count) {
 		if(err){
 			util.renderError(err,res,'访问失败');
 		}else{
-			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+			mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err, docs) {
 				if(err){
 					util.renderError(err,res,'访问失败');
 				}else{
 					var has_more=false;
-					if(count.count<=pageIndex*pageSize){
+					if(count.count<=po.pageIndex*po.pageSize){
 						has_more=false;
 					}else{
 						has_more=true;
 					}
-					res.render('index', {has_more:has_more,pageIndex:(pageIndex+1),pageSize:pageSize,title: config.name,count:count.count,list:docs});
+					res.render('index', {has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,title: config.name,count:count.count,list:docs});
 				}
 			});
 		}

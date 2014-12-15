@@ -284,24 +284,19 @@ router.get('/userlist', function(req, res) {
 	var regex = new RegExp(username, 'i');
 	var obj=new Object();
 	obj.username=regex;
-	
-	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	 }else{
-		pageIndex=pageIndex*1;
-	 }
-	 if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=config.user_pageSize;
-	 }else{
-		pageSize=pageSize*1;
-	 }
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
+	var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
 	mysqlUtil.count(user,condition,function (err,count) {
 		if(!err){
-			mysqlUtil.getListWithPage(pageIndex,pageSize,user,condition,' create_date desc ',function (err, docs) {
+			mysqlUtil.getListWithPage(po.pageIndex,po.pageSize,user,condition,' create_date desc ',function (err, docs) {
 				if(err){
 					util.renderError(err,res,'搜索/查询用户列表出错');
 				}else{
-					res.render('user/userlistControl', {username:username,pageSize:pageSize,totalCount:count.count,list:docs});
+					res.render('user/userlistControl', {username:username,pageSize:po.pageSize,totalCount:count.count,list:docs});
 				}
 			});
 		}else{
@@ -312,24 +307,18 @@ router.get('/userlist', function(req, res) {
 
 router.get('/getUserlist', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var username=params.condition;
-	var pageIndex=params.pageIndex;
-	var pageSize=params.pageSize;
-	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	}else{
-		pageIndex=pageIndex*1;
-	}
-	if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=config.user_pageSize;
-	}else{
-		pageSize=pageSize*1;
-	}
+	var username = params.condition;
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
+	var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
 	var condition='';
 	if(typeof(username)!=='undefined'&&username!==null&&username!==''){
 		condition=' username like "%'+username+'%"';
 	}
-	mysqlUtil.getListWithPage(pageIndex,pageSize,user,condition,' create_date desc ',function (err, docs) {
+	mysqlUtil.getListWithPage(po.pageIndex,po.pageSize,user,condition,' create_date desc ',function (err, docs) {
 		if(err){
 			log.error(err);
 			res.send({status:'fail'});

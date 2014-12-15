@@ -86,24 +86,19 @@ router.get('/commentlist', function(req, res) {
 	}
 	var csql = 'select count(*) count from comment c , user u where c.userid=u.id and u.username like "%'+cusername+'%"'; 
 	var sql = 'select c.*,u.username,u.avatar,a.title from comment c ,article a, user u where c.articleid=a.id and c.userid=u.id and u.username like "%'+cusername+'%" order by create_date desc ';
-	
-	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	 }else{
-		pageIndex=pageIndex*1;
-	 }
-	 if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=config.user_pageSize;
-	 }else{
-		pageSize=pageSize*1;
-	 }
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
+	var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
 	mysqlUtil.countBySql(csql,function (err, count) {
 		if(!err){
-			mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err,docs) {
+			mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err,docs) {
 				if(err){
 					util.renderError(err,res,'搜索/查询评论列表出错');
 				}else{
-					res.render('comment/commentControl', {cusername:cusername,pageSize:pageSize,totalCount:count.count,list:docs});
+					res.render('comment/commentControl', {cusername:cusername,pageSize:po.pageSize,totalCount:count.count,list:docs});
 				}
 			});
 		}else{
@@ -116,20 +111,14 @@ router.get('/commentlist', function(req, res) {
 
 router.get('/getCommentlist', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var condition=params.condition;
-	var pageIndex=params.pageIndex;
-	var pageSize=params.pageSize;
-	var articleid=params.articleid;
-	if(typeof(pageIndex)==='undefined'||pageIndex===null||pageIndex===''){
-		pageIndex=1;
-	}else{
-		pageIndex=pageIndex*1;
-	}
-	if(typeof(pageSize)==='undefined'||pageSize===null||pageSize===''){
-		pageSize=config.user_pageSize;
-	}else{
-		pageSize=pageSize*1;
-	}
+	var condition = params.condition;
+	var pageIndex = params.pageIndex;
+	var pageSize = params.pageSize;
+	var articleid = params.articleid;
+	var po = new Object();
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
 	var obj='';
 	if(typeof(condition)!=='undefined'&&condition!==null&&condition!==''){
 		obj = '  and u.username like "%'+condition+'%" ';
@@ -149,19 +138,19 @@ router.get('/getCommentlist', function(req, res) {
 			res.send({status:'fail'});
 			return;
 		}
-		mysqlUtil.queryWithPage(pageIndex,pageSize,sql,function (err, docs) {
+		mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err, docs) {
 			if(err){
 				log.error(err);
 				res.send({status:'fail'});
 			}else{
 				var has_more=false;
-				if(count.count<=pageIndex*pageSize){
+				if(count.count<=po.pageIndex*po.pageSize){
 					has_more=false;
 				}else{
 					has_more=true;
 				}
                 var articleid = docs[0].articleid;
-				res.send({has_more:has_more,articleid:articleid,pageIndex:(pageIndex+1),pageSize:pageSize,list:docs,status:'success'});
+				res.send({has_more:has_more,articleid:articleid,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,list:docs,status:'success'});
 			}
 		});
 	});
