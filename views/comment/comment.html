@@ -1,6 +1,6 @@
 <style>
 	.line {width:100%; margin-top:20px;margin-bottom:5px;border-bottom:2px solid #8c96a0;}
-	.line_red {width:100%; margin-top:20px;margin-bottom:5px;border-bottom:2px solid #DC143C;}
+	.line_red {width:100%; margin-top:20px;margin-bottom:5px;border-bottom:2px solid #e98d70;}
 	.div_common {padding: 0 0 8px 0;margin-left:50px;width:95%;height:auto;word-wrap: break-word; word-break: normal;}
 </style>
 <script src="/javascripts/shortcut.js"></script>
@@ -18,9 +18,9 @@
 			<% } %>
 			<div style='width:100%;'><div style='float:left;width:50px;'>
 			<% if (typeof(v.avatar)!=='undefined'&&v.avatar !== null&& v.avatar !== '') { %>
-				<a target="_blank" href="/relations/follow/<%= v.userid%>"><img src='<%= v.avatar%>' title='<%= v.username%>' height='30' width='30' style='border-radius:5px;'></a>
+				<a target="_blank" href="/relations/follow/<%= v.userid%>"><img src='<%= v.avatar%>' title='<%= v.username%>' height='25' width='25' style='border-radius:5px;'></a>
 			<% } else { %>
-                <a target="_blank" href="/relations/follow/<%= v.userid%>"><img src='http://gravatar.com/avatar?size=30' title='<%= v.username%>' height='30' width='30' style='border-radius:5px;'></a>
+                <a target="_blank" href="/relations/follow/<%= v.userid%>"><img src='http://gravatar.com/avatar?size=25' title='<%= v.username%>' height='25' width='25' style='border-radius:5px;'></a>
 			<% } %>
             </div>
 			<div class='div_common' id='<%= v.id%>'>
@@ -68,7 +68,11 @@
 $(function(){
 //	$("#editor").focus();
 	$("time").each(function(){
-		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+		if(typeof($(this).html()) !== 'undefined' && $(this).html() !== 'undefined' && $(this).html() !== '' && $(this).html() !== null && $(this).html() !== 'null'){
+			$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+		}else{
+			$(this).html('');
+		}
 	});
 })
 var cnum=1;
@@ -141,13 +145,18 @@ function loadComment(pageIndex,pageSize,articleid){
 				$(list).each(function(i){
 					 var avatar='';
 					 if(this.avatar===null||this.avatar===''){
-						avatar='http://gravatar.com/avatar?size=30';
+						avatar='http://gravatar.com/avatar?size=25';
 					 }else{
 						avatar=this.avatar;
 					 }
 					 var currentUserid=$('#currentUserid').val();
-					 html+="<div class='line'></div>"+
-						"<div style='width:100%;'><div style='float:left;width:50px;'><a target='_blank' href='/relations/follow/"+this.userid+"'><img src='"+avatar+"' title='"+this.username+"' height='30' width='30' style='border-radius:5px;'></a></div>"+
+					 if(typeof(currentUserid)!=='undefined'&& currentUserid!==null && currentUserid!=='' && currentUserid===this.userid){
+					 	 html+="<div class='line_red'></div>";
+					 }else{
+					 	html+="<div class='line'></div>";
+					 }
+					
+					 html+="<div style='width:100%;'><div style='float:left;width:50px;'><a target='_blank' href='/relations/follow/"+this.userid+"'><img src='"+avatar+"' title='"+this.username+"' height='25' width='25' style='border-radius:5px;'></a></div>"+
 						"<div class='div_common' id='"+this.id+"'>"+
 						"<span style='font-size:16px;'>"+this.content+"</span></div><div style='text-align:right;width:100%;'>";
 					 if(typeof(currentUserid)!=='undefined'&& currentUserid!==null && currentUserid!=='' && currentUserid===this.author_id){

@@ -13,9 +13,9 @@ var login = 'login';
 /* 注册页面 */
 router.get('/reg', function(req, res) {
     if(req.session.user){
-        res.redirect('/');
+        res.redirect('/main');
     }else{
-        res.render('user/register');
+        res.render('user/register',{jumptype:'reg'});
     }
 });
 
@@ -27,9 +27,9 @@ router.get('/login', function(req, res) {
     articleid='';
     }
     if(req.session.user){
-        res.redirect('/')
+        res.redirect('/main')
     }else{
-        res.render('user/login',{articleid:articleid});
+        res.render('user/login',{articleid:articleid,jumptype:'login'});
     }
 });
 
@@ -108,7 +108,7 @@ router.get('/user/login', function(req, res) {
                                 req.session.message_count = count.count;
                                 req.session.loginid= id ;
 								if(typeof(type) !== 'undefined' && type === 'github' ){
-									res.redirect('/');
+									res.redirect('/main');
 								}else{
 									res.send({status:'success'});
 								}

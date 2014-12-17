@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>站内信管理</title>
+<title>站内信管理 - w2r</title>
 <%- partial('../common/header') %>
 </head>
 <body>
@@ -11,12 +11,14 @@
 <form class="navbar-form navbar-left" role="search" action="/messages/messagelist">
 <div class="form-group">
 	<% if (typeof(username) !== 'undefined' && username !== null) { %>
-		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" value="<%= username %>" placeholder="发/收信人">	
+		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;background-color:transparent;" value="<%= username %>" placeholder="发/收信人">	
 	<% } else {%>
-		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" placeholder="发/收信人">
+		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;background-color:transparent;" placeholder="发/收信人">
 	<% } %>				
 </div>
+<!--
 <button type="submit" class="btn btn-default" style="background:#F0EFEF; font-family:Microsoft YaHei;">搜索</button>
+-->
 <button type="button" onclick="addMessage()" class="btn btn-default" style="margin-left:20px;background:#F0EFEF; font-family:Microsoft YaHei;">批量新增站内信</button>
 <button type="button" onclick="addMessageByUsername()" class="btn btn-default" style="margin-left:20px;background:#F0EFEF; font-family:Microsoft YaHei;">新增站内信</button>
 </form>
@@ -24,7 +26,10 @@
 <hr>
 <input type="hidden" id="pageSize" value="<%= pageSize %>">
 <input type="hidden" id="totalCount" value="<%= totalCount %>">
+<!--
 <table class="table table-hover">
+	-->
+	<table class="table">
       <thead>
         <tr>
           <th width="100">发信人</th>

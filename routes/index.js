@@ -7,7 +7,7 @@ var util = require('../utils/util');
 var log = require('../log').logger('w2r');
 
 /* GET home page. */
-router.get('/', function(req, res) {
+router.get('/main', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
@@ -31,11 +31,15 @@ router.get('/', function(req, res) {
 					}else{
 						has_more=true;
 					}
-					res.render('index', {has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,title: config.name,count:count.count,list:docs});
+					res.render('main', {has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,title: config.name,count:count.count,list:docs});
 				}
 			});
 		}
 	});
+});
+
+router.get('/', function(req, res) {
+  res.render('index');
 });
 
 router.get('/help', function(req, res) {

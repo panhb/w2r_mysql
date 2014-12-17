@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>站内信</title>
+<title>站内信 - w2r</title>
 <%- partial('../common/header') %>
 </head>
 <body>
@@ -63,7 +63,11 @@
 <script>
 $(function(){
 	$("time").each(function(){
-		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+		if(typeof($(this).html()) !== 'undefined' && $(this).html() !== 'undefined' && $(this).html() !== '' && $(this).html() !== null && $(this).html() !== 'null'){
+			$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
+		}else{
+			$(this).html('');
+		}
 	});
 })
 

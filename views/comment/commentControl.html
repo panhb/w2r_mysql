@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>评论管理</title>
+<title>评论管理 - w2r</title>
 <%- partial('../common/header') %>
 </head>
 <body>
@@ -11,19 +11,24 @@
 <form class="navbar-form navbar-left" role="search" action="/comments/commentlist">
 <div class="form-group">
 	<% if (typeof(cusername) !== 'undefined' && cusername !== null) { %>
-		<input type="text" id="cusername" name="cusername" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" value="<%= cusername %>" placeholder="评论人">	
+		<input type="text" id="cusername" name="cusername" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;background-color:transparent;" value="<%= cusername %>" placeholder="评论人">	
 	<% } else {%>
-		<input type="text" id="cusername" name="cusername" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;" placeholder="评论人">
+		<input type="text" id="cusername" name="cusername" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;background-color:transparent;" placeholder="评论人">
 	<% } %>				
 </div>
+<!--
 <button type="submit" class="btn btn-default" style="background:#F0EFEF; font-family:Microsoft YaHei;">搜索</button>
+-->
 </form>
 <br>
 <hr>
 <input type="hidden" id="pageSize" value="<%= pageSize %>">
 <input type="hidden" id="totalCount" value="<%= totalCount %>">
+<!--
 <table class="table table-hover">
-      <thead>
+	-->
+	<table class="table">
+	  <thead>
         <tr>
 		  <th width="150">文章名</th>
           <th width="150">评论人</th>

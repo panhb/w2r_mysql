@@ -2,14 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>文章</title>
+<title>
+	<% if (typeof(type) !== 'undefined' && type !== ''&& type === 'my') { %>
+		我的文章 - w2r
+	<% }else{ %> 
+		分享的文章 - w2r
+	<% } %>
+</title>
 <%- partial('../common/header') %>
 <style>
 .subheader {
 //	background: #fbfbfa;
 	padding: 16px 0;
-	border-top: 1px solid #eee;
-	border-bottom: 1px solid #eee;
+//	border-top: 1px solid #eee;
+//	border-bottom: 1px solid #eee;
 	text-align: center;
 }
 .entry-list {

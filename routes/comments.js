@@ -131,7 +131,7 @@ router.get('/getCommentlist', function(req, res) {
 		}
 	}
 	var csql='select count(*) count from comment c , user u where u.id=c.userid '+obj;
-	var sql='select c.*,u.username,u.avatar,a.author_id,a.title from comment c , user u, article a where a.id=c.articleid and c.userid = u.id '+obj + ' order by create_date desc ';
+	var sql='select c.*,u.username,u.avatar,a.author_id,a.title from comment c , user u, article a where a.id=c.articleid and c.userid = u.id '+obj + ' order by create_date asc ';
 	mysqlUtil.countBySql(csql,function (err, count) {
 		if(err){
 			log.error(err);
