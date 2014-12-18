@@ -71,7 +71,6 @@
 	</style>
   </head>
   <body>
-	<div class="shade"></div>
 	<div class="yue">
 	<div style="margin-top:100px;"></div>
 	<input class="input" style="border-bottom:0;" readonly type="text" style="margin-top:100px;" placeholder="用户名:<%= username%>" /><br>
@@ -93,9 +92,6 @@
 	<% } else { %>
 		<input class="input_1" readonly type="text" placeholder="个性签名:"><input class="input" id="signature" style="margin-left:10px;"  type="text"  value="" /><br>
 	<% } %>
-	
-	
-	
 	<button id="updateBtn" onclick="updateUserinfo()" data-loading-text="保存中..." class="button">保存</button>
 	</div>
   <%- partial('../common/footer') %>

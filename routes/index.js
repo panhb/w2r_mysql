@@ -39,7 +39,11 @@ router.get('/main', function(req, res) {
 });
 
 router.get('/', function(req, res) {
-  res.render('index');
+	if (req.session.user) {
+        res.redirect('/main');
+    } else {
+    	res.render('index');
+    }
 });
 
 router.get('/help', function(req, res) {

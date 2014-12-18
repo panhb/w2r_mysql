@@ -16,9 +16,6 @@
 		<input type="text" id="username" name="username" class="form-control" style="margin-left:-16px;width:200px;background:#efefef;font-family:Microsoft YaHei;background-color:transparent;" placeholder="发/收信人">
 	<% } %>				
 </div>
-<!--
-<button type="submit" class="btn btn-default" style="background:#F0EFEF; font-family:Microsoft YaHei;">搜索</button>
--->
 <button type="button" onclick="addMessage()" class="btn btn-default" style="margin-left:20px;background:#F0EFEF; font-family:Microsoft YaHei;">批量新增站内信</button>
 <button type="button" onclick="addMessageByUsername()" class="btn btn-default" style="margin-left:20px;background:#F0EFEF; font-family:Microsoft YaHei;">新增站内信</button>
 </form>
@@ -26,9 +23,6 @@
 <hr>
 <input type="hidden" id="pageSize" value="<%= pageSize %>">
 <input type="hidden" id="totalCount" value="<%= totalCount %>">
-<!--
-<table class="table table-hover">
-	-->
 	<table class="table">
       <thead>
         <tr>
@@ -230,8 +224,6 @@ function saveMessage(){
 		alert('内容不能为空。');
 		return;
 	}
-	//content=content.replace(/\r\n/g,'<br>');
-	//content=content.replace(/\n/g,'<br>');
 	var messageid=$("#messageid").val();
 	$.ajax({
 		type: "GET",
@@ -258,8 +250,6 @@ function sendMessage(){
 		alert('内容不能为空。');
 		return;
 	}
-	//content=content.replace(/\r\n/g,'<br>');
-	//content=content.replace(/\n/g,'<br>');
 	var roletype='';
 	var f1=$("#checkbox1").is(':checked');
 	var f2=$("#checkbox2").is(':checked');
@@ -304,9 +294,6 @@ function sendMessageByUsername(){
 		alert('内容不能为空。');
 		return;
 	}
-	//content=content.replace(/\r\n/g,'<br>');
-	//content=content.replace(/\n/g,'<br>');
-
 	var tousername=$("#tousername").val();	
 	if(tousername===null||tousername===''){
 		alert('发布对象不能为空。');
@@ -345,7 +332,6 @@ function deleteMessage(id,obj){
 			var data=eval(json)
 			alert(data.message);
 			if(data.status==='success'){
-				//$(obj).parent().parent().fadeOut();
 				location.reload();
 			}
 		},
