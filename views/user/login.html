@@ -75,7 +75,7 @@
 	<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 	<a href="/users/forget_password" style="text-decoration:underline;">忘记密码?</a>
 	<ul class="social_profiles">
-        <li class="github"><a title="github登录" href="/auth/github"></a></li>  
+        <li class="github"><a title="github登录" href="javascript:gitlogin()"></a></li>  
 	</ul>
 	</div>
   <%- partial('../common/footer') %>
@@ -113,6 +113,11 @@ $(function(){
         }
     })
 })
+
+function gitlogin(){
+	$(".shade").show();
+	window.location.href="/auth/github";
+}
 
 function login(){
 	var flag1=checkUsername();
