@@ -34,6 +34,16 @@ var config = {
    //图灵机器人
   tl_apikey:'1241e6e629539909ac3e160d86aeb2cb',
 
+  // RSS配置
+  rss: {
+    title: 'w2r',
+    link: 'http://localhost:3000',
+    language: 'zh-cn',
+    description: 'w2r 是一个使用Node.js开发的专注于阅读和书写体验的网站。',
+    //最多获取的RSS Item数量
+    max_rss_items: 50
+  },
+  
   //邮箱配置
   mail_options: {
     host : 'smtp.gmail.com',

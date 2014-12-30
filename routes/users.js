@@ -22,9 +22,9 @@ router.get('/reg', function(req, res) {
 /* 登录页面 */
 router.get('/login', function(req, res) {
     var params = Url.parse(req.url,true).query;
-    var articleid=params.articleid;
-    if(typeof(articleid)==='undefined'||articleid===null||articleid===''){
-    articleid='';
+	var articleid= '';
+	if(typeof(params) !=='undefined'&&params!==null&&params!==''){
+		articleid=params.articleid;
     }
     if(req.session.user){
         res.redirect('/main')

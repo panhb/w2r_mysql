@@ -5,6 +5,9 @@ var config = require('../config');
 var mysqlUtil = require('../utils/mysqlUtil');
 var util = require('../utils/util');
 var log = require('../log').logger('w2r');
+var convert = require('data2xml')();
+var mcache = require('memory-cache');
+var marked = require('marked');
 
 /* GET home page. */
 router.get('/main', function(req, res) {
@@ -52,6 +55,47 @@ router.get('/help', function(req, res) {
 
 router.get('/contact', function(req, res) {
   res.render('contact');
+});
+
+router.get('/rss', function(req, res) {
+  res.contentType('application/xml');
+  if (mcache.get('rss')) {
+    res.send(mcache.get('rss'));
+  } else {
+  	var sql = 'select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc'; 
+  	mysqlUtil.queryWithPage(1,20,sql,function(err,docs){
+  		if (err) {
+        	log.error(err);
+      	} else {
+      		var rss_obj = {
+		        _attr: { version: '2.0' },
+		        channel: {
+		          title: config.rss.title,
+		          link: config.rss.link,
+		          language: config.rss.language,
+		          description: config.rss.description,
+		          item: []
+		        }
+		    };
+
+		    docs.forEach(function (topic) {
+		        rss_obj.channel.item.push({
+		          title: topic.title,
+		          link: config.rss.link + '/articles/reading/' + topic.id,
+		          guid: config.rss.link + '/articles/reading/' + topic.id,
+		          description: marked(topic.content),
+		          author: topic.username,
+		          pubDate: topic.update_date.toUTCString()
+		        });
+		    });
+
+		    var rssContent = convert('rss', rss_obj);
+
+		    mcache.put('rss', rssContent, 1000 * 60 * 5); // 五分钟
+		    res.send(rssContent);
+		}
+  	})
+  }
 });
 
 module.exports = router;
