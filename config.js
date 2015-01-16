@@ -10,7 +10,8 @@ var config = {
   },
   
   mysql_options:{
-	host: 'localhost',
+    connectionLimit : 10,
+    host: 'localhost',
     user: 'root',
     password: '1314520',
     database:'w2r',
