@@ -1,7 +1,8 @@
 var mysql = require('mysql');
 var config = require('../config');
 var log = require('../log').logger('w2r');
-var conn = mysql.createConnection(config.mysql_options);
+//var conn = mysql.createConnection(config.mysql_options);
+var conn = mysql.createPool(config.mysql_options);
 
 /**
  * 根据主键获取记录
