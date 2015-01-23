@@ -72,8 +72,24 @@ router.get('/deleteComment', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var commentid=params.commentid;
 	log.info(commentid);
-	mysqlUtil.deleteById(comment,commentid,function(err){
-		util.send(err,res,'删除成功','删除失败');
+	mysqlUtil.getById(comment,commentid,function(err,c){
+		if(err){
+			log.error(err);
+		}
+		mysqlUtil.deleteById(comment,commentid,function(err){
+			if(err){
+				log.error(err);
+				res.send({status:'fail',message:'删除失败'});
+			}else{
+				var usql = ' update article set reply_count = reply_count-1  where id = "'+c.articleid+'"';
+				mysqlUtil.query(usql,function (err){
+					if(err){
+						log.error(err);
+					}
+					res.send({status:'success',message:'删除成功'});
+				});
+			}
+		});
 	});
 });
 
