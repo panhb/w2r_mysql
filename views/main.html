@@ -55,6 +55,7 @@
 </html>
 <script>
 $(function(){
+	/*
 	$("time").each(function(){
         if(typeof($(this).html())!=='undefined'&& $(this).html()!=='undefined'&& $(this).html()!=='' && $(this).html()!==null){
             $(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
@@ -62,6 +63,7 @@ $(function(){
             $(this).html('');
         }
 	});
+	*/
 })
 
 function loadArtcile(pageIndex,pageSize,loadType){
@@ -78,6 +80,7 @@ function loadArtcile(pageIndex,pageSize,loadType){
 				var list=data.list;
 				var html='';
 				$(list).each(function(){
+					/*
                     if(this.update_date!==null){
                         this.update_date = moment(this.update_date).format('YYYY-MM-DD HH:mm');
                     }else{
@@ -85,6 +88,10 @@ function loadArtcile(pageIndex,pageSize,loadType){
                     }
 					html+='<li class="entry-item"><div class="entry-meta">'+this.username+
 					'&nbsp;&nbsp;&nbsp;&nbsp;<time>'+this.update_date+'</time></div>'+
+					'<div><h2><a target="_blank" href="/articles/reading/'+this.id+'">'+this.title+'</a></h2></div></li>';
+					*/
+					html+='<li class="entry-item"><div class="entry-meta">'+this.username+
+					'&nbsp;&nbsp;&nbsp;&nbsp;分享于'+this.update_date+'&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#9e78c0;font-size:14px">'+this.reply_count+'</span> / <span style="font-size:10px">'+this.visit_count+'</span></div>'+
 					'<div><h2><a target="_blank" href="/articles/reading/'+this.id+'">'+this.title+'</a></h2></div></li>';
 				});
 				var pagehtml='';

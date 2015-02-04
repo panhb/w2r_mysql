@@ -34,6 +34,9 @@ router.get('/main', function(req, res) {
 					}else{
 						has_more=true;
 					}
+					for(var i in docs){
+	                    docs[i].update_date = util.fromNow(docs[i].update_date);
+	                }
 					res.render('main', {has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,title: config.name,count:count.count,list:docs});
 				}
 			});

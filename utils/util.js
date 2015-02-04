@@ -1,8 +1,17 @@
 var moment = require('moment');
+moment.locale('zh-cn'); // 使用中文
 var crypto = require('crypto');
 var xss = require('xss');
 var log = require('../log').logger('w2r');
 var config = require('../config');
+
+/**
+ * 获取时间
+ * @param {String} format 格式    默认YYYY-MM-DD HH:mm:ss
+ */
+exports.fromNow = function (date) { 
+    return moment(date).fromNow();
+};
 
 /**
  * 获取时间

@@ -98,6 +98,7 @@
                           <%= session.user.username %><span class="caret"></span>
                       </a>
                       <ul id="drop-userinfo-menu" class="dropdown-menu" style="background-color:transparent;max-width:120px;min-width:120px;" role="menu" aria-labelledby="drop_userinfo">
+                      	  <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/collections/myCollectlist">我的收藏</a></li>
                           <% if (session.user.role_type === 1||session.user.status === 1) { %>
                           <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/relations/myfollowlist">我的关注</a></li>
                           <li><a style="font-family:Microsoft YaHei;font-size:16px;" href="/articles/myArticle">我的文章</a></li>

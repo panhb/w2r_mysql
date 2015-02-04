@@ -3,7 +3,11 @@
 <li class="entry-item">
 	<div class="entry-meta">
 	  <%= v.username %>&nbsp;&nbsp;&nbsp;&nbsp;
-	  <time><%= v.update_date %></time>&nbsp;&nbsp;&nbsp;&nbsp;点击数&nbsp;&nbsp;<%= v.visit_count %>&nbsp;&nbsp;&nbsp;&nbsp;回复数&nbsp;&nbsp;<%= v.reply_count %>
+	  分享于<%= v.update_date %>&nbsp;&nbsp;&nbsp;&nbsp;
+	  <!--
+	  点击数&nbsp;&nbsp;<%= v.visit_count %>&nbsp;&nbsp;&nbsp;&nbsp;回复数&nbsp;&nbsp;<%= v.reply_count %>
+	  -->
+	  <span style="color:#9e78c0;font-size:14px"><%= v.reply_count %></span> / <span style="font-size:10px"><%= v.visit_count %></span>
 	</div>
 	<div>
 	  <h2><a title="<%- v.title %>" target="_blank" href="/articles/reading/<%= v.id %>"><%- v.title %></a></h2>

@@ -103,6 +103,11 @@ router.get('/getArticlelist', function(req, res) {
                     }else{
                         has_more=true;
                     }
+                    if(loadType==='share'){
+						for(var i in docs){
+		                    docs[i].update_date = util.fromNow(docs[i].update_date);
+		                }
+					}
                     res.send({has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,list:docs,status:'success'});
                 }
             });
@@ -159,12 +164,12 @@ router.get('/search/articlelist', function(req, res) {
 	});
 });
 
-/* 搜索文章列表 */
+/* 用户分享的文章列表 */
 router.get('/user/articlelist', function(req, res) {
     var params = Url.parse(req.url,true).query;
     var userid = params.userid;
     var csql = 'select count(*) count from (select * from article where author_id = "'+userid+'" and status = 1) a , user u where a.author_id=u.id ';
-    var sql = 'select a.*,u.username,u.avatar count from (select * from article where author_id = "'+userid+'" and status = 1) a , user u where a.author_id=u.id order by a.update_date desc';
+    var sql = 'select a.*,u.username,u.avatar from (select * from article where author_id = "'+userid+'" and status = 1) a , user u where a.author_id=u.id order by a.update_date desc';
     mysqlUtil.countBySql(csql,function (err, count) {
         if(err){
 			util.renderError(err,res,'访问失败');
@@ -172,6 +177,9 @@ router.get('/user/articlelist', function(req, res) {
             mysqlUtil.query(sql,function (err, docs) {
                 if(err){
 					util.renderError(err,res,'访问失败');
+                }
+                for(var i in docs){
+                    docs[i].update_date = util.fromNow(docs[i].update_date);
                 }
                 var username = docs[0].username;
                 res.render('article/user_sharearticlelist', {username:username,count:count.count,list:docs});
@@ -255,7 +263,19 @@ router.get('/reading/:id', function(req, res) {
                                         }else{
                                             has_more=true;
                                         }
-                                        res.render('article/article', {article:article[0],has_more:has_more,pageIndex:2,pageSize:config.user_pageSize*1,count:count.count,list:docs});
+                                        var has_collect = false;
+                                        if (req.session.user) {
+                                        	//是否已收藏文章
+				                            var count_sql="select count(*) count from collection where articleid='"+id+"' and userid ='"+req.session.user.id+"'";
+				                        	mysqlUtil.countBySql(count_sql,function(err,c){
+				                        		if(c.count != 0){
+				                        			has_collect = true;
+				                        		}
+				                        		res.render('article/article', {article:article[0],has_collect:has_collect,has_more:has_more,pageIndex:2,pageSize:config.user_pageSize*1,count:count.count,list:docs});
+				                        	})
+				                        }else{
+				                        	res.render('article/article', {article:article[0],has_more:has_more,pageIndex:2,pageSize:config.user_pageSize*1,count:count.count,list:docs});
+				                        }  
                                     }
                                 });
                             }
@@ -280,7 +300,15 @@ router.get('/reading/:id', function(req, res) {
                                                 }else{
                                                     has_more=true;
                                                 }
-                                                res.render('article/article', {article:article[0],has_more:has_more,pageIndex:2,pageSize:config.user_pageSize*1,count:count.count,list:docs});
+                                                var has_collect = false;
+                                                //是否已收藏文章
+					                            var count_sql="select count(*) count from collection where articleid='"+id+"' and userid ='"+req.session.user.id+"'";
+					                        	mysqlUtil.countBySql(count_sql,function(err,c){
+					                        		if(c.count != 0){
+					                        			has_collect = true;
+					                        		}
+					                        		res.render('article/article', {article:article[0],has_collect:has_collect,has_more:has_more,pageIndex:2,pageSize:config.user_pageSize*1,count:count.count,list:docs});
+					                        	})
                                             }
                                         });
                                     }

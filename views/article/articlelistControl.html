@@ -114,9 +114,9 @@ function select(index){
 						'<td><time>'+this.update_date+'</time></td>'+
 						'<td>'+this.username+'</td>';
 						if(this.status == 0){
-							html+='<td>分享</td>';				
+							html+='<td>未分享</td>';				
 						}else{
-							html+='<td>取消分享</td>';
+							html+='<td>已分享</td>';
 						}
 						html+='<td><span title="编辑" onclick="editArticle(\''+this.id+'\')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 						if(this.status == 0){

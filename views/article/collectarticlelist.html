@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title><%= username %>的分享文章 - w2r</title>
+<title>我的收藏文章 - w2r</title>
 <%- partial('../common/header') %>
 <style>
 .subheader {
@@ -31,11 +31,24 @@
 </head>
 <body>
 <div class="yue">
-<div class="subheader"><%= username %>&nbsp;&nbsp;共
+<div class="subheader">共
 <%= count %>
-篇分享文章</div>
+篇收藏文章</div>
 <ul id="article_list" class="entry-list">
-    <%- partial('../article/sharearticlelist') %>
+    <% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+	<% list.forEach(function (v, k){ %>
+	<li class="entry-item">
+		<div class="entry-meta">
+		  <%= v.username %>&nbsp;&nbsp;&nbsp;&nbsp;
+		  收藏于<%= v.update_date %>&nbsp;&nbsp;&nbsp;&nbsp;
+		  <span style="color:#9e78c0;font-size:14px"><%= v.reply_count %></span> / <span style="font-size:10px"><%= v.visit_count %></span>
+		</div>
+		<div>
+		  <h2><a title="<%- v.title %>" target="_blank" href="/articles/reading/<%= v.id %>"><%- v.title %></a></h2>
+		</div>
+	  </li>
+	<% })%>
+	<% } %>
 </ul>
 <div>
 <%- partial('../common/footer') %>

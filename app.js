@@ -15,6 +15,8 @@ var messages = require('./routes/messages');
 var logins = require('./routes/logins');
 var auth = require('./routes/auth');
 var relations = require('./routes/relations');
+var collections = require('./routes/collections');
+var mysqlUtil = require('./utils/mysqlUtil');
 var log = require('./log');
 var session = require('express-session');
 var passport = require('passport');
@@ -30,6 +32,7 @@ nofree_url.push('/logins/loginlist');
 nofree_url.push('/messages/message');
 nofree_url.push('/articles/myArticle');
 nofree_url.push('/relations/myfollowlist');
+nofree_url.push('/collections/myCollectlist');
 nofree_url.push('/users/user/userinfo');
 nofree_url.push('/relations/followControl');
 nofree_url.push('/articles/writing');
@@ -109,6 +112,7 @@ app.use('/logins', logins);
 app.use('/tuling', tuling);
 app.use('/relations', relations);
 app.use('/auth', auth);
+app.use('/collections', collections);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -144,5 +148,14 @@ app.use(function(err, req, res, next) {
 app.listen(config.port, function () {
     log.logger('w2r').info("w2r listening on port %d", config.port);
 });
+
+//初始化数据库
+mysqlUtil.initDb(function(err){
+    if(err){
+        log.logger('w2r').error(err);
+    }else{
+        log.logger('w2r').info("初始化数据库成功");
+    }
+})
 
 module.exports = app;
