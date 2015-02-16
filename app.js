@@ -22,6 +22,8 @@ var session = require('express-session');
 var passport = require('passport');
 var redisStore = require('connect-redis')(session);
 
+var apiV1 = require('./api_v1');
+
 //需要登录
 var nofree_url = new Array();
 nofree_url.push('/users/userlist');
@@ -113,6 +115,7 @@ app.use('/tuling', tuling);
 app.use('/relations', relations);
 app.use('/auth', auth);
 app.use('/collections', collections);
+app.use('/api/v1', apiV1);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
