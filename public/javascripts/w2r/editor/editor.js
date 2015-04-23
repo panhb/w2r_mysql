@@ -58,11 +58,49 @@ $(function(){
 	$(".glyphicon-floppy-disk").click(function(){
         saveArticle();
 	});
-	
-	
-	
-	
-	
+
+    $(".glyphicon-resize-full").click(function(){
+        $("#editor").removeAttr ("style");
+        var elem = document.getElementById("editor");
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+
+    });
+
+    var fullFlag = false;
+    $(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
+            if(!fullFlag){
+                fullFlag = true;
+            }else{
+                $("#editor").trigger("oninput");
+                fullFlag = false;
+            }
+    });
+
+    /*
+    document.addEventListener("fullscreenChange", function () {
+        if (document.fullscreenElement != null) {
+            alert(1)
+        } else {
+            alert(0)
+        }
+    });
+    */
+
+    /* 这里编写当ESC按下时的处理逻辑！
+    $("#editor").keydown(function (e) {
+        if (e && e.keyCode == 27) {
+            $("#editor").trigger("oninput");
+        }
+    });
+	*/
 	
 	
 	//拖拽上传功能实现

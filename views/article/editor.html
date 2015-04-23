@@ -8,11 +8,12 @@
 body {
 	background: #efefef;
   }
-  
-  .dropdown-menu:after {
-        border-bottom: 11px solid #efefef;
-		background: transparent;
-    }
+
+.dropdown-menu:after {
+    border-bottom: 11px solid #efefef;
+    background: transparent;
+}
+
 </style>
 <link rel='stylesheet' href='/stylesheets/w2r/editor/editor.css' />
 <script src="/javascripts/w2r/editor/editor.js"></script>
@@ -47,6 +48,7 @@ body {
 <!--
 <a title="保存" data-shortcut="alt+s" class="glyphicon glyphicon-floppy-disk"></a>
 -->
+<a title="全屏"  class="glyphicon glyphicon-resize-full" style="position:absolute;margin-top:15px;right: 0;"></a>
 </div>
 <textarea id="editor"  placeholder="正文" class="info"  oninput="this.style.height=this.scrollHeight+'px';"><% if (typeof(content) !== 'undefined'&&content !== '') { %><%- content%><% } %></textarea>
 <div id="preview" class="preview"></div>

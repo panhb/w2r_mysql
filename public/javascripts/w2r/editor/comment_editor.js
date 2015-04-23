@@ -44,6 +44,19 @@ $(function(){
 			$("#preview").fadeOut();
 		}
 	});
+
+    $(".glyphicon-resize-full").click(function(){
+        var elem = document.getElementById("editor");
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+    });
 })
 
 function previewShow(){
