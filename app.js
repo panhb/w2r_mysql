@@ -150,6 +150,7 @@ app.use(function(err, req, res, next) {
 
 app.listen(config.port, function () {
     log.logger('w2r').info("w2r listening on port %d", config.port);
+    require('child_process').exec("start http://localhost:"+config.port);
 });
 
 //初始化数据库
