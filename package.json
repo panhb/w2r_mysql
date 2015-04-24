@@ -29,6 +29,7 @@
 	"connect-redis": "2.1.0",
 	"data2xml": "1.2.0",
 	"memory-cache": "0.0.5",
+    "newrelic": "^1.18.4",
 	"marked": "~0.3.2"
   }
 }
