@@ -22,7 +22,7 @@ var log = require('./log');
 var session = require('express-session');
 var passport = require('passport');
 var redisStore = require('connect-redis')(session);
-
+var busboy = require('connect-busboy');
 var apiV1 = require('./api_v1');
 
 //需要登录
@@ -77,6 +77,8 @@ app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(log.useLog());
+
+app.use(busboy());
 
 app.use(function(req, res, next) {
     log.logger('w2r').info('++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++');

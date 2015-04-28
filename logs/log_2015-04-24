@@ -1,0 +1,72 @@
+[2015-04-24 14:24:24.672] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-24 14:24:24.687] [INFO] w2r - w2r listening on port 3000
+[2015-04-24 14:24:29.332] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:24:29.333] [INFO] w2r - /
+[2015-04-24 14:24:29.389] [WARN] w2r - GET /
+[2015-04-24 14:26:44.230] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-24 14:26:44.234] [INFO] w2r - w2r listening on port 3000
+[2015-04-24 14:26:44.379] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-24 14:26:44.384] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-24 14:26:44.386] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-24 14:26:44.389] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-24 14:26:44.392] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-24 14:26:44.398] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-24 14:26:44.404] [INFO] w2r - 初始化数据库成功
+[2015-04-24 14:26:44.740] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:26:44.741] [INFO] w2r - /
+[2015-04-24 14:26:44.748] [WARN] w2r - GET /
+[2015-04-24 14:42:55.709] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-24 14:42:55.715] [INFO] w2r - w2r listening on port 3000
+[2015-04-24 14:42:55.735] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-24 14:42:55.738] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-24 14:42:55.739] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-24 14:42:55.740] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-24 14:42:55.741] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-24 14:42:55.742] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-24 14:42:55.744] [INFO] w2r - 初始化数据库成功
+[2015-04-24 14:42:56.223] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:42:56.224] [INFO] w2r - /
+[2015-04-24 14:42:56.232] [WARN] w2r - GET /
+[2015-04-24 14:42:58.832] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:42:58.837] [INFO] w2r - /users/login
+[2015-04-24 14:42:58.913] [WARN] w2r - GET /users/login
+[2015-04-24 14:43:02.781] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:43:02.784] [INFO] w2r - /users/user/login?username=admin&password=b206e95a4384298962649e58dc7b39d4
+[2015-04-24 14:43:02.786] [INFO] w2r - 条件查询: select * from  user where  username = "admin" 
+[2015-04-24 14:43:03.105] [INFO] w2r - 统计执行: select count(*) count from  message where  to_userid = "0" and has_read = 0 
+[2015-04-24 14:43:03.327] [INFO] w2r - 新增: insert  into login set ?
+[2015-04-24 14:43:03.382] [WARN] w2r - GET /users/user/login?username=admin&password=b206e95a4384298962649e58dc7b39d4
+[2015-04-24 14:43:03.403] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:43:03.407] [INFO] w2r - /main
+[2015-04-24 14:43:03.410] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-24 14:43:03.472] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-24 14:43:03.707] [WARN] w2r - GET /main
+[2015-04-24 14:43:05.155] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:43:05.157] [INFO] w2r - /articles/writing
+[2015-04-24 14:43:05.238] [WARN] w2r - GET /articles/writing
+[2015-04-24 14:43:07.239] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:43:07.241] [INFO] w2r - /users/userlist
+[2015-04-24 14:43:07.243] [INFO] w2r - 统计执行: select count(*) count from  user where  username like "%"
+[2015-04-24 14:43:07.248] [INFO] w2r - 分页条件查询: select * from  user where  username like "%" order by  create_date desc  limit 0,10
+[2015-04-24 14:43:07.345] [WARN] w2r - GET /users/userlist
+[2015-04-24 14:43:08.136] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:43:08.140] [INFO] w2r - /contact
+[2015-04-24 14:43:08.172] [INFO] w2r - GET /contact
+[2015-04-24 14:43:08.859] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:43:08.861] [INFO] w2r - /help
+[2015-04-24 14:43:08.913] [WARN] w2r - GET /help
+[2015-04-24 14:43:10.282] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:43:10.286] [INFO] w2r - /collections/myCollectlist
+[2015-04-24 14:43:10.287] [INFO] w2r - 统计执行:  select count(*) count from collection c ,article a,user u where u.id = a.author_id and c.articleid = a.id and c.userid = "0"
+[2015-04-24 14:43:10.329] [INFO] w2r - sql执行:  select a.*,u.username,c.create_date collect_date from collection c ,article a,user u where u.id = a.author_id and c.articleid = a.id and c.userid = "0" order by c.create_date desc 
+[2015-04-24 14:43:10.356] [WARN] w2r - GET /collections/myCollectlist
+[2015-04-24 14:43:11.829] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:43:11.832] [INFO] w2r - /articles/articleControl
+[2015-04-24 14:43:11.838] [INFO] w2r - 统计执行: select count(*) count from (select * from article  where title like "%") a , user u where a.author_id=u.id 
+[2015-04-24 14:43:11.844] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article  where title like "%") a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-24 14:43:11.869] [WARN] w2r - GET /articles/articleControl
+[2015-04-24 14:43:13.158] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-24 14:43:13.161] [INFO] w2r - /messages/messagelist
+[2015-04-24 14:43:13.163] [INFO] w2r - 统计执行:  select count(*) count from  (select m.* ,u.username send_username,(select username from user where id=m.to_userid) to_username from message m ,user u where m.send_userid = u.id ) tab where tab.send_username like "%"  or tab.to_username like "%" 
+[2015-04-24 14:43:13.194] [INFO] w2r - sql执行:  select * from  (select m.* ,u.username send_username,(select username from user where id=m.to_userid) to_username from message m ,user u where m.send_userid = u.id ) tab where tab.send_username like "%"  or tab.to_username like "%" order by send_date desc  limit 0,10
+[2015-04-24 14:43:13.217] [INFO] w2r - GET /messages/messagelist

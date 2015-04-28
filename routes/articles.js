@@ -9,6 +9,7 @@ var config = require('../config');
 var mysqlUtil = require('../utils/mysqlUtil');
 var util = require('../utils/util');
 var log = require('../log').logger('w2r');
+var qiniu = require('qiniu');
 var article = 'article';
 var comment = 'comment';
 
@@ -460,4 +461,83 @@ router.post('/import', multipartMiddleware,function(req, res) {
 	}
 });
 
+
+
+/* 上传图片 */
+router.post('/uploadImage', multipartMiddleware,function(req, res) {
+    /*
+    qiniu.conf.ACCESS_KEY = config.qiniu_options.access_key;
+    qiniu.conf.SECRET_KEY = config.qiniu_options.secret_key;
+    var putPolicy = new qiniu.rs.PutPolicy(config.qiniu_options.bucketname);
+    var uptoken = putPolicy.token();
+    var extra = new qiniu.io.PutExtra();
+    extra.mimeType = 'image/jpeg';
+    var originalFilename = req.files.file.originalFilename;
+    var fileName = originalFilename.substring(0,originalFilename.lastIndexOf('.'))
+    fileName = util.toMd5(fileName + util.getDate());
+    var fileSuffix = originalFilename.substring(originalFilename.lastIndexOf('.'))
+    var key = fileName + fileSuffix;
+    */
+
+    qn_init(req.files.file,function(uptoken,key,extra){
+        qiniu.io.putFile(uptoken, key, req.files.file.path, extra, function(err, ret) {
+            if (!err) {
+                // 上传成功， 处理返回值
+                console.log(ret.key, ret.hash);
+                // ret.key & ret.hash
+                res.json({
+                    success: true,
+                    url: config.qiniu_options.domain+"/"+key
+                });
+            } else {
+                // 上传失败， 处理返回代码
+                console.log(err)
+                // http://developer.qiniu.com/docs/v6/api/reference/codes.html
+            }
+        })
+    })
+
+});
+
+router.post('/uploadImage2',function(req, res) {
+    req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+        qn_init(filename,function(uptoken,key,extra) {
+            qiniu.io.put(uptoken, key, file, extra, function(err, ret) {
+                if (!err) {
+                    // 上传成功， 处理返回值
+                    console.log(ret.key, ret.hash);
+                    // ret.key & ret.hash
+                    res.json({
+                        success: true,
+                        url: config.qiniu_options.domain+"/"+key
+                    });
+                } else {
+                    // 上传失败， 处理返回代码
+                    console.log(err)
+                    // http://developer.qiniu.com/docs/v6/api/reference/codes.html
+                }
+            })
+        })
+    });
+    req.pipe(req.busboy);
+})
+
+
+function qn_init(file,callback){
+
+    qiniu.conf.ACCESS_KEY = config.qiniu_options.access_key;
+    qiniu.conf.SECRET_KEY = config.qiniu_options.secret_key;
+    var putPolicy = new qiniu.rs.PutPolicy(config.qiniu_options.bucketname);
+    var uptoken = putPolicy.token();
+    var extra = new qiniu.io.PutExtra();
+    extra.mimeType = 'image/jpeg';
+
+    var originalFilename = typeof(file) === 'string' ? file :file.originalFilename;
+    var fileName = originalFilename.substring(0,originalFilename.lastIndexOf('.'))
+    fileName = util.toMd5(fileName + util.getDate());
+    var fileSuffix = originalFilename.substring(originalFilename.lastIndexOf('.'))
+    var key = fileName + fileSuffix;
+
+    callback(uptoken,key,extra);
+}
 module.exports = router;

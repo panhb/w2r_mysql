@@ -43,6 +43,12 @@ exports.getActKey = function () {
 	return md5.digest('hex');
 };
 
+exports.toMd5 = function (s) {
+    var md5 = crypto.createHash('md5');
+    md5.update(s);
+    return md5.digest('hex');
+};
+
 exports.escape = function (html) {
 	return html.replace(/&(?!\w+;)/g, '&amp;')
     .replace(/</g, '&lt;')

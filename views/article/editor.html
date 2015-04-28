@@ -4,6 +4,12 @@
 <head>
 <title>writing</title>
 <%- partial('../common/header') %>
+<script src="/javascripts/w2r/editor/editor.js"></script>
+<script src="/javascripts/shortcut.js"></script>
+<link rel='stylesheet' href='/stylesheets/w2r/editor/editor.css' />
+<link rel='stylesheet' href='/stylesheets/w2r/webuploader/webuploader.css' />
+<script src="/javascripts/w2r/webuploader/webuploader.withoutimage.min.js"></script>
+
 <style type="text/css">
 body {
 	background: #efefef;
@@ -13,11 +19,7 @@ body {
     border-bottom: 11px solid #efefef;
     background: transparent;
 }
-
 </style>
-<link rel='stylesheet' href='/stylesheets/w2r/editor/editor.css' />
-<script src="/javascripts/w2r/editor/editor.js"></script>
-<script src="/javascripts/shortcut.js"></script>
 <body>
 <div class="yue">
 <% if (typeof(id) !== 'undefined'&&id !== '') { %>
@@ -59,6 +61,23 @@ body {
 </div>
 <!--
 <p title="保存文章" id="save" data-shortcut="alt+s" ><a><span></span>保存文章</a></p>
+
+<div class="modal"  id="picModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"><b>图片上传</b></h4>
+            </div>
+            <div class="modal-body">
+                <div id="uploader-demo" style="height: 200px; padding: 60px 0px; text-align: center; border: 4px dashed rgb(221, 221, 221);">
+                    <div id="filePicker" style="margin:20px auto;">选择图片</div>
+                    <span id="tip" style="display: none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 -->
 <p id="save" data-shortcut="alt+s" ><a><span></span>保存文章</a></p>
 <%- partial('../common/footer') %>

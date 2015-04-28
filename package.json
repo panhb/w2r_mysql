@@ -30,6 +30,8 @@
 	"data2xml": "1.2.0",
 	"memory-cache": "0.0.5",
     "newrelic": "^1.18.4",
+    "qiniu": "6.1.6",
+    "connect-busboy": "0.0.2",
 	"marked": "~0.3.2"
   }
 }

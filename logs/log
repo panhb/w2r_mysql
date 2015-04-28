@@ -1,0 +1,1444 @@
+[2015-04-28 09:11:05.040] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 09:11:05.046] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 09:11:05.068] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 09:11:05.080] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 09:11:05.082] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 09:11:05.082] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 09:11:05.083] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 09:11:05.084] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 09:11:05.086] [INFO] w2r - 初始化数据库成功
+[2015-04-28 09:11:05.547] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:11:05.549] [INFO] w2r - /
+[2015-04-28 09:11:05.573] [INFO] w2r - GET /
+[2015-04-28 09:11:07.731] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:11:07.733] [INFO] w2r - /users/login
+[2015-04-28 09:11:07.809] [WARN] w2r - GET /users/login
+[2015-04-28 09:11:16.863] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:11:16.866] [INFO] w2r - /users/user/login?username=admin&password=5df2027a65933d9c482d58ec7c850d5a
+[2015-04-28 09:11:16.868] [INFO] w2r - 条件查询: select * from  user where  username = "admin" 
+[2015-04-28 09:11:16.941] [INFO] w2r - GET /users/user/login?username=admin&password=5df2027a65933d9c482d58ec7c850d5a
+[2015-04-28 09:11:21.076] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:11:21.077] [INFO] w2r - /users/user/login?username=admin&password=b206e95a4384298962649e58dc7b39d4
+[2015-04-28 09:11:21.078] [INFO] w2r - 条件查询: select * from  user where  username = "admin" 
+[2015-04-28 09:11:21.080] [INFO] w2r - 统计执行: select count(*) count from  message where  to_userid = "0" and has_read = 0 
+[2015-04-28 09:11:21.118] [INFO] w2r - 新增: insert  into login set ?
+[2015-04-28 09:11:21.249] [WARN] w2r - GET /users/user/login?username=admin&password=b206e95a4384298962649e58dc7b39d4
+[2015-04-28 09:11:21.263] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:11:21.264] [INFO] w2r - /main
+[2015-04-28 09:11:21.266] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 09:11:21.358] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 09:11:21.377] [WARN] w2r - GET /main
+[2015-04-28 09:11:22.848] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:11:22.851] [INFO] w2r - /articles/writing
+[2015-04-28 09:11:22.880] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:12:08.870] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:12:08.877] [INFO] w2r - /articles/writing
+[2015-04-28 09:12:08.896] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:12:38.900] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:12:38.902] [INFO] w2r - /articles/writing
+[2015-04-28 09:12:38.909] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:12:41.297] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:12:41.298] [INFO] w2r - /users/userlist
+[2015-04-28 09:12:41.300] [INFO] w2r - 统计执行: select count(*) count from  user where  username like "%"
+[2015-04-28 09:12:41.303] [INFO] w2r - 分页条件查询: select * from  user where  username like "%" order by  create_date desc  limit 0,10
+[2015-04-28 09:12:41.311] [INFO] w2r - GET /users/userlist
+[2015-04-28 09:12:54.327] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:12:54.330] [INFO] w2r - /users/user/userinfoDetail?userid=20141205203135808
+[2015-04-28 09:12:54.332] [INFO] w2r - 主键查询: select * from  user where id="20141205203135808"
+[2015-04-28 09:12:54.336] [INFO] w2r - { id: '20141205203135808',
+  username: 'eqweqwe',
+  password: '47467759aeb811883525a389a225f838',
+  email: 'eqwe',
+  url: '',
+  signature: '',
+  avatar: '',
+  score: 0,
+  fans: 0,
+  following: 0,
+  create_date: Fri Dec 05 2014 20:31:35 GMT+0800 (中国标准时间),
+  update_date: Fri Dec 05 2014 20:31:52 GMT+0800 (中国标准时间),
+  status: 1,
+  active_key: '039800e3128e3cd34080ccf109743cc0',
+  role_type: 1,
+  githubId: null }
+[2015-04-28 09:12:54.343] [WARN] w2r - GET /users/user/userinfoDetail?userid=20141205203135808
+[2015-04-28 09:13:55.226] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:13:55.229] [INFO] w2r - /articles/writing
+[2015-04-28 09:13:55.243] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:14:08.827] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:14:08.831] [INFO] w2r - /articles/writing
+[2015-04-28 09:14:08.844] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:14:55.850] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:14:55.852] [INFO] w2r - /articles/writing
+[2015-04-28 09:14:55.861] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:16:11.244] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:16:11.247] [INFO] w2r - /articles/writing
+[2015-04-28 09:16:11.259] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:16:47.242] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:16:47.243] [INFO] w2r - /articles/uploadImage
+[2015-04-28 09:16:48.526] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 09:16:57.737] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:16:57.741] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F5aae061df077ca29e154f50e04c8fd0c.jpg)
+[2015-04-28 09:16:57.754] [INFO] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F5aae061df077ca29e154f50e04c8fd0c.jpg)
+[2015-04-28 09:19:19.791] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:19:19.793] [INFO] w2r - /articles/writing
+[2015-04-28 09:19:19.805] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:19:20.973] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:19:20.976] [INFO] w2r - /articles/writing
+[2015-04-28 09:19:20.989] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:20:34.487] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:20:34.490] [INFO] w2r - /articles/writing
+[2015-04-28 09:20:34.502] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:22:30.030] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:22:30.035] [INFO] w2r - /articles/writing
+[2015-04-28 09:22:30.047] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:23:32.514] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:23:32.517] [INFO] w2r - /articles/writing
+[2015-04-28 09:23:32.525] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:23:40.667] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:23:40.669] [INFO] w2r - /articles/writing
+[2015-04-28 09:23:40.679] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:24:17.626] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:24:17.628] [INFO] w2r - /articles/writing
+[2015-04-28 09:24:17.633] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:24:56.869] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:24:56.871] [INFO] w2r - /articles/writing
+[2015-04-28 09:24:56.880] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:27:05.336] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:27:05.338] [INFO] w2r - /articles/writing
+[2015-04-28 09:27:05.342] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:27:30.590] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:27:30.593] [INFO] w2r - /articles/writing
+[2015-04-28 09:27:30.606] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:27:48.133] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:27:48.135] [INFO] w2r - /articles/writing
+[2015-04-28 09:27:48.141] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:28:27.313] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:28:27.316] [INFO] w2r - /articles/writing
+[2015-04-28 09:28:27.324] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:28:45.422] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:28:45.425] [INFO] w2r - /articles/writing
+[2015-04-28 09:28:45.437] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:28:53.717] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:28:53.720] [INFO] w2r - /articles/writing
+[2015-04-28 09:28:53.741] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:29:03.059] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:29:03.062] [INFO] w2r - /articles/writing
+[2015-04-28 09:29:03.074] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:29:13.126] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:29:13.128] [INFO] w2r - /articles/writing
+[2015-04-28 09:29:13.136] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:29:36.116] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:29:36.119] [INFO] w2r - /articles/writing
+[2015-04-28 09:29:36.129] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:31:00.646] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:31:00.648] [INFO] w2r - /articles/writing
+[2015-04-28 09:31:00.655] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:31:31.526] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:31:31.529] [INFO] w2r - /articles/writing
+[2015-04-28 09:31:31.537] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:32:04.856] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:32:04.858] [INFO] w2r - /articles/writing
+[2015-04-28 09:32:04.871] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:32:24.100] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:32:24.104] [INFO] w2r - /articles/writing
+[2015-04-28 09:32:24.124] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:33:23.529] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:33:23.530] [INFO] w2r - /articles/writing
+[2015-04-28 09:33:23.538] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:33:37.388] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:33:37.392] [INFO] w2r - /articles/writing
+[2015-04-28 09:33:37.409] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:34:24.998] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:34:25.002] [INFO] w2r - /articles/writing
+[2015-04-28 09:34:25.050] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:35:19.774] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:35:19.777] [INFO] w2r - /articles/writing
+[2015-04-28 09:35:19.786] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:36:01.548] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:36:01.550] [INFO] w2r - /articles/writing
+[2015-04-28 09:36:01.556] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:36:24.297] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:36:24.299] [INFO] w2r - /articles/writing
+[2015-04-28 09:36:24.312] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:36:47.818] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:36:47.821] [INFO] w2r - /articles/writing
+[2015-04-28 09:36:47.827] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:36:48.756] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:36:48.759] [INFO] w2r - /articles/writing
+[2015-04-28 09:36:48.769] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:38:54.694] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:38:54.697] [INFO] w2r - /articles/writing
+[2015-04-28 09:38:54.709] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:41:57.394] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:41:57.397] [INFO] w2r - /articles/writing
+[2015-04-28 09:41:57.404] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:43:57.924] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:43:57.926] [INFO] w2r - /articles/writing
+[2015-04-28 09:43:57.935] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:47:17.946] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:47:17.948] [INFO] w2r - /articles/writing
+[2015-04-28 09:47:17.953] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:47:28.152] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:47:28.155] [INFO] w2r - /articles/writing
+[2015-04-28 09:47:28.164] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:48:14.494] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:48:14.496] [INFO] w2r - /articles/writing
+[2015-04-28 09:48:14.505] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:48:32.879] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:48:32.883] [INFO] w2r - /articles/writing
+[2015-04-28 09:48:32.890] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:48:32.910] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:48:32.911] [INFO] w2r - /users/login
+[2015-04-28 09:48:32.917] [WARN] w2r - GET /users/login
+[2015-04-28 09:48:41.669] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:48:41.670] [INFO] w2r - /users/user/login?username=admin&password=b206e95a4384298962649e58dc7b39d4
+[2015-04-28 09:48:41.672] [INFO] w2r - 条件查询: select * from  user where  username = "admin" 
+[2015-04-28 09:48:41.678] [INFO] w2r - 统计执行: select count(*) count from  message where  to_userid = "0" and has_read = 0 
+[2015-04-28 09:48:41.683] [INFO] w2r - 新增: insert  into login set ?
+[2015-04-28 09:48:41.726] [WARN] w2r - GET /users/user/login?username=admin&password=b206e95a4384298962649e58dc7b39d4
+[2015-04-28 09:48:41.783] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:48:41.785] [INFO] w2r - /main
+[2015-04-28 09:48:41.786] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 09:48:41.789] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 09:48:41.804] [WARN] w2r - GET /main
+[2015-04-28 09:48:43.118] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:48:43.119] [INFO] w2r - /articles/writing
+[2015-04-28 09:48:43.123] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:51:35.357] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:51:35.358] [INFO] w2r - /articles/writing
+[2015-04-28 09:51:35.362] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:51:44.331] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:51:44.338] [INFO] w2r - /articles/writing
+[2015-04-28 09:51:44.354] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:51:48.949] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:51:48.953] [INFO] w2r - /articles/writing
+[2015-04-28 09:51:48.965] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:57:51.107] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:57:51.110] [INFO] w2r - /articles/writing
+[2015-04-28 09:57:51.125] [WARN] w2r - GET /articles/writing
+[2015-04-28 09:58:52.088] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:58:52.095] [INFO] w2r - /articles/writing
+[2015-04-28 09:58:52.124] [INFO] w2r - GET /articles/writing
+[2015-04-28 09:59:00.381] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 09:59:00.384] [INFO] w2r - /articles/writing
+[2015-04-28 09:59:00.394] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:05:23.106] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:05:23.106] [INFO] w2r - /articles/writing
+[2015-04-28 10:05:23.111] [INFO] w2r - GET /articles/writing
+[2015-04-28 10:05:41.166] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:05:41.168] [INFO] w2r - /articles/uploadImage
+[2015-04-28 10:05:42.389] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 10:06:32.996] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:06:32.999] [INFO] w2r - /articles/writing
+[2015-04-28 10:06:33.010] [INFO] w2r - GET /articles/writing
+[2015-04-28 10:06:43.702] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:06:43.704] [INFO] w2r - /articles/writing
+[2015-04-28 10:06:43.717] [INFO] w2r - GET /articles/writing
+[2015-04-28 10:06:46.923] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:06:46.924] [INFO] w2r - /articles/uploadImage
+[2015-04-28 10:06:48.149] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 10:09:15.365] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:09:15.368] [INFO] w2r - /articles/writing
+[2015-04-28 10:09:15.379] [INFO] w2r - GET /articles/writing
+[2015-04-28 10:09:24.331] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:09:24.332] [INFO] w2r - /articles/uploadImage
+[2015-04-28 10:09:51.019] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:09:51.022] [INFO] w2r - /articles/writing
+[2015-04-28 10:09:51.032] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:10:09.136] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:10:09.137] [INFO] w2r - /articles/uploadImage
+[2015-04-28 10:15:52.011] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:15:52.016] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:15:52.138] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:15:52.161] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:15:52.163] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:15:52.165] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:15:52.166] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:15:52.167] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:15:52.170] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:15:52.924] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:15:52.925] [INFO] w2r - /
+[2015-04-28 10:15:52.930] [WARN] w2r - GET /
+[2015-04-28 10:15:52.958] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:15:52.960] [INFO] w2r - /main
+[2015-04-28 10:15:52.961] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:15:52.963] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:15:52.988] [WARN] w2r - GET /main
+[2015-04-28 10:15:54.393] [INFO] w2r - /articles/writing
+[2015-04-28 10:15:54.392] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:15:54.400] [INFO] w2r - GET /articles/writing
+[2015-04-28 10:15:59.472] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:15:59.474] [INFO] w2r - /articles/uploadImage
+[2015-04-28 10:16:46.568] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:16:46.572] [INFO] w2r - /articles/writing
+[2015-04-28 10:16:46.584] [INFO] w2r - GET /articles/writing
+[2015-04-28 10:16:46.600] [ERROR] w2r - POST /articles/uploadImage
+[2015-04-28 10:26:40.348] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:26:40.353] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:26:40.397] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:26:40.407] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:26:40.409] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:26:40.410] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:26:40.411] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:26:40.412] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:26:40.415] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:26:41.212] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:26:41.214] [INFO] w2r - /
+[2015-04-28 10:26:41.220] [WARN] w2r - GET /
+[2015-04-28 10:26:41.227] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:26:41.229] [INFO] w2r - /main
+[2015-04-28 10:26:41.230] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:26:41.233] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:26:41.258] [WARN] w2r - GET /main
+[2015-04-28 10:26:42.470] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:26:42.472] [INFO] w2r - /articles/writing
+[2015-04-28 10:26:42.493] [INFO] w2r - GET /articles/writing
+[2015-04-28 10:26:51.996] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:26:51.997] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 10:26:52.007] [ERROR] w2r - POST /articles/uploadImage2
+[2015-04-28 10:28:10.143] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:28:10.148] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:28:10.377] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:28:10.390] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:28:10.392] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:28:10.394] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:28:10.395] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:28:10.396] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:28:10.398] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:28:10.834] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:28:10.835] [INFO] w2r - /
+[2015-04-28 10:28:10.840] [WARN] w2r - GET /
+[2015-04-28 10:28:10.850] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:28:10.851] [INFO] w2r - /main
+[2015-04-28 10:28:10.852] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:28:10.855] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:28:10.877] [WARN] w2r - GET /main
+[2015-04-28 10:28:15.257] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:28:15.258] [INFO] w2r - /articles/writing
+[2015-04-28 10:28:15.266] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:28:18.099] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:28:18.100] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 10:28:18.104] [ERROR] w2r - POST /articles/uploadImage2
+[2015-04-28 10:28:31.720] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:28:31.725] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:28:31.765] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:28:31.774] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:28:31.776] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:28:31.777] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:28:31.778] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:28:31.779] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:28:31.782] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:28:32.513] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:28:32.514] [INFO] w2r - /
+[2015-04-28 10:28:32.522] [WARN] w2r - GET /
+[2015-04-28 10:28:32.535] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:28:32.538] [INFO] w2r - /main
+[2015-04-28 10:28:32.539] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:28:32.544] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:28:32.591] [WARN] w2r - GET /main
+[2015-04-28 10:28:35.699] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:28:35.702] [INFO] w2r - /articles/writing
+[2015-04-28 10:28:35.722] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:28:38.970] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:28:38.972] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 10:28:38.976] [ERROR] w2r - POST /articles/uploadImage2
+[2015-04-28 10:34:59.818] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:34:59.825] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:34:59.848] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:34:59.852] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:34:59.853] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:34:59.854] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:34:59.856] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:34:59.857] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:34:59.860] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:35:00.416] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:35:00.417] [INFO] w2r - /
+[2015-04-28 10:35:00.424] [WARN] w2r - GET /
+[2015-04-28 10:35:00.434] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:35:00.436] [INFO] w2r - /main
+[2015-04-28 10:35:00.437] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:35:00.440] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:35:00.472] [WARN] w2r - GET /main
+[2015-04-28 10:35:02.086] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:35:02.087] [INFO] w2r - /articles/writing
+[2015-04-28 10:35:02.099] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:35:05.669] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:35:05.670] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 10:35:05.815] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 10:35:44.540] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:35:44.547] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:35:44.568] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:35:44.576] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:35:44.578] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:35:44.582] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:35:44.586] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:35:44.587] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:35:44.589] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:35:44.748] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:35:44.749] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 10:35:44.896] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 10:35:44.982] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:35:44.984] [INFO] w2r - /
+[2015-04-28 10:35:44.988] [WARN] w2r - GET /
+[2015-04-28 10:35:44.994] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:35:44.995] [INFO] w2r - /main
+[2015-04-28 10:35:44.996] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:35:44.999] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:35:45.022] [WARN] w2r - GET /main
+[2015-04-28 10:37:27.280] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:37:27.286] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:37:27.307] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:37:27.311] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:37:27.312] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:37:27.313] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:37:27.314] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:37:27.315] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:37:27.317] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:37:27.770] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:37:27.772] [INFO] w2r - /
+[2015-04-28 10:37:27.778] [WARN] w2r - GET /
+[2015-04-28 10:37:27.786] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:37:27.787] [INFO] w2r - /main
+[2015-04-28 10:37:27.788] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:37:27.791] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:37:27.817] [WARN] w2r - GET /main
+[2015-04-28 10:37:29.024] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:37:29.031] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:37:29.047] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:37:29.058] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:37:29.061] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:37:29.062] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:37:29.063] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:37:29.065] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:37:29.068] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:37:29.458] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:37:29.459] [INFO] w2r - /
+[2015-04-28 10:37:29.462] [WARN] w2r - GET /
+[2015-04-28 10:37:29.470] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:37:29.472] [INFO] w2r - /main
+[2015-04-28 10:37:29.474] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:37:29.477] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:37:29.500] [WARN] w2r - GET /main
+[2015-04-28 10:38:55.218] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:38:55.225] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:38:55.253] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:38:55.256] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:38:55.258] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:38:55.259] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:38:55.260] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:38:55.261] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:38:55.262] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:38:55.656] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:38:55.658] [INFO] w2r - /
+[2015-04-28 10:38:55.664] [WARN] w2r - GET /
+[2015-04-28 10:38:55.672] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:38:55.675] [INFO] w2r - /main
+[2015-04-28 10:38:55.675] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:38:55.678] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:38:55.702] [WARN] w2r - GET /main
+[2015-04-28 10:39:52.074] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:39:52.080] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:39:52.103] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:39:52.108] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:39:52.109] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:39:52.111] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:39:52.112] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:39:52.113] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:39:52.116] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:39:52.951] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:39:52.963] [INFO] w2r - /
+[2015-04-28 10:39:52.970] [WARN] w2r - GET /
+[2015-04-28 10:39:52.978] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:39:52.979] [INFO] w2r - /main
+[2015-04-28 10:39:52.980] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:39:52.983] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:39:53.006] [WARN] w2r - GET /main
+[2015-04-28 10:41:48.614] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:41:48.620] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:41:48.645] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:41:48.649] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:41:48.650] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:41:48.651] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:41:48.652] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:41:48.653] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:41:48.655] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:41:49.067] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:41:49.071] [INFO] w2r - /
+[2015-04-28 10:41:49.075] [WARN] w2r - GET /
+[2015-04-28 10:41:49.083] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:41:49.084] [INFO] w2r - /main
+[2015-04-28 10:41:49.085] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:41:49.088] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:41:49.111] [WARN] w2r - GET /main
+[2015-04-28 10:42:01.875] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:42:01.882] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:42:01.903] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:42:01.907] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:42:01.909] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:42:01.910] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:42:01.911] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:42:01.912] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:42:01.915] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:42:02.678] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:42:02.684] [INFO] w2r - /
+[2015-04-28 10:42:02.690] [WARN] w2r - GET /
+[2015-04-28 10:42:02.701] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:42:02.703] [INFO] w2r - /main
+[2015-04-28 10:42:02.704] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:42:02.708] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:42:02.732] [WARN] w2r - GET /main
+[2015-04-28 10:42:45.479] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:42:45.485] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:42:45.508] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:42:45.513] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:42:45.515] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:42:45.516] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:42:45.517] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:42:45.517] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:42:45.519] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:42:45.912] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:42:45.913] [INFO] w2r - /
+[2015-04-28 10:42:45.918] [WARN] w2r - GET /
+[2015-04-28 10:42:45.927] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:42:45.929] [INFO] w2r - /main
+[2015-04-28 10:42:45.930] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:42:45.932] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:42:45.956] [WARN] w2r - GET /main
+[2015-04-28 10:42:51.457] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:42:51.468] [INFO] w2r - /articles/writing
+[2015-04-28 10:42:51.483] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:42:55.013] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:42:55.015] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 10:42:55.018] [ERROR] w2r - POST /articles/uploadImage2
+[2015-04-28 10:43:24.029] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:43:24.035] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:43:24.057] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:43:24.065] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:43:24.066] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:43:24.067] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:43:24.068] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:43:24.069] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:43:24.074] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:43:24.896] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:43:24.899] [INFO] w2r - /
+[2015-04-28 10:43:24.905] [WARN] w2r - GET /
+[2015-04-28 10:43:24.914] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:43:24.915] [INFO] w2r - /main
+[2015-04-28 10:43:24.916] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:43:24.919] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:43:24.946] [WARN] w2r - GET /main
+[2015-04-28 10:43:34.171] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:43:34.172] [INFO] w2r - /articles/writing
+[2015-04-28 10:43:34.179] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:43:38.148] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:43:38.149] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 10:43:38.154] [ERROR] w2r - POST /articles/uploadImage2
+[2015-04-28 10:44:17.522] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:44:17.527] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:44:17.549] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:44:17.553] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:44:17.555] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:44:17.556] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:44:17.558] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:44:17.559] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:44:17.561] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:44:19.035] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:44:19.048] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:44:19.067] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:44:19.070] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:44:19.073] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:44:19.078] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:44:19.079] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:44:19.080] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:44:19.083] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:44:19.148] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:44:19.150] [INFO] w2r - /
+[2015-04-28 10:44:19.156] [WARN] w2r - GET /
+[2015-04-28 10:44:19.164] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:44:19.166] [INFO] w2r - /main
+[2015-04-28 10:44:19.166] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:44:19.169] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:44:19.199] [WARN] w2r - GET /main
+[2015-04-28 10:44:19.521] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:44:19.522] [INFO] w2r - /
+[2015-04-28 10:44:19.525] [WARN] w2r - GET /
+[2015-04-28 10:44:19.534] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:44:19.539] [INFO] w2r - /main
+[2015-04-28 10:44:19.540] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:44:19.543] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:44:19.566] [WARN] w2r - GET /main
+[2015-04-28 10:44:28.086] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:44:28.093] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:44:28.120] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:44:28.123] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:44:28.125] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:44:28.126] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:44:28.128] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:44:28.129] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:44:28.132] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:44:28.900] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:44:28.901] [INFO] w2r - /
+[2015-04-28 10:44:28.906] [WARN] w2r - GET /
+[2015-04-28 10:44:28.917] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:44:28.920] [INFO] w2r - /main
+[2015-04-28 10:44:28.921] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:44:28.925] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:44:28.954] [WARN] w2r - GET /main
+[2015-04-28 10:44:31.157] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:44:31.158] [INFO] w2r - /articles/writing
+[2015-04-28 10:44:31.166] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:44:35.104] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:44:35.110] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:44:35.133] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:44:35.136] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:44:35.137] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:44:35.138] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:44:35.139] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:44:35.139] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:44:35.141] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:44:36.392] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:44:36.398] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:44:36.412] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:44:36.416] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:44:36.417] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:44:36.418] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:44:36.419] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:44:36.420] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:44:36.422] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:44:36.794] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:44:36.796] [INFO] w2r - /
+[2015-04-28 10:44:36.800] [WARN] w2r - GET /
+[2015-04-28 10:44:36.808] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:44:36.809] [INFO] w2r - /main
+[2015-04-28 10:44:36.810] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:44:36.813] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:44:36.835] [WARN] w2r - GET /main
+[2015-04-28 10:45:39.953] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:45:39.959] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:45:39.980] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:45:39.984] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:45:39.985] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:45:39.987] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:45:39.988] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:45:39.989] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:45:39.991] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:45:40.748] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:45:40.750] [INFO] w2r - /
+[2015-04-28 10:45:40.760] [WARN] w2r - GET /
+[2015-04-28 10:45:40.772] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:45:40.775] [INFO] w2r - /main
+[2015-04-28 10:45:40.776] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:45:40.780] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:45:40.817] [WARN] w2r - GET /main
+[2015-04-28 10:45:46.127] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:45:46.128] [INFO] w2r - /articles/writing
+[2015-04-28 10:45:46.139] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:45:50.031] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:45:50.037] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:45:50.058] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:45:50.061] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:45:50.062] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:45:50.063] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:45:50.064] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:45:50.065] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:45:50.067] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:45:51.288] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:45:51.293] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:45:51.307] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:45:51.310] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:45:51.312] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:45:51.313] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:45:51.314] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:45:51.315] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:45:51.317] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:45:51.685] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:45:51.686] [INFO] w2r - /
+[2015-04-28 10:45:51.691] [WARN] w2r - GET /
+[2015-04-28 10:45:51.698] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:45:51.699] [INFO] w2r - /main
+[2015-04-28 10:45:51.700] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:45:51.703] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:45:51.726] [WARN] w2r - GET /main
+[2015-04-28 10:46:02.208] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:02.209] [INFO] w2r - /articles/writing
+[2015-04-28 10:46:02.217] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:46:06.287] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:46:06.293] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:46:06.315] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:46:06.319] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:46:06.323] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:46:06.324] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:46:06.328] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:46:06.329] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:46:06.331] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:46:07.556] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:46:07.561] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:46:07.576] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:46:07.579] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:46:07.581] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:46:07.582] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:46:07.583] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:46:07.583] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:46:07.585] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:46:07.951] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:07.952] [INFO] w2r - /
+[2015-04-28 10:46:07.957] [WARN] w2r - GET /
+[2015-04-28 10:46:07.964] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:07.966] [INFO] w2r - /main
+[2015-04-28 10:46:07.967] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:46:07.971] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:46:07.992] [WARN] w2r - GET /main
+[2015-04-28 10:46:14.708] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:14.710] [INFO] w2r - /articles/writing
+[2015-04-28 10:46:14.727] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:46:15.591] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:15.595] [INFO] w2r - /articles/writing
+[2015-04-28 10:46:15.607] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:46:16.228] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:16.231] [INFO] w2r - /articles/writing
+[2015-04-28 10:46:16.247] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:46:16.761] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:16.763] [INFO] w2r - /articles/writing
+[2015-04-28 10:46:16.767] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:46:17.261] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:17.262] [INFO] w2r - /articles/writing
+[2015-04-28 10:46:17.265] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:46:17.780] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:17.783] [INFO] w2r - /articles/writing
+[2015-04-28 10:46:17.790] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:46:18.234] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:18.235] [INFO] w2r - /articles/writing
+[2015-04-28 10:46:18.239] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:46:46.973] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:46:46.979] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:46:47.000] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:46:47.004] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:46:47.005] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:46:47.006] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:46:47.007] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:46:47.008] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:46:47.010] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:46:47.761] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:47.765] [INFO] w2r - /
+[2015-04-28 10:46:47.778] [WARN] w2r - GET /
+[2015-04-28 10:46:47.800] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:47.804] [INFO] w2r - /main
+[2015-04-28 10:46:47.814] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:46:47.818] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:46:47.862] [WARN] w2r - GET /main
+[2015-04-28 10:46:50.046] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:50.047] [INFO] w2r - /main
+[2015-04-28 10:46:50.048] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:46:50.050] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:46:50.065] [WARN] w2r - GET /main
+[2015-04-28 10:46:51.081] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:51.083] [INFO] w2r - /articles/writing
+[2015-04-28 10:46:51.091] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:46:55.412] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:46:55.418] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:46:55.440] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:46:55.451] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:46:56.570] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:46:56.577] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:46:56.591] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:46:56.594] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:46:56.596] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:46:56.597] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:46:56.598] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:46:56.599] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:46:56.601] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:46:56.969] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:56.969] [INFO] w2r - /
+[2015-04-28 10:46:56.973] [WARN] w2r - GET /
+[2015-04-28 10:46:56.981] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:46:56.982] [INFO] w2r - /main
+[2015-04-28 10:46:56.982] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:46:56.986] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:46:57.008] [WARN] w2r - GET /main
+[2015-04-28 10:47:06.423] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:47:06.428] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:47:06.452] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:47:06.456] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:47:06.458] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:47:06.460] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:47:06.462] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:47:06.464] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:47:06.470] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:47:07.172] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:47:07.174] [INFO] w2r - /
+[2015-04-28 10:47:07.184] [WARN] w2r - GET /
+[2015-04-28 10:47:07.196] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:47:07.199] [INFO] w2r - /main
+[2015-04-28 10:47:07.200] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:47:07.204] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:47:07.238] [WARN] w2r - GET /main
+[2015-04-28 10:47:09.106] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:47:09.108] [INFO] w2r - /articles/writing
+[2015-04-28 10:47:09.115] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:47:48.838] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:47:48.844] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:47:48.866] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:47:48.869] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:47:48.871] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:47:48.872] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:47:48.873] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:47:48.873] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:47:48.875] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:47:49.284] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:47:49.285] [INFO] w2r - /
+[2015-04-28 10:47:49.289] [WARN] w2r - GET /
+[2015-04-28 10:47:49.296] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:47:49.298] [INFO] w2r - /main
+[2015-04-28 10:47:49.299] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:47:49.302] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:47:49.325] [WARN] w2r - GET /main
+[2015-04-28 10:47:51.237] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:47:51.245] [INFO] w2r - /articles/writing
+[2015-04-28 10:47:51.261] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:48:44.109] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:48:44.115] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:48:44.138] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:48:44.141] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:48:44.142] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:48:44.143] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:48:44.145] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:48:44.145] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:48:44.148] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:48:44.541] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:48:44.542] [INFO] w2r - /
+[2015-04-28 10:48:44.548] [WARN] w2r - GET /
+[2015-04-28 10:48:44.557] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:48:44.559] [INFO] w2r - /main
+[2015-04-28 10:48:44.559] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:48:44.563] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:48:44.586] [WARN] w2r - GET /main
+[2015-04-28 10:48:46.040] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:48:46.042] [INFO] w2r - /articles/writing
+[2015-04-28 10:48:46.054] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:49:59.857] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 10:49:59.864] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 10:49:59.887] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 10:49:59.890] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 10:49:59.892] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 10:49:59.893] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 10:49:59.893] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 10:49:59.894] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 10:49:59.897] [INFO] w2r - 初始化数据库成功
+[2015-04-28 10:50:00.034] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:50:00.036] [INFO] w2r - /articles/writing
+[2015-04-28 10:50:00.056] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:50:00.329] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:50:00.331] [INFO] w2r - /
+[2015-04-28 10:50:00.333] [WARN] w2r - GET /
+[2015-04-28 10:50:00.339] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:50:00.340] [INFO] w2r - /main
+[2015-04-28 10:50:00.341] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 10:50:00.345] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 10:50:00.366] [WARN] w2r - GET /main
+[2015-04-28 10:50:04.011] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:50:04.012] [INFO] w2r - /articles/writing
+[2015-04-28 10:50:04.029] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:50:07.580] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:50:07.581] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 10:50:07.695] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 10:55:55.743] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:55:55.747] [INFO] w2r - /articles/writing
+[2015-04-28 10:55:55.765] [INFO] w2r - GET /articles/writing
+[2015-04-28 10:56:39.382] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:56:39.387] [INFO] w2r - /articles/writing
+[2015-04-28 10:56:39.400] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:57:25.522] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:57:25.524] [INFO] w2r - /articles/writing
+[2015-04-28 10:57:25.529] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:57:34.400] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:57:34.404] [INFO] w2r - /articles/writing
+[2015-04-28 10:57:34.427] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:58:12.234] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:58:12.235] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 10:58:12.400] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 10:59:34.752] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:59:34.753] [INFO] w2r - /articles/writing
+[2015-04-28 10:59:34.758] [WARN] w2r - GET /articles/writing
+[2015-04-28 10:59:46.684] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 10:59:46.685] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 10:59:46.882] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:00:45.509] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:00:45.510] [INFO] w2r - /articles/writing
+[2015-04-28 11:00:45.514] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:00:57.444] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:00:57.445] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 11:00:57.555] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:01:43.812] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:01:43.815] [INFO] w2r - /articles/writing
+[2015-04-28 11:01:43.823] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:02:15.320] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:02:15.323] [INFO] w2r - /articles/writing
+[2015-04-28 11:02:15.334] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:03:33.153] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:03:33.161] [INFO] w2r - /articles/writing
+[2015-04-28 11:03:33.171] [INFO] w2r - GET /articles/writing
+[2015-04-28 11:03:45.682] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:03:45.691] [INFO] w2r - /articles/writing
+[2015-04-28 11:03:45.708] [INFO] w2r - GET /articles/writing
+[2015-04-28 11:05:11.041] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:05:11.045] [INFO] w2r - /articles/writing
+[2015-04-28 11:05:11.059] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:05:17.730] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:05:17.732] [INFO] w2r - /articles/uploadImage
+[2015-04-28 11:05:25.747] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 11:05:59.025] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:05:59.027] [INFO] w2r - /articles/writing
+[2015-04-28 11:05:59.036] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:06:09.685] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:06:09.686] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 11:06:09.847] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:07:09.506] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 11:07:09.512] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 11:07:09.534] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 11:07:09.538] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 11:07:09.539] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 11:07:09.540] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 11:07:09.541] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 11:07:09.542] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 11:07:09.544] [INFO] w2r - 初始化数据库成功
+[2015-04-28 11:07:09.961] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:07:09.963] [INFO] w2r - /
+[2015-04-28 11:07:09.968] [WARN] w2r - GET /
+[2015-04-28 11:07:09.976] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:07:09.977] [INFO] w2r - /main
+[2015-04-28 11:07:09.978] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 11:07:09.982] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 11:07:10.005] [WARN] w2r - GET /main
+[2015-04-28 11:07:12.575] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:07:12.578] [INFO] w2r - /articles/writing
+[2015-04-28 11:07:12.590] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:07:20.988] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:07:20.990] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 11:07:21.123] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:09:21.453] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:09:21.453] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 11:09:21.572] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:09:44.232] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:09:44.233] [INFO] w2r - /articles/writing
+[2015-04-28 11:09:44.239] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:09:53.830] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:09:53.831] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 11:09:53.953] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:16:34.575] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:16:34.579] [INFO] w2r - /articles/writing
+[2015-04-28 11:16:34.583] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:16:42.617] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 11:16:42.623] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 11:16:42.644] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 11:16:42.648] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 11:16:42.650] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 11:16:42.651] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 11:16:42.652] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 11:16:42.653] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 11:16:42.655] [INFO] w2r - 初始化数据库成功
+[2015-04-28 11:16:43.363] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:16:43.366] [INFO] w2r - /
+[2015-04-28 11:16:43.371] [WARN] w2r - GET /
+[2015-04-28 11:16:43.380] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:16:43.381] [INFO] w2r - /main
+[2015-04-28 11:16:43.382] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 11:16:43.386] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 11:16:43.410] [WARN] w2r - GET /main
+[2015-04-28 11:16:49.331] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:16:49.334] [INFO] w2r - /articles/writing
+[2015-04-28 11:16:49.351] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:17:23.563] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 11:17:23.569] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 11:17:23.592] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 11:17:23.595] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 11:17:23.598] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 11:17:23.600] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 11:17:23.600] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 11:17:23.601] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 11:17:23.603] [INFO] w2r - 初始化数据库成功
+[2015-04-28 11:17:24.025] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:17:24.026] [INFO] w2r - /
+[2015-04-28 11:17:24.032] [WARN] w2r - GET /
+[2015-04-28 11:17:24.041] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:17:24.042] [INFO] w2r - /main
+[2015-04-28 11:17:24.043] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 11:17:24.046] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 11:17:24.070] [WARN] w2r - GET /main
+[2015-04-28 11:17:26.208] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:17:26.210] [INFO] w2r - /articles/writing
+[2015-04-28 11:17:26.220] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:22:52.604] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 11:22:52.610] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 11:22:52.633] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 11:22:52.636] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 11:22:52.638] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 11:22:52.639] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 11:22:52.640] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 11:22:52.641] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 11:22:52.643] [INFO] w2r - 初始化数据库成功
+[2015-04-28 11:22:53.057] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:22:53.058] [INFO] w2r - /
+[2015-04-28 11:22:53.063] [WARN] w2r - GET /
+[2015-04-28 11:22:53.070] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:22:53.071] [INFO] w2r - /main
+[2015-04-28 11:22:53.072] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 11:22:53.074] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 11:22:53.099] [WARN] w2r - GET /main
+[2015-04-28 11:22:55.128] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:22:55.131] [INFO] w2r - /articles/writing
+[2015-04-28 11:22:55.144] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:23:03.819] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:23:03.820] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 11:23:03.959] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:28:33.009] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 11:28:33.015] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 11:28:33.037] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 11:28:33.040] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 11:28:33.041] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 11:28:33.042] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 11:28:33.044] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 11:28:33.045] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 11:28:33.047] [INFO] w2r - 初始化数据库成功
+[2015-04-28 11:28:33.530] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:28:33.532] [INFO] w2r - /
+[2015-04-28 11:28:33.538] [WARN] w2r - GET /
+[2015-04-28 11:28:33.551] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:28:33.553] [INFO] w2r - /main
+[2015-04-28 11:28:33.554] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 11:28:33.557] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 11:28:33.580] [WARN] w2r - GET /main
+[2015-04-28 11:28:35.204] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:28:35.206] [INFO] w2r - /articles/writing
+[2015-04-28 11:28:35.215] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:28:41.501] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:28:41.502] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 11:28:41.650] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:30:41.976] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:30:41.979] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 11:30:42.121] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:35:00.433] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 11:35:00.439] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 11:35:00.460] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 11:35:00.464] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 11:35:00.465] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 11:35:00.466] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 11:35:00.467] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 11:35:00.468] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 11:35:00.470] [INFO] w2r - 初始化数据库成功
+[2015-04-28 11:35:00.915] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:35:00.916] [INFO] w2r - /
+[2015-04-28 11:35:00.922] [WARN] w2r - GET /
+[2015-04-28 11:35:00.931] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:35:00.933] [INFO] w2r - /main
+[2015-04-28 11:35:00.934] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 11:35:00.936] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 11:35:00.963] [WARN] w2r - GET /main
+[2015-04-28 11:35:02.450] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:35:02.452] [INFO] w2r - /articles/writing
+[2015-04-28 11:35:02.470] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:35:04.488] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:35:04.492] [INFO] w2r - /articles/article2html?content=
+[2015-04-28 11:35:04.498] [WARN] w2r - GET /articles/article2html?content=
+[2015-04-28 11:35:12.069] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:35:12.070] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 11:35:12.205] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:35:51.641] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 11:35:51.647] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 11:35:51.669] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 11:35:51.673] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 11:35:51.674] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 11:35:51.675] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 11:35:51.676] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 11:35:51.677] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 11:35:51.679] [INFO] w2r - 初始化数据库成功
+[2015-04-28 11:35:52.089] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:35:52.090] [INFO] w2r - /
+[2015-04-28 11:35:52.094] [WARN] w2r - GET /
+[2015-04-28 11:35:52.103] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:35:52.104] [INFO] w2r - /main
+[2015-04-28 11:35:52.105] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 11:35:52.108] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 11:35:52.130] [WARN] w2r - GET /main
+[2015-04-28 11:35:57.636] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:35:57.639] [INFO] w2r - /articles/writing
+[2015-04-28 11:35:57.654] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:36:03.807] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:36:03.807] [INFO] w2r - /articles/uploadImage2
+[2015-04-28 11:36:03.964] [INFO] w2r - POST /articles/uploadImage2
+[2015-04-28 11:39:49.378] [INFO] w2r - /articles/writing
+[2015-04-28 11:39:49.377] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:39:49.387] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:40:03.217] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:40:03.219] [INFO] w2r - /articles/uploadImage
+[2015-04-28 11:40:11.330] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 11:40:58.395] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:40:58.400] [INFO] w2r - /articles/writing
+[2015-04-28 11:40:58.414] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:42:43.500] [INFO] w2r - 判断表是否存在: show tables like 'article'
+[2015-04-28 11:42:43.505] [INFO] w2r - w2r listening on port 3000
+[2015-04-28 11:42:43.527] [INFO] w2r - 判断表是否存在: show tables like 'comment'
+[2015-04-28 11:42:43.531] [INFO] w2r - 判断表是否存在: show tables like 'login'
+[2015-04-28 11:42:43.532] [INFO] w2r - 判断表是否存在: show tables like 'message'
+[2015-04-28 11:42:43.533] [INFO] w2r - 判断表是否存在: show tables like 'relation'
+[2015-04-28 11:42:43.535] [INFO] w2r - 判断表是否存在: show tables like 'user'
+[2015-04-28 11:42:43.535] [INFO] w2r - 判断表是否存在: show tables like 'collection'
+[2015-04-28 11:42:43.537] [INFO] w2r - 初始化数据库成功
+[2015-04-28 11:42:43.994] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:42:43.996] [INFO] w2r - /
+[2015-04-28 11:42:44.001] [WARN] w2r - GET /
+[2015-04-28 11:42:44.008] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:42:44.010] [INFO] w2r - /main
+[2015-04-28 11:42:44.011] [INFO] w2r - 统计执行: select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id 
+[2015-04-28 11:42:44.014] [INFO] w2r - sql执行: select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc limit 0,10
+[2015-04-28 11:42:44.036] [WARN] w2r - GET /main
+[2015-04-28 11:42:51.598] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:42:51.601] [INFO] w2r - /articles/writing
+[2015-04-28 11:42:51.619] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:43:06.677] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:43:06.678] [INFO] w2r - /articles/uploadImage
+[2015-04-28 11:43:08.634] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 11:43:13.471] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:43:13.474] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:13.481] [INFO] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:19.603] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:43:19.607] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:19.609] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:28.447] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:43:28.448] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:28.448] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:47.769] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:43:47.772] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:47.775] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:53.471] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:43:53.475] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:53.477] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:58.817] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:43:58.828] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:43:58.832] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:44:35.264] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:44:35.266] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:44:35.268] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F38f1204052a222bc55740f67e4715d4f.jpg)
+[2015-04-28 11:45:38.473] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:45:38.474] [INFO] w2r - /articles/writing
+[2015-04-28 11:45:38.477] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:48:08.710] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:48:08.712] [INFO] w2r - /articles/writing
+[2015-04-28 11:48:08.715] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:48:16.282] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:48:16.286] [INFO] w2r - /articles/writing
+[2015-04-28 11:48:16.293] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:49:31.845] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:49:31.849] [INFO] w2r - /articles/writing
+[2015-04-28 11:49:31.856] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:49:59.497] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:49:59.500] [INFO] w2r - /articles/writing
+[2015-04-28 11:49:59.507] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:50:52.991] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:50:52.993] [INFO] w2r - /articles/writing
+[2015-04-28 11:50:52.999] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:52:51.795] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:52:51.797] [INFO] w2r - /articles/writing
+[2015-04-28 11:52:51.824] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:54:44.766] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:54:44.770] [INFO] w2r - /articles/writing
+[2015-04-28 11:54:44.783] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:55:36.260] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:55:36.262] [INFO] w2r - /articles/writing
+[2015-04-28 11:55:36.272] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:56:19.054] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:56:19.056] [INFO] w2r - /articles/writing
+[2015-04-28 11:56:19.067] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:57:07.072] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:57:07.075] [INFO] w2r - /articles/writing
+[2015-04-28 11:57:07.083] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:57:17.323] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:57:17.327] [INFO] w2r - /articles/writing
+[2015-04-28 11:57:17.337] [WARN] w2r - GET /articles/writing
+[2015-04-28 11:59:29.042] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 11:59:29.042] [INFO] w2r - /articles/writing
+[2015-04-28 11:59:29.046] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:47:00.619] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:47:00.629] [INFO] w2r - /articles/writing
+[2015-04-28 12:47:00.638] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:47:23.394] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:47:23.396] [INFO] w2r - /articles/writing
+[2015-04-28 12:47:23.405] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:50:39.855] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:50:39.856] [INFO] w2r - /articles/writing
+[2015-04-28 12:50:39.868] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:52:59.753] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:52:59.755] [INFO] w2r - /articles/writing
+[2015-04-28 12:52:59.760] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:53:28.547] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:53:28.548] [INFO] w2r - /articles/writing
+[2015-04-28 12:53:28.554] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:54:34.050] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:54:34.053] [INFO] w2r - /articles/writing
+[2015-04-28 12:54:34.071] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:56:24.941] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:56:24.943] [INFO] w2r - /articles/writing
+[2015-04-28 12:56:24.948] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:57:43.165] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:57:43.175] [INFO] w2r - /articles/writing
+[2015-04-28 12:57:43.185] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:58:16.116] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:58:16.118] [INFO] w2r - /articles/writing
+[2015-04-28 12:58:16.132] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:58:30.132] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:58:30.136] [INFO] w2r - /articles/writing
+[2015-04-28 12:58:30.147] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:58:53.423] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:58:53.426] [INFO] w2r - /articles/writing
+[2015-04-28 12:58:53.437] [WARN] w2r - GET /articles/writing
+[2015-04-28 12:58:54.852] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:58:54.856] [INFO] w2r - /articles/article2html?content=
+[2015-04-28 12:58:54.859] [WARN] w2r - GET /articles/article2html?content=
+[2015-04-28 12:59:56.538] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 12:59:56.540] [INFO] w2r - /articles/writing
+[2015-04-28 12:59:56.547] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:00:23.359] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:00:23.362] [INFO] w2r - /articles/writing
+[2015-04-28 13:00:23.369] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:00:48.998] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:00:49.001] [INFO] w2r - /articles/writing
+[2015-04-28 13:00:49.013] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:01:08.732] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:01:08.735] [INFO] w2r - /articles/writing
+[2015-04-28 13:01:08.745] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:01:55.246] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:01:55.254] [INFO] w2r - /articles/writing
+[2015-04-28 13:01:55.268] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:04:13.350] [INFO] w2r - /articles/writing
+[2015-04-28 13:04:13.348] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:04:13.357] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:05:20.738] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:05:20.739] [INFO] w2r - /articles/writing
+[2015-04-28 13:05:20.744] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:05:39.113] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:05:39.118] [INFO] w2r - /articles/writing
+[2015-04-28 13:05:39.125] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:30:34.217] [INFO] w2r - /articles/writing
+[2015-04-28 13:30:34.216] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:30:34.222] [INFO] w2r - GET /articles/writing
+[2015-04-28 13:30:50.545] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:30:50.548] [INFO] w2r - /articles/writing
+[2015-04-28 13:30:50.555] [INFO] w2r - GET /articles/writing
+[2015-04-28 13:30:54.779] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:30:54.780] [INFO] w2r - /articles/uploadImage
+[2015-04-28 13:30:57.428] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 13:32:01.843] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:32:01.844] [INFO] w2r - /articles/writing
+[2015-04-28 13:32:01.854] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:32:18.285] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:32:18.292] [INFO] w2r - /articles/writing
+[2015-04-28 13:32:18.299] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:33:33.190] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:33:33.193] [INFO] w2r - /articles/writing
+[2015-04-28 13:33:33.202] [INFO] w2r - GET /articles/writing
+[2015-04-28 13:34:09.235] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:34:09.237] [INFO] w2r - /articles/writing
+[2015-04-28 13:34:09.242] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:34:13.562] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:34:13.563] [INFO] w2r - /articles/uploadImage
+[2015-04-28 13:34:13.994] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 13:34:17.472] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:34:17.475] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F317432cbf4046a4eb5febde1f26ec4dc.jpg)
+[2015-04-28 13:34:17.478] [INFO] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F317432cbf4046a4eb5febde1f26ec4dc.jpg)
+[2015-04-28 13:34:22.141] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:34:22.142] [INFO] w2r - /articles/uploadImage
+[2015-04-28 13:34:22.465] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 13:34:31.090] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:34:31.091] [INFO] w2r - /articles/article2html?content=!%5B!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2Fdd7d52febf201c048f41d682f782b3cc.jpg)%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F317432cbf4046a4eb5febde1f26ec4dc.jpg)
+[2015-04-28 13:34:31.092] [INFO] w2r - GET /articles/article2html?content=!%5B!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2Fdd7d52febf201c048f41d682f782b3cc.jpg)%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F317432cbf4046a4eb5febde1f26ec4dc.jpg)
+[2015-04-28 13:34:35.780] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:34:35.784] [INFO] w2r - /articles/article2html?content=!%5B!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2Fdd7d52febf201c048f41d682f782b3cc.jpg)%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F317432cbf4046a4eb5febde1f26ec4dc.jpg)
+[2015-04-28 13:34:35.788] [WARN] w2r - GET /articles/article2html?content=!%5B!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2Fdd7d52febf201c048f41d682f782b3cc.jpg)%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F317432cbf4046a4eb5febde1f26ec4dc.jpg)
+[2015-04-28 13:34:46.504] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:34:46.506] [INFO] w2r - /articles/uploadImage
+[2015-04-28 13:34:46.835] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 13:35:59.175] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:35:59.179] [INFO] w2r - /articles/writing
+[2015-04-28 13:35:59.188] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:36:02.739] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:36:02.741] [INFO] w2r - /articles/uploadImage
+[2015-04-28 13:36:04.748] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 13:36:11.710] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:36:11.710] [INFO] w2r - /articles/uploadImage
+[2015-04-28 13:36:12.128] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 13:36:15.331] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:36:15.335] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F107515a1520ea68f9e01c2945ec99781.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2Fed35262b1a89e4438c0a4ee2fb5b02f7.jpg)
+[2015-04-28 13:36:15.338] [INFO] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F107515a1520ea68f9e01c2945ec99781.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2Fed35262b1a89e4438c0a4ee2fb5b02f7.jpg)
+[2015-04-28 13:36:24.160] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:36:24.164] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F107515a1520ea68f9e01c2945ec99781.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2Fed35262b1a89e4438c0a4ee2fb5b02f7.jpg)
+[2015-04-28 13:36:24.167] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F107515a1520ea68f9e01c2945ec99781.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2Fed35262b1a89e4438c0a4ee2fb5b02f7.jpg)
+[2015-04-28 13:38:52.359] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:38:52.363] [INFO] w2r - /articles/writing
+[2015-04-28 13:38:52.376] [WARN] w2r - GET /articles/writing
+[2015-04-28 13:38:55.567] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:38:55.568] [INFO] w2r - /articles/uploadImage
+[2015-04-28 13:38:56.090] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 13:38:58.684] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:38:58.686] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F954de216a2952582f43ea79908f7945a.jpg)
+[2015-04-28 13:38:58.689] [INFO] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F954de216a2952582f43ea79908f7945a.jpg)
+[2015-04-28 13:39:00.949] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:39:00.952] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F954de216a2952582f43ea79908f7945a.jpg)
+[2015-04-28 13:39:00.960] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F954de216a2952582f43ea79908f7945a.jpg)
+[2015-04-28 13:39:07.025] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:39:07.026] [INFO] w2r - /articles/uploadImage
+[2015-04-28 13:39:09.631] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 13:39:13.869] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:39:13.872] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F954de216a2952582f43ea79908f7945a.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F646be638c60a4a713057e1d2373a514f.jpg)
+[2015-04-28 13:39:13.876] [INFO] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F954de216a2952582f43ea79908f7945a.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F646be638c60a4a713057e1d2373a514f.jpg)
+[2015-04-28 13:40:31.285] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 13:40:31.287] [INFO] w2r - /articles/writing
+[2015-04-28 13:40:31.292] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:04:55.569] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:04:55.570] [INFO] w2r - /articles/writing
+[2015-04-28 14:04:55.575] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:05:33.916] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:05:33.919] [INFO] w2r - /articles/writing
+[2015-04-28 14:05:33.928] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:13:57.448] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:13:57.450] [INFO] w2r - /articles/writing
+[2015-04-28 14:13:57.456] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:15:22.643] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:15:22.645] [INFO] w2r - /articles/writing
+[2015-04-28 14:15:22.653] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:16:34.223] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:16:34.226] [INFO] w2r - /articles/writing
+[2015-04-28 14:16:34.234] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:17:11.382] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:17:11.387] [INFO] w2r - /articles/writing
+[2015-04-28 14:17:11.395] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:18:15.169] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:18:15.172] [INFO] w2r - /articles/writing
+[2015-04-28 14:18:15.178] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:19:38.261] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:19:38.264] [INFO] w2r - /articles/writing
+[2015-04-28 14:19:38.283] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:26:31.569] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:26:31.571] [INFO] w2r - /articles/writing
+[2015-04-28 14:26:31.575] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:26:53.758] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:26:53.760] [INFO] w2r - /articles/writing
+[2015-04-28 14:26:53.771] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:27:24.398] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:27:24.401] [INFO] w2r - /articles/writing
+[2015-04-28 14:27:24.414] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:28:01.224] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:28:01.229] [INFO] w2r - /articles/writing
+[2015-04-28 14:28:01.249] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:28:34.910] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:28:34.912] [INFO] w2r - /articles/writing
+[2015-04-28 14:28:34.925] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:28:46.056] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:28:46.057] [INFO] w2r - /articles/article2html?content=%5B%5D(http%3A%2F%2F)%5B%E5%80%92%E8%90%A8%E5%A4%A7%E5%B8%88%E5%A4%A7%E5%B8%88%E7%9A%84%5D(http%3A%2F%2F%E5%A4%A7%E5%B8%88%E5%A4%A7%E5%B8%88%E7%9A%84)
+[2015-04-28 14:28:46.060] [INFO] w2r - GET /articles/article2html?content=%5B%5D(http%3A%2F%2F)%5B%E5%80%92%E8%90%A8%E5%A4%A7%E5%B8%88%E5%A4%A7%E5%B8%88%E7%9A%84%5D(http%3A%2F%2F%E5%A4%A7%E5%B8%88%E5%A4%A7%E5%B8%88%E7%9A%84)
+[2015-04-28 14:32:38.860] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:32:38.862] [INFO] w2r - /articles/writing
+[2015-04-28 14:32:38.871] [INFO] w2r - GET /articles/writing
+[2015-04-28 14:32:43.975] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:32:43.978] [INFO] w2r - /articles/myArticle
+[2015-04-28 14:32:43.980] [INFO] w2r - 统计执行: select count(*) count from article a , user u where a.author_id=u.id and a.author_id="0"
+[2015-04-28 14:32:43.988] [INFO] w2r - sql执行: select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.author_id="0" order by update_date desc limit 0,10
+[2015-04-28 14:32:44.027] [INFO] w2r - GET /articles/myArticle
+[2015-04-28 14:32:45.494] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:32:45.495] [INFO] w2r - /articles/reading/20141206132415027
+[2015-04-28 14:32:45.496] [INFO] w2r - 文章id:20141206132415027
+[2015-04-28 14:32:45.497] [INFO] w2r - sql执行:  update article set visit_count = visit_count+1  where id = "20141206132415027"
+[2015-04-28 14:32:45.619] [INFO] w2r - sql执行: select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.id="20141206132415027"
+[2015-04-28 14:32:45.621] [INFO] w2r - [ { id: '20141206132415027',
+    title: 'dasd',
+    content: 'dsadas',
+    author_id: '0',
+    top: 0,
+    star: 0,
+    reply_count: 24,
+    visit_count: 51,
+    create_date: Sat Dec 06 2014 13:24:15 GMT+0800 (中国标准时间),
+    update_date: Sat Dec 06 2014 13:24:19 GMT+0800 (中国标准时间),
+    status: 1,
+    tab: null,
+    height: '668',
+    username: 'admin',
+    avatar: null } ]
+[2015-04-28 14:32:45.624] [INFO] w2r - 统计执行: select count(*) count from  comment where articleid="20141206132415027"
+[2015-04-28 14:32:45.666] [INFO] w2r - sql执行: select c.*,u.username,u.avatar from comment c , user u where c.userid=u.id and c.articleid="20141206132415027" limit 0,10
+[2015-04-28 14:32:45.668] [INFO] w2r - 统计执行: select count(*) count from collection where articleid='20141206132415027' and userid ='0'
+[2015-04-28 14:32:45.721] [INFO] w2r - GET /articles/reading/20141206132415027
+[2015-04-28 14:32:57.684] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:32:57.685] [INFO] w2r - /articles/uploadImage
+[2015-04-28 14:32:58.618] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 14:33:00.204] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:33:00.207] [INFO] w2r - /articles/article2html?content=%5B%E8%AF%B4%E6%98%AF%E8%AF%B4%5D(http%3A%2F%2F)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2Fe78f1c5c39fcdb4674be443ff7f2b31a.jpg)
+[2015-04-28 14:33:00.209] [INFO] w2r - GET /articles/article2html?content=%5B%E8%AF%B4%E6%98%AF%E8%AF%B4%5D(http%3A%2F%2F)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2Fe78f1c5c39fcdb4674be443ff7f2b31a.jpg)
+[2015-04-28 14:34:34.066] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:34:34.069] [INFO] w2r - /articles/reading/20141206132415027
+[2015-04-28 14:34:34.070] [INFO] w2r - 文章id:20141206132415027
+[2015-04-28 14:34:34.070] [INFO] w2r - sql执行:  update article set visit_count = visit_count+1  where id = "20141206132415027"
+[2015-04-28 14:34:34.115] [INFO] w2r - sql执行: select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.id="20141206132415027"
+[2015-04-28 14:34:34.120] [INFO] w2r - [ { id: '20141206132415027',
+    title: 'dasd',
+    content: 'dsadas',
+    author_id: '0',
+    top: 0,
+    star: 0,
+    reply_count: 24,
+    visit_count: 52,
+    create_date: Sat Dec 06 2014 13:24:15 GMT+0800 (中国标准时间),
+    update_date: Sat Dec 06 2014 13:24:19 GMT+0800 (中国标准时间),
+    status: 1,
+    tab: null,
+    height: '668',
+    username: 'admin',
+    avatar: null } ]
+[2015-04-28 14:34:34.122] [INFO] w2r - 统计执行: select count(*) count from  comment where articleid="20141206132415027"
+[2015-04-28 14:34:34.125] [INFO] w2r - sql执行: select c.*,u.username,u.avatar from comment c , user u where c.userid=u.id and c.articleid="20141206132415027" limit 0,10
+[2015-04-28 14:34:34.128] [INFO] w2r - 统计执行: select count(*) count from collection where articleid='20141206132415027' and userid ='0'
+[2015-04-28 14:34:34.140] [WARN] w2r - GET /articles/reading/20141206132415027
+[2015-04-28 14:35:21.988] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:35:21.990] [INFO] w2r - /articles/reading/20141206132415027
+[2015-04-28 14:35:21.991] [INFO] w2r - 文章id:20141206132415027
+[2015-04-28 14:35:21.992] [INFO] w2r - sql执行:  update article set visit_count = visit_count+1  where id = "20141206132415027"
+[2015-04-28 14:35:22.040] [INFO] w2r - sql执行: select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.id="20141206132415027"
+[2015-04-28 14:35:22.044] [INFO] w2r - [ { id: '20141206132415027',
+    title: 'dasd',
+    content: 'dsadas',
+    author_id: '0',
+    top: 0,
+    star: 0,
+    reply_count: 24,
+    visit_count: 53,
+    create_date: Sat Dec 06 2014 13:24:15 GMT+0800 (中国标准时间),
+    update_date: Sat Dec 06 2014 13:24:19 GMT+0800 (中国标准时间),
+    status: 1,
+    tab: null,
+    height: '668',
+    username: 'admin',
+    avatar: null } ]
+[2015-04-28 14:35:22.046] [INFO] w2r - 统计执行: select count(*) count from  comment where articleid="20141206132415027"
+[2015-04-28 14:35:22.053] [INFO] w2r - sql执行: select c.*,u.username,u.avatar from comment c , user u where c.userid=u.id and c.articleid="20141206132415027" limit 0,10
+[2015-04-28 14:35:22.055] [INFO] w2r - 统计执行: select count(*) count from collection where articleid='20141206132415027' and userid ='0'
+[2015-04-28 14:35:22.067] [WARN] w2r - GET /articles/reading/20141206132415027
+[2015-04-28 14:35:22.951] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:35:22.952] [INFO] w2r - /articles/writing
+[2015-04-28 14:35:22.956] [WARN] w2r - GET /articles/writing
+[2015-04-28 14:35:28.021] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:35:28.022] [INFO] w2r - /articles/uploadImage
+[2015-04-28 14:35:29.000] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 14:35:32.612] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:35:32.613] [INFO] w2r - /articles/uploadImage
+[2015-04-28 14:35:40.607] [INFO] w2r - POST /articles/uploadImage
+[2015-04-28 14:35:43.835] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:35:43.838] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F30224e24c0e3c022e809a967c51a55d4.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F2bf0f3d9edd38d9579b6887ae77ae328.jpg)
+[2015-04-28 14:35:43.842] [INFO] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F30224e24c0e3c022e809a967c51a55d4.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F2bf0f3d9edd38d9579b6887ae77ae328.jpg)
+[2015-04-28 14:36:01.599] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:36:01.601] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F30224e24c0e3c022e809a967c51a55d4.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F2bf0f3d9edd38d9579b6887ae77ae328.jpg)
+[2015-04-28 14:36:01.606] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F30224e24c0e3c022e809a967c51a55d4.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F2bf0f3d9edd38d9579b6887ae77ae328.jpg)
+[2015-04-28 14:36:09.270] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:36:09.272] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F30224e24c0e3c022e809a967c51a55d4.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F2bf0f3d9edd38d9579b6887ae77ae328.jpg)
+[2015-04-28 14:36:09.273] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F30224e24c0e3c022e809a967c51a55d4.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F2bf0f3d9edd38d9579b6887ae77ae328.jpg)
+[2015-04-28 14:36:41.696] [INFO] w2r - ++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++
+[2015-04-28 14:36:41.700] [INFO] w2r - /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F30224e24c0e3c022e809a967c51a55d4.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F2bf0f3d9edd38d9579b6887ae77ae328.jpg)
+[2015-04-28 14:36:41.703] [WARN] w2r - GET /articles/article2html?content=!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F30224e24c0e3c022e809a967c51a55d4.jpg)!%5B%5D(http%3A%2F%2Fpanhb.qiniudn.com%2F2bf0f3d9edd38d9579b6887ae77ae328.jpg)

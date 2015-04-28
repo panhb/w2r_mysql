@@ -22,6 +22,13 @@ var config = {
      license_key: '99331460b90f0ecbc2f2ba20a27eaa160e3847ae'
   },
 
+  qiniu_options:{
+      access_key: 'JltYNmaFFYFdqOxYzoipVhNx_a31gn9fXf0EUac_',
+      secret_key: 'nFn44eJDowwktY3i5i0qtQ5UIVAeIYwfAkrAPyDq',
+      bucketname: 'panhb',
+      domain : 'http://panhb.qiniudn.com'
+  },
+
   // github 登陆的配置
   github_oauth: {
     clientID: '8d3f384b322349398e6d',
