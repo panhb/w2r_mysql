@@ -481,6 +481,9 @@ router.post('/uploadImage', multipartMiddleware,function(req, res) {
 
     qn_init(req.files.file,function(uptoken,key,extra){
         qiniu.io.putFile(uptoken, key, req.files.file.path, extra, function(err, ret) {
+            //不论上传成功还是失败都删除临时文件
+            console.log('图片临时文件地址：'+req.files.file.path);
+            fs.unlink(req.files.file.path);
             if (!err) {
                 // 上传成功， 处理返回值
                 console.log(ret.key, ret.hash);
