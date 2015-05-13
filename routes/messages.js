@@ -25,7 +25,7 @@ router.get('/addMessage', function(req, res) {
             res.send({status:'fail',message:'发送失败'});
 		}else{
 			for(var i in docs){
-				var obj=new Object();
+				var obj={};
 				obj.id=util.getId();
 				obj.content=content;
 				obj.send_userid=req.session.user.id;
@@ -67,7 +67,7 @@ router.get('/addMessageByUsername', function(req, res) {
 				log.error(err);
 				res.send({status:'fail',message:'发送失败'});
 			}else{
-				var obj=new Object();
+				var obj={};
 				obj.id=util.getId();
 				obj.content=content;
 				obj.send_userid=req.session.user.id;
@@ -79,9 +79,9 @@ router.get('/addMessageByUsername', function(req, res) {
 						res.send({status:'fail',message:'发送失败'});
 						return;
 					}
-				})
+				});
 			}
-		})
+		});
 	}
 	/**/
 	setTimeout(mysqlUtil.count(message,'to_userid="'+req.session.user.id+'" and has_read=0',function(err,count){
@@ -115,7 +115,7 @@ router.get('/deleteMessage', function(req, res) {
 					req.session.message_count = count.count;
 					res.send({status:'success',message:'删除成功'});
 				}	
-			})
+			});
 		}	
 	});
 });
@@ -129,7 +129,7 @@ router.get('/messagelist', function(req, res) {
 	}
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
-	var po = new Object();
+	var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
@@ -142,7 +142,7 @@ router.get('/messagelist', function(req, res) {
 					util.renderError(err,res,'搜索/查询站内信列表出错');
 				}else{
 					for(var i in docs){
-						docs[i].content = marked(docs[i].content)
+						docs[i].content = marked(docs[i].content);
 					}
 					res.render('message/messageControl', {username:username,pageSize:po.pageSize,totalCount:count.count,list:docs});
 				}
@@ -158,7 +158,7 @@ router.get('/getMessagelist', function(req, res) {
 	var condition = params.condition;
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
-	var po = new Object();
+	var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
@@ -172,12 +172,12 @@ router.get('/getMessagelist', function(req, res) {
 			res.send({status:'fail'});
 		}else{
 			for(var i in docs){
-				docs[i].content = marked(docs[i].content)
+				docs[i].content = marked(docs[i].content);
 			}
 			res.send({list:docs,status:'success'});
 		}
 	});
-})
+});
 
 /* 站内信 */
 router.get('/message', function(req, res) {
@@ -188,7 +188,7 @@ router.get('/message', function(req, res) {
 			util.renderError(err,res,'站内信列表出错');
 		}else{
 			for(var i in docs){
-				docs[i].content = marked(docs[i].content)
+				docs[i].content = marked(docs[i].content);
 			}
 			log.info(docs);
 			res.render('message/message',{list:docs});
@@ -214,7 +214,7 @@ router.get('/changeRead', function(req, res) {
 					req.session.message_count = count.count;
 					res.send({status:'success',message:'操作成功'});
 				}	
-			})
+			});
 		}
 	});
 });

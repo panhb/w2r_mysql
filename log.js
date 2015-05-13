@@ -12,7 +12,7 @@ exports.logger = function(name) {
     var dateFileLog = log4js.getLogger(name);
     dateFileLog.setLevel(log4js.levels.INFO);
     return dateFileLog;
-}
+};
 
 /**
  * 用于express中间件
@@ -21,4 +21,4 @@ exports.logger = function(name) {
 exports.useLog = function() {
 	log4js.configure(path.join(__dirname,'log4js.json'));  
     return log4js.connectLogger(log4js.getLogger('w2r'),{level:'auto', format:':method :url'});
-} 
+}; 

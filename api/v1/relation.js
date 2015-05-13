@@ -9,9 +9,9 @@ var relations = function (req, res, next) {
             res.status(403);
 			return res.send(err);
         }else{
-            res.send({relations : docs})
+            res.send({relations : docs});
         }
-    })
+    });
 	
 };
 

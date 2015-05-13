@@ -8,11 +8,11 @@ $(function(){
 	
 	$("#editor").focus(function(){
 		refresh();
-	})
+	});
 	
 	$("#editor").click(function(){
 		refresh();
-	})
+	});
 	
 	$(".glyphicon-bold").click(function(){
 		setCursor(document.getElementById("editor"),position,'**','**');
@@ -133,13 +133,16 @@ $(function(){
 	$("#glyphicon-eye").click(function(){
 		if($("#glyphicon-eye").attr("class")==='glyphicon glyphicon-eye-open'){
 			$(".glyphicon-eye-open").attr("class","glyphicon glyphicon-eye-close");
-			$("#preview").css("top",$(this).offset().top+40)
+			$("#preview").css("top",$(this).offset().top+40);
 			previewShow();
 		}else{
 			$(".glyphicon-eye-close").attr("class","glyphicon glyphicon-eye-open");
 			$("#preview").fadeOut();
 		}
 	});
+<<<<<<< HEAD
+});
+=======
 
     $(".glyphicon-resize-full").click(function(){
         var elem = document.getElementById("editor");
@@ -154,6 +157,7 @@ $(function(){
         }
     });
 })
+>>>>>>> a5942888a7e83a752bb9051d85e65268f19bf98d
 
 function addlink(){
     $("#linkModal").modal("hide");
@@ -171,11 +175,11 @@ function previewShow(){
 		data: {content:data},
 		dataType: "json",
 		success: function(json){
-			var data=eval(json);
+			var data=JSON.parse(json);
 			$("#preview").html(data.html);
 			$("#preview").fadeIn();
 		}
-	})
+	});
 }
 
 function refresh(){
@@ -191,7 +195,7 @@ function getCursor(ctrl) {
 		var Sel = document.selection.createRange(); 
 		var Sel2 = Sel.duplicate(); 
 		Sel2.moveToElementText(ctrl); 
-		var CaretPos = -1; 
+		CaretPos = -1; 
 		while(Sel2.inRange(Sel)){ 
 			Sel2.moveStart('character'); 
 			CaretPos++; 

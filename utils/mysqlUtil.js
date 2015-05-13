@@ -132,9 +132,9 @@ exports.initDb = function(callback){
 					init_db(j);
 				}
 			}
-		})
+		});
 	}
-}
+};
 
 /**
  * 根据主键获取记录

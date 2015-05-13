@@ -34,13 +34,13 @@ router.get('/follow/:userid', function(req, res) {
                                 if( typeof (relation) === 'undefined' ){
                                     has_relation = false ;
                                 }
-                                res.render('relation/follow', {shareNum : count.count , has_relation : has_relation , user : user})
+                                res.render('relation/follow', {shareNum : count.count , has_relation : has_relation , user : user});
                             }
-                        })
+                        });
                     }
-                })
+                });
             }
-        })
+        });
     }
 });
 
@@ -50,7 +50,7 @@ router.get('/focus', function(req, res) {
     var followid = params.followid;
     var userid = req.session.user.id;
 
-    var obj = new Object();
+    var obj = {};
     obj.id = util.getId();
     obj.userid = userid;
     obj.followid = followid;
@@ -59,11 +59,11 @@ router.get('/focus', function(req, res) {
     if(type === '1'){
         mysqlUtil.insert(relation , obj , function (err) {
             util.send(err,res,'关注成功','关注失败');
-        })
+        });
     } else {
         mysqlUtil.query( 'delete from relation where userid = "'+userid+'" and followid = "'+followid+'" ' ,function (err) {
             util.send(err,res,'取消关注成功','取消关注失败');
-        })
+        });
     }
 });
 
@@ -74,9 +74,9 @@ router.get('/myfollowlist', function(req, res) {
         if(err){
             util.renderError(err,res,'访问失败');
         }else{
-            res.render('relation/myfollowlist', {list : docs})
+            res.render('relation/myfollowlist', {list : docs});
         }
-    })
+    });
 });
 
 router.get('/getFollowlist', function(req, res) {
@@ -84,7 +84,7 @@ router.get('/getFollowlist', function(req, res) {
     var username = params.username;
     var pageIndex = params.pageIndex;
     var pageSize = params.pageSize;
-    var po = new Object();
+    var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
@@ -135,7 +135,7 @@ router.get('/followControl', function(req, res) {
     }
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
-    var po = new Object();
+    var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);

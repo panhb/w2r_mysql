@@ -9,7 +9,7 @@ var shareArticles = function (req, res, next) {
   var csql = 'select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id '; 
   var sql = 'select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc'; 
   
-  var obj = new Object();
+  var obj = {};
   obj.page = page;
   obj.csql = csql;
   obj.sql = sql;
@@ -30,7 +30,7 @@ var myArticles = function (req, res, next) {
   var csql = 'select count(*) count from article a , user u where a.author_id=u.id and a.author_id="'+author_id+'"'; 
   var sql='select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.author_id="'+author_id+'" order by update_date desc'; 
   
-  var obj = new Object();
+  var obj = {};
   obj.page = page;
   obj.csql = csql;
   obj.sql = sql;
@@ -70,11 +70,11 @@ var article = function (req, res, next) {
                             	//是否已收藏文章
 	                            var count_sql="select count(*) count from collection,user u where articleid='"+id+"' and userid = u.id and u.active_key = '"+accesstoken+"'";
 	                        	mysqlUtil.countBySql(count_sql,function(err,c){
-	                        		if(c.count != 0){
+	                        		if(c.count !== 0){
 	                        			has_collect = true;
 	                        		}
 	                        		res.send({article:article[0],has_collect:has_collect,comments:docs});
-	                        	})
+	                        	});
 	                        }else{
 	                        	res.send({article:article[0],comments:docs});
 	                        }  

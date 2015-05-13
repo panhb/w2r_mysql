@@ -26,7 +26,7 @@ var busboy = require('connect-busboy');
 var apiV1 = require('./api_v1');
 
 //需要登录
-var nofree_url = new Array();
+var nofree_url = [];
 nofree_url.push('/users/userlist');
 nofree_url.push('/articles/articleControl');
 nofree_url.push('/comments/commentlist');
@@ -40,13 +40,13 @@ nofree_url.push('/users/user/userinfo');
 nofree_url.push('/relations/followControl');
 nofree_url.push('/articles/writing');
 
-var active_url = new Array();
+var active_url = [];
 active_url.push('/articles/myArticle');
 active_url.push('/articles/writing');
 
 
 //需要管理员权限
-var admin_url = new Array();
+var admin_url = [];
 admin_url.push('/users/userlist');
 admin_url.push('/articles/articleControl');
 admin_url.push('/comments/commentlist');
@@ -163,6 +163,6 @@ mysqlUtil.initDb(function(err){
     }else{
         log.logger('w2r').info("初始化数据库成功");
     }
-})
+});
 
 module.exports = app;

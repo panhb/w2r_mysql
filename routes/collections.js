@@ -10,14 +10,14 @@ var collect = 'collection';
 /* 新增收藏记录 */
 router.get('/addCollect', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var obj = new Object();
+	var obj = {};
 	obj.id = util.getId();
 	obj.articleid = params.articleid;
 	obj.userid=req.session.user.id;
 	obj.create_date=util.getDate();
 	mysqlUtil.insert(collect,obj,function(err){
         util.send(err,res,'收藏成功','收藏失败');
-    })
+    });
 });
 
 /* 删除收藏记录 */
@@ -27,7 +27,7 @@ router.get('/deleteCollect', function(req, res) {
 	var userid = req.session.user.id;
 	mysqlUtil.query( 'delete from collection where userid = "'+userid+'" and articleid = "'+articleid+'" ' ,function (err) {
         util.send(err,res,'取消收藏成功','取消收藏失败');
-    })
+    });
 });
 
 /* 我的收藏记录列表 */

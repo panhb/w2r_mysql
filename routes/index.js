@@ -14,7 +14,7 @@ router.get('/main', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
-	var po = new Object();
+	var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
@@ -97,7 +97,7 @@ router.get('/rss', function(req, res) {
 		    mcache.put('rss', rssContent, 1000 * 60 * 5); // 五分钟
 		    res.send(rssContent);
 		}
-  	})
+  	});
   }
 });
 

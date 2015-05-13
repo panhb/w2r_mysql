@@ -18,7 +18,7 @@ router.get('/loginlist', function(req, res) {
 	var sql = 'select l.*,u.username,u.avatar from login l , user u where l.userid=u.id and u.username like "%'+username+'%" order by login_date desc ';
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
-	var po = new Object();
+	var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
@@ -43,7 +43,7 @@ router.get('/getLoginlist', function(req, res) {
 	var condition = params.condition;
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
-	var po = new Object();
+	var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
@@ -60,7 +60,7 @@ router.get('/getLoginlist', function(req, res) {
 			res.send({list:docs,status:'success'});
 		}
 	});
-})
+});
 
 /* 删除用户登录信息 */
 router.get('/login/delete', function(req, res) {

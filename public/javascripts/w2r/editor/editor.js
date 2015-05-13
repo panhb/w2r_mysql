@@ -14,11 +14,11 @@ $(function(){
 	
 	$("#editor").focus(function(){
 		refresh();
-	})
+	});
 	
 	$("#editor").click(function(){
 		refresh();
-	})
+	});
 	
 	$(".glyphicon-bold").click(function(){
 		setCursor(document.getElementById("editor"),position,'**','**');

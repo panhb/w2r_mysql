@@ -27,7 +27,7 @@ router.get('/login', function(req, res) {
 		articleid=params.articleid;
     }
     if(req.session.user){
-        res.redirect('/main')
+        res.redirect('/main');
     }else{
         res.render('user/login',{articleid:articleid,jumptype:'login'});
     }
@@ -89,12 +89,12 @@ router.get('/user/login', function(req, res) {
 						}
                         
                     }else{
-                        var obj=new Object();
+                        var obj={};
                         var id = util.getId();
                         obj.id = id;
                         obj.userid=doc.id;
                         obj.login_date=util.getDate();
-                        obj.ip=req.headers['x-forwarded-for']||req.connection.remoteAddress||req.socket.remoteAddress||req.connection.socket.remoteAddress;;
+                        obj.ip=req.headers['x-forwarded-for']||req.connection.remoteAddress||req.socket.remoteAddress||req.connection.socket.remoteAddress;
                         //创建登录记录
                         mysqlUtil.insert(login,obj,function(err){
                             if(err){
@@ -116,7 +116,7 @@ router.get('/user/login', function(req, res) {
                             }
                         });
                     }
-                })
+                });
             }else{
                 res.send({status:'fail',message:'登录失败,用户名或密码错误。'});
             }
@@ -147,7 +147,7 @@ router.get('/user/reg', function(req, res) {
     var password = params.password;
     var active_key = util.getActKey();
     var new_userid = util.getId();
-    var obj = new Object();
+    var obj = {};
     obj.id = new_userid;
     obj.username = username;
     obj.email = email;
@@ -162,7 +162,7 @@ router.get('/user/reg', function(req, res) {
         }else{
             //随机抽取一位管理员发送激活提示
             mysqlUtil.getOne(user,'role_type = 1',function(err,user){
-                var obj=new Object();
+                var obj={};
                 obj.id=util.getId();
                 obj.content='请立即激活您的账号，以免影响您的正常使用。如已激活，请忽略本条信息，谢谢。';
                 obj.send_userid=user.id;
@@ -177,7 +177,7 @@ router.get('/user/reg', function(req, res) {
                         res.send({status:'success',message:'注册成功,请检查您的邮箱,激活账号'});
                     }
                 });
-            })
+            });
         }
     });
 });
@@ -282,13 +282,11 @@ router.get('/userlist', function(req, res) {
 	}
 	var condition=' username like "%'+username+'%"';
 	var regex = new RegExp(username, 'i');
-	var obj=new Object();
+	var obj={};
 	obj.username=regex;
-	var pageIndex = params.pageIndex;
-	var pageSize = params.pageSize;
-	var po = new Object();
-	po.pageIndex = pageIndex;
-	po.pageSize = pageSize;
+	var po = {};
+	po.pageIndex = params.pageIndex;
+	po.pageSize = params.pageSize;
 	po = util.page(po);
 	mysqlUtil.count(user,condition,function (err,count) {
 		if(!err){
@@ -365,7 +363,7 @@ router.get('/user/updateuserinfoDetail', function(req, res) {
 	  var password=params.password;
 	  var id=params.userId;
 	 
-	  var obj=new Object();
+	  var obj={};
 	  var updateString = ' username = "'+username+'",  email = "'+email+'", role_type = '+role_type+',  status = '+status+',  avatar = "'+avatar+'",  url = "'+url+'",  signature = "'+signature+'",  update_date = "'+util.getDate()+'" ' ;
 	  obj.username=username;
 	  obj.email=email;

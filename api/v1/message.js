@@ -10,7 +10,7 @@ var messages = function (req, res, next) {
 			return res.send(err);
 		}else{
 			for(var i in docs){
-				docs[i].content = marked(docs[i].content)
+				docs[i].content = marked(docs[i].content);
 			}
 			res.send({messages:docs});
 		}	
@@ -34,9 +34,9 @@ var count = function (req, res, next) {
 				}else{
 					res.send({has_read:count.count,no_read:hcount.count});
 				}	
-			})
+			});
 		}	
-	})
+	});
 	
 };
 exports.count = count;

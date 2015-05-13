@@ -19,7 +19,7 @@ router.get('/addComment', function(req, res) {
 	content = util.escape(content);
 	content = marked(content);
 	var articleid = params.articleid;
-	var obj = new Object();
+	var obj = {};
 	obj.id = util.getId();
 	obj.content=content;
 	obj.userid=req.session.user.id;
@@ -46,7 +46,7 @@ router.get('/addComment', function(req, res) {
                             }
                             //随机抽取一位管理员发送激活提示
                             mysqlUtil.getOne(user,'role_type = 1',function(err,user){
-                                var obj=new Object();
+                                var obj={};
                                 obj.id=util.getId();
                                 obj.content=req.session.user.username+' 在您的《<a target="_blank" href="/articles/reading/'+article.id+'">'+article.title+'</a>》发表了一条评论。';
                                 obj.send_userid=user.id;
@@ -58,9 +58,9 @@ router.get('/addComment', function(req, res) {
                                     }
                                     res.send({status:'success',message:'评论成功'});
                                 });
-                            })
-                        })
-                    })
+                            });
+                        });
+                    });
                 }
             });
         }
@@ -104,7 +104,7 @@ router.get('/commentlist', function(req, res) {
 	var sql = 'select c.*,u.username,u.avatar,a.title from comment c ,article a, user u where c.articleid=a.id and c.userid=u.id and u.username like "%'+cusername+'%" order by create_date desc ';
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
-	var po = new Object();
+	var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
@@ -131,7 +131,7 @@ router.get('/getCommentlist', function(req, res) {
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
 	var articleid = params.articleid;
-	var po = new Object();
+	var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
@@ -170,6 +170,6 @@ router.get('/getCommentlist', function(req, res) {
 			}
 		});
 	});
-})
+});
 
 module.exports = router;

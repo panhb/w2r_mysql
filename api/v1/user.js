@@ -8,9 +8,9 @@ var user = function (req, res, next) {
 			res.status(403);
 			return res.send(err);
 		}else{
-			res.send(user)
+			res.send(user);
 		}
-	})
+	});
 	
 };
 
@@ -25,9 +25,9 @@ var username = function (req, res, next) {
 			res.status(403);
 			return res.send(err);
 		}else{
-			res.send(user)
+			res.send(user);
 		}
-	})
+	});
 	
 };
 

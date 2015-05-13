@@ -45,7 +45,7 @@ router.get('/getAnswer', function(req, res) {
             return next(err);
         }
         var text = sres.text;
-        var json = JSON.parse(text)
+        var json = JSON.parse(text);
         var code =json.code;
         var index=_.findIndex(tuling_error, { 'code': code });
         if(index<0){
@@ -54,7 +54,7 @@ router.get('/getAnswer', function(req, res) {
             log.info(tuling_error[index]);
             res.send({status:'fail'});
         }
-    })
+    });
 });
 
 module.exports = router;

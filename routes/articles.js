@@ -32,7 +32,7 @@ router.get('/myArticle', function(req, res) {
 	var author_id = req.session.user.id; 
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
-	var po = new Object();
+	var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
@@ -66,7 +66,7 @@ router.get('/getArticlelist', function(req, res) {
 	var pageIndex = params.pageIndex;
 	var pageSize = params.pageSize;
 	var loadType = params.loadType;
-	var po = new Object();
+	var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
@@ -114,7 +114,7 @@ router.get('/getArticlelist', function(req, res) {
             });
         }
 	});
-})
+});
 
 /* 搜索文章列表 */
 router.get('/search/articlelist', function(req, res) {
@@ -122,7 +122,7 @@ router.get('/search/articlelist', function(req, res) {
 	 var condition = params.condition;
 	 var pageIndex = params.pageIndex;
 	 var pageSize = params.pageSize;
-	 var po = new Object();
+	 var po = {};
 	 po.pageIndex = pageIndex;
 	 po.pageSize = pageSize;
 	 po = util.page(po);
@@ -201,7 +201,7 @@ router.get('/addArticle', function(req, res) {
   var article_id=params.article_id;
   var height=params.height;
   var date = util.getDate();
-  var obj=new Object();
+  var obj={};
   var updateString =' height = "'+height+'" ,content = "'+content+'" ,title = "'+title+'" ,update_date = "'+date+'" ';
   obj.content=content;
   obj.height=height;

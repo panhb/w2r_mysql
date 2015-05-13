@@ -7,14 +7,14 @@ $(function(){
         if(event.keyCode=="13"){
             getAnswer();
         }
-    })
-})
+    });
+});
 
 
 function getAnswer(){
     String.prototype.trim = function () { // 重写
         return this .replace(/^\s\s*/, '' ).replace(/\s\s*$/, '' );
-    }
+    };
     var info=$("#ask_massage").val();
     info=info.trim();
     if(info===''||info===null){
@@ -36,18 +36,18 @@ function getAnswer(){
         dataType: "json",
         success: function(json){
             $("#ask_massage").val('');
-            var data=eval(json);
+            var data=JSON.parse(json);
             if(data.status==='fail'){
                 error_html();
             }else{
-                var json = data.json;
-                getHtmlByCode(json);
+                var jsond = data.json;
+                getHtmlByCode(jsond);
             }
         },error: function(){
             $("#ask_massage").val('');
             error_html();
         }
-    })
+    });
 
 }
 
@@ -129,12 +129,12 @@ function novel_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.name+'<br>'+this.author+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
@@ -147,12 +147,12 @@ function news_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.article+'<br>'+this.source+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
@@ -165,12 +165,12 @@ function app_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.name+'<br>'+this.count+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
@@ -183,12 +183,12 @@ function train_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.start+'-'+this.terminal+'&nbsp;&nbsp;'+this.trainnum+'<br>'+this.starttime+'，'+this.endtime+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
@@ -201,7 +201,7 @@ function flight_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             var state='';
@@ -214,7 +214,7 @@ function flight_html(json){
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.flight+route+'&nbsp;&nbsp;'+state+'<br>'+this.starttime+'-'+this.endtime+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
@@ -227,12 +227,12 @@ function group_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.name+'&nbsp;&nbsp;'+this.price+'&nbsp;&nbsp;'+this.count+'<br>'+this.info+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
@@ -245,12 +245,12 @@ function favorable_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.name+'<br>'+this.info+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
@@ -263,7 +263,7 @@ function hotel_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             var count='';
@@ -272,7 +272,7 @@ function hotel_html(json){
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.name+'&nbsp;&nbsp;'+this.price+'&nbsp;&nbsp;'+count+'<br>'+this.satisfaction+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
@@ -285,12 +285,12 @@ function lottery_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.number+'<br>'+this.info+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
@@ -303,12 +303,12 @@ function price_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.name+'<br>'+this.price+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
@@ -321,12 +321,12 @@ function restaurant_html(json){
         if(i<3){
             html+='<div  class="news_others">';
             html+='<a href="'+this.detailurl+'" style="text-decoration:none;" target="_blank">';
-            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!=''){
+            if(typeof(this.icon)!=='undefined'&&this.icon!==null&&this.icon!==''){
                 html+='<div class="news_other_pic"><img src="'+this.icon+'" class="other_pic_img" style="float:right;width:38px;height:38px;"></div>';
             }
             html+='<div class="news_desc" style="font-size: 14px; max-height: 45px; margin: 0px 50px 5px 0px; color: grey;">'+this.name+'<br>'+this.price+'</div></a></div>';
         }
-    })
+    });
     html+='</div>';
     $("#mainMeaasge").append(html);
     $("#mainMeaasge").scrollTop( $('#mainMeaasge')[0].scrollHeight );
