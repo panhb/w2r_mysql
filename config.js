@@ -64,7 +64,7 @@ var config = {
 //    secureConnection: true, // use SSL
     auth: {
         user: 'panhongbo891010@163.com',
-        pass: 'panhongbo'
+        pass: 'aztfaxkiakhyojzx'
     }
   }
 };
