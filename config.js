@@ -59,12 +59,12 @@ var config = {
   
   //邮箱配置
   mail_options: {
-    host : 'smtp.gmail.com',
+    host : 'smtp.163.com',
     port: 25, // port for secure SMTP
 //    secureConnection: true, // use SSL
     auth: {
-        user: 'panhongbo891010@gmail.com',
-        pass: '391400311'
+        user: 'panhongbo891010@163.com',
+        pass: 'panhongbo'
     }
   }
 };
