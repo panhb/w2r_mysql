@@ -171,7 +171,7 @@ mysqlUtil.initDb(function(err){
 		obj.role_type = '1';
 		obj.create_date = util.getDate();
 		obj.status = 1;
-		mysqlUtil.insert(user,obj,function(err){
+		mysqlUtil.insert('user',obj,function(err){
 			if(err){
 				log.logger('w2r').error("初始化管理员数据失败");
 			} else {
