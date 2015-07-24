@@ -18,6 +18,7 @@ var auth = require('./routes/auth');
 var relations = require('./routes/relations');
 var collections = require('./routes/collections');
 var mysqlUtil = require('./utils/mysqlUtil');
+var util = require('./utils/util');
 var log = require('./log');
 var session = require('express-session');
 var passport = require('passport');
@@ -161,7 +162,22 @@ mysqlUtil.initDb(function(err){
     if(err){
         log.logger('w2r').error(err);
     }else{
-        log.logger('w2r').info("初始化数据库成功");
+		var obj = {};
+		obj.id = '0';
+		obj.username = 'admin';
+		obj.email = 'admin@test.com';
+		obj.avatar = 'https://avatars3.githubusercontent.com/u/8011065?v=3&s=460',
+		obj.password = 'admin';
+		obj.role_type = '1';
+		obj.create_date = util.getDate();
+		obj.status = 1;
+		mysqlUtil.insert(user,obj,function(err){
+			if(err){
+				log.logger('w2r').error("初始化管理员数据失败");
+			} else {
+				log.logger('w2r').info("初始化数据库成功");
+			}
+		});
     }
 });
 

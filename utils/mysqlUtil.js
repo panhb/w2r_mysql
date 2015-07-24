@@ -103,9 +103,6 @@ exports.initDb = function(callback){
 	  "`create_date` datetime NOT NULL,"+
 	  "PRIMARY KEY  (`id`))"
 	);
-	
-	create_sqls.push("insert into user (id,username,password,email,role_type,avatar,status) "+ 
-	" values ('0','admin','admin','admin@qq.com','1','https://avatars3.githubusercontent.com/u/8011065?v=3&s=460','1') ");
 
 	for(var i  in table_names){
 		exist_sqls.push("show tables like '"+table_names[i]+"'");
