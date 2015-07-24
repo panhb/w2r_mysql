@@ -1,21 +1,21 @@
 var config = {
   name: 'w2r',
   description: 'w2r 是一个使用Node.js开发的专注于阅读和书写体验的网站。',
-  // mongodb 配置
+ 
   session_secret: 'w2r',
   
   redis_options:{
-	host: 'localhost',
-    port: 6379
+	host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT
   },
   
   mysql_options:{
-    connectionLimit : 10,
-    host: 'localhost',
-    user: 'root',
-    password: '1314520',
-    database:'w2r',
-    port: 3306
+    connectionLimit : process.env.MYSQL_CONNECTIONLIMIT,
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+    port: process.env.MYSQL_PORT
   },
 
   newrelic_options:{
