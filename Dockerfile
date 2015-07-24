@@ -21,6 +21,7 @@ ENV MYSQL_CONNECTIONLIMIT **ChangeMe**
 # REDIS
 ENV REDIS_HOST **ChangeMe**
 ENV REDIS_PORT **ChangeMe**
+ENV REDIS_PASSWORD **ChangeMe**
  
 # Expose the container port
 EXPOSE 3000

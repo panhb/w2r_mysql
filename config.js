@@ -6,6 +6,7 @@ var config = {
   
   redis_options:{
 	host: process.env.REDIS_HOST,
+	pass: process.env.REDIS_PASSWORD,
     port: process.env.REDIS_PORT
   },
   
