@@ -38,6 +38,7 @@ var config = {
   },
   //域名
   hostname: 'w2read.daoapp.io',
+  hosturl: 'w2read.daoapp.io',
   // 程序运行的端口
   port: process.env.VCAP_APP_PORT || 3000,
   // 超级密码   	请勿破解，谢谢
