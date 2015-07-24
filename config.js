@@ -34,10 +34,10 @@ var config = {
   github_oauth: {
     clientID: '8d3f384b322349398e6d',
     clientSecret: '684bf395d7651c7496ce9417aaee17404555c8fe',
-    callbackURL: 'http://localhost:3000/auth/github/callback'
+    callbackURL: 'http://w2read.daoapp.io/auth/github/callback'
   },
   //域名
-  hostname: 'localhost',
+  hostname: 'w2read.daoapp.io',
   // 程序运行的端口
   port: process.env.VCAP_APP_PORT || 3000,
   // 超级密码   	请勿破解，谢谢
@@ -50,7 +50,7 @@ var config = {
   // RSS配置
   rss: {
     title: 'w2r',
-    link: 'http://localhost:3000',
+    link: 'http://w2read.daoapp.io',
     language: 'zh-cn',
     description: 'w2r 是一个使用Node.js开发的专注于阅读和书写体验的网站。',
     //最多获取的RSS Item数量
