@@ -10,4 +10,4 @@ nodejs,mysql,redis
 
 express框架     
 
-项目演示地址  [w2r](http://w2r.coding.io)
+项目演示地址  [w2r](http://w2read.daoapp.io/)
