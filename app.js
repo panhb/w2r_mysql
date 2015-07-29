@@ -67,7 +67,7 @@ app.engine('html', require('ejs-mate'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(config.session_secret));
 app.use(session({
     secret: config.session_secret,
     resave: true,
