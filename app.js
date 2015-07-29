@@ -85,31 +85,35 @@ app.use(function(req, res, next) {
     log.logger('w2r').info('++++++++++++++++++所有的跳转都要经过这个+++++++++++++++++++++++++');
     log.logger('w2r').info(req.url);
 
-    //cookie
-    var auth_token = req.signedCookies[config.auth_cookie_name];
-    if (auth_token) { //存在cookie
-      	mysqlUtil.getById('user',auth_token,function(err,doc){
-      		req.session.user = doc;
-      		next();
-      	})
-    } else {
+    if( req.session.user ){
     	next();
+    } else {
+    	//cookie
+	    var auth_token = req.signedCookies[config.auth_cookie_name];
+	    if (auth_token) { //存在cookie
+	      	mysqlUtil.getById('user',auth_token,function(err,doc){
+	      		req.session.user = doc;
+	      		next();
+	      	})
+	    } else {
+	    	next();
+	    }
     }
-    
+
 });
 
 app.use(function(req, res, next){ 
-	if(!req.session.user){
-		if(_.indexOf(nofree_url,req.url)!==-1){
+	if ( !req.session.user ) {
+		if ( _.indexOf( nofree_url,req.url ) !== -1 ) {
 			res.redirect('/users/login');
 		}
-	}else if(_.indexOf(active_url,req.url) !== -1 && req.session.user.status !== 1){
+	} else if ( _.indexOf( active_url,req.url ) !== -1 && req.session.user.status !== 1 ) {
 		res.render('error', {
 			message: '请先激活',
 			error: {}
 		});
 		return;
-	}else if(_.indexOf(admin_url,req.url) !== -1 && req.session.user.role_type !== 1){
+	}else if ( _.indexOf(admin_url,req.url) !== -1 && req.session.user.role_type !== 1 ) {
 		res.render('error', {
 			message: '您没有权限访问该页面',
 			error: {}
