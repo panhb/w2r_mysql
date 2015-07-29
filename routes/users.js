@@ -104,9 +104,20 @@ router.get('/user/login', function(req, res) {
 									res.send({status:'fail',message:'登录失败,请联系管理员。'});
 								}
                             }else{
+                            	//session
                                 req.session.user = doc;
                                 req.session.message_count = count.count;
                                 req.session.loginid= id ;
+
+                                //cookie
+                                var auth_token = user._id + '$$$$'; // 以后可能会存储更多信息，用 $$$$ 来分隔
+								var opts = {
+								    path: '/',
+								    maxAge: 1000 * 60 * 60 * 24 * 30,
+								    signed: true,
+								    httpOnly: true
+								};
+								res.cookie(config.auth_cookie_name, auth_token, opts); //cookie 有效期30天
 								if(typeof(type) !== 'undefined' && type === 'github' ){
 									res.redirect('/main');
 								}else{
@@ -131,9 +142,14 @@ router.get('/loginOut', function(req, res) {
 		if(err){
 			log.error(err);
 		}else{
+			/*
 			delete req.session.loginid;
 			delete req.session.message_count;
 			delete req.session.user;
+			*/
+			//
+			req.session.destroy();
+  			res.clearCookie(config.auth_cookie_name, { path: '/' });
 			res.redirect('/');
 		}
   });

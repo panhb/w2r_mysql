@@ -47,6 +47,8 @@ var config = {
   control_pageSize: 10,
    //图灵机器人
   tl_apikey:'1241e6e629539909ac3e160d86aeb2cb',
+  //cookie
+  auth_cookie_name: 'w2read',
 
   // RSS配置
   rss: {
