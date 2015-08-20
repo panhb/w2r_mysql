@@ -21,9 +21,9 @@
                 <h2>注册时间&nbsp;:&nbsp;<time><%= user.create_date%></time></h2>
                 <br>
                 <% if ( shareNum === 0 ) { %>
-                    <h2>共&nbsp;<%= shareNum%>&nbsp;篇分享文章</h2>
+                    <h2>有&nbsp;<%= shareNum%>&nbsp;篇分享的文章</h2>
                 <% } else { %>
-                    <h2>共&nbsp;<a target="_blank" href="/articles/user/articlelist?userid=<%= user.id%>"><%= shareNum%></a>&nbsp;篇分享文章</h2>
+                    <h2>有&nbsp;<a href="/articles/user/articlelist?userid=<%= user.id%>"><%= shareNum%></a>&nbsp;篇分享的文章</h2>
                 <% } %>
 
                 <br>

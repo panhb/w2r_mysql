@@ -13,7 +13,7 @@ var login = 'login';
 /* 注册页面 */
 router.get('/reg', function(req, res) {
     if(req.session.user){
-        res.redirect('/main');
+        res.redirect('/main/1');
     }else{
         res.render('user/register',{jumptype:'reg'});
     }
@@ -27,7 +27,7 @@ router.get('/login', function(req, res) {
 		articleid=params.articleid;
     }
     if(req.session.user){
-        res.redirect('/main');
+        res.redirect('/main/1');
     }else{
         res.render('user/login',{articleid:articleid,jumptype:'login'});
     }
@@ -119,7 +119,7 @@ router.get('/user/login', function(req, res) {
 								};
 								res.cookie(config.auth_cookie_name, auth_token, opts); //cookie 有效期30天
 								if(typeof(type) !== 'undefined' && type === 'github' ){
-									res.redirect('/main');
+									res.redirect('/main/1');
 								}else{
 									res.send({status:'success'});
 								}

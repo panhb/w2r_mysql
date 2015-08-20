@@ -65,8 +65,8 @@ app.engine('html', require('ejs-mate'));
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '10mb'}));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser(config.session_secret));
 app.use(session({
     secret: config.session_secret,
@@ -173,7 +173,7 @@ app.use(function(err, req, res, next) {
 
 app.listen(config.port, function () {
     log.logger('w2r').info("w2r listening on port %d", config.port);
-    require('child_process').exec("start http://localhost:"+config.port);
+    //require('child_process').exec("start http://localhost:"+config.port);
 });
 
 //初始化数据库

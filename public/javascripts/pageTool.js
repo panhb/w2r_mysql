@@ -17,10 +17,10 @@ var PageTool = {
 		clickFlag:false,
 		init:function(option,callback){
 			PageTool.pageSize=parseInt(option.pageSize);
-			PageTool.funcName=option.funcName===null?this.funcName:option.funcName;
-			PageTool.funcPreviousName=option.funcPreviousName===null?this.funcPreviousName:option.funcPreviousName;
-			PageTool.funcNextName=option.funcNextName===null?this.funcNextName:option.funcNextName;
-			PageTool.clickFlag=option.clickFlag===null?this.clickFlag:option.clickFlag;
+			PageTool.funcName=option.funcName==null?this.funcName:option.funcName;
+			PageTool.funcPreviousName=option.funcPreviousName==null?this.funcPreviousName:option.funcPreviousName;
+			PageTool.funcNextName=option.funcNextName==null?this.funcNextName:option.funcNextName;
+			PageTool.clickFlag=option.clickFlag==null?this.clickFlag:option.clickFlag;
 			PageTool.pageMax=parseInt(option.pageMax);
 			PageTool.pagetotal=Math.ceil(parseInt(option.totalCount) / parseInt(option.pageSize));
 			this.setPage(1);

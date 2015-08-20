@@ -30,6 +30,7 @@
           <th width="100">收信人</th>
           <th width="160">发信时间</th>
           <th >内容</th>
+          <th width="60">状态</th>
 		  <th width="100">操作</th>
         </tr>
       </thead>
@@ -41,6 +42,13 @@
 				<td><%= v.to_username %></td>
 				<td><time><%= v.send_date %></time></td>
 				<td><%- v.content %></td>
+				<td>
+				<% if(v.has_read===0) {%>
+					未读
+				<% } else { %>
+					已读
+				<% } %>
+				</td>
 				<td><span title="编辑" onclick="editMessage('<%= v.id %>',this)" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span title="删除" onclick="deleteMessage('<%= v.id %>',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>
 			</tr>
 		<% })%>
@@ -164,6 +172,7 @@ function select(index){
 						html+='<td>'+this.to_username+'</td>';
 						html+='<td><time>'+this.send_date+'</time></td>';
 						html+='<td>'+this.content+'</td>';
+						html+='<td>'+(this.has_read==0?'未读':'已读')+'</td>';
 						html+='<td><span title="编辑" onclick="editMessage(\''+this.id+'\',this)" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span title="删除" onclick="deleteMessage(\''+this.id+'\',this)" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span></td>';
 					});
 					$('#message_list').html(html);

@@ -40,7 +40,10 @@
 	
 	<% if (typeof(has_more) !== 'undefined' && has_more !== null&& has_more === true) { %>
 		<div id="pagediv" style="text-align:center;margin-top:50px;">
-		<a style="cursor:pointer;" onclick="loadAllComment('<%= article.id%>')">所有回复</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a style="cursor:pointer;" onclick="loadComment('<%= pageIndex%>','<%= pageSize%>','<%= article.id%>')">更多回复...</a>
+		<a style="cursor:pointer;" onclick="loadAllComment('<%= article.id%>')">所有回复</a>
+		<!--
+		&nbsp;&nbsp;/&nbsp;&nbsp;<a style="cursor:pointer;" onclick="loadComment('<%= pageIndex%>','<%= pageSize%>','<%= article.id%>')">更多回复...</a>
+		-->
 		</div>
 	<% } %>
 	

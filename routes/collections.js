@@ -34,7 +34,7 @@ router.get('/deleteCollect', function(req, res) {
 router.get('/myCollectlist', function(req, res) {
     var userid = req.session.user.id;
     var csql = ' select count(*) count from collection c ,article a,user u where u.id = a.author_id and c.articleid = a.id and c.userid = "'+userid+'"';
-    var sql = ' select a.*,u.username,c.create_date collect_date from collection c ,article a,user u where u.id = a.author_id and c.articleid = a.id and c.userid = "'+userid+'" order by c.create_date desc ';
+    var sql = ' select a.*,u.username,u.avatar ,c.create_date collect_date from collection c ,article a,user u where u.id = a.author_id and c.articleid = a.id and c.userid = "'+userid+'" order by c.create_date desc ';
     mysqlUtil.countBySql(csql,function (err, count) {
         if(err){
 			util.renderError(err,res,'访问失败');

@@ -6,9 +6,12 @@ var mysqlUtil = require('../utils/mysqlUtil');
 var util = require('../utils/util');
 var log = require('../log').logger('w2r');
 var marked = require('marked');
+var async = require('async');
 var message = 'message';
 
-/* 根据角色发站内信 */
+/* 根据角色发站内信 
+   需要支持事务
+*/
 router.get('/addMessage', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var content = params.content;
@@ -24,35 +27,35 @@ router.get('/addMessage', function(req, res) {
 			log.error(err);
             res.send({status:'fail',message:'发送失败'});
 		}else{
-			for(var i in docs){
+			async.map(docs,function(doc,callback){
 				var obj={};
 				obj.id=util.getId();
 				obj.content=content;
 				obj.send_userid=req.session.user.id;
-				obj.to_userid=docs[i].id;
+				obj.to_userid=doc.id;
 				obj.send_date=send_date;
-				mysqlUtil.insert(message,obj,function(err,doc){
+				mysqlUtil.insert(message,obj,function(err){
 					if(err){
-						log.error(err);
-						res.send({status:'fail',message:'发送失败'});
+						callback(err);
+					}else{
+						callback(null);
 					}
 				});
-			}
-			/**/
-			setTimeout(mysqlUtil.count(message,'to_userid="'+req.session.user.id+'" and has_read=0',function(err,count){
-				if(err){
-					log.error(err);
+			},function(errs){
+				if(errs){
+					log.error(errs);
 					res.send({status:'fail',message:'发送失败'});
 				}else{
-					req.session.message_count = count.count;
-					res.send({status:'success',message:'发送成功'});
+					refreshSessionCount(req,res,'发送');
 				}
-			}),10);
+			});
 		}
-    });
+	});
 });
 
-/* 根据用户名发站内信 */
+/* 根据用户名发站内信 
+   需要支持事务
+*/
 router.get('/addMessageByUsername', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var content = params.content;
@@ -61,11 +64,11 @@ router.get('/addMessageByUsername', function(req, res) {
 	//content = marked(content);
 	var tousername = params.tousername.split(',');
 	var send_date = util.getDate();
-	for(var i in tousername){
-		mysqlUtil.getOne('user',' username = "'+tousername[i]+'"',function(err,doc){
+	async.map(tousername,function(username,callback){
+		mysqlUtil.getOne('user',' username = "'+username+'"',function(err,doc){
 			if(err){
 				log.error(err);
-				res.send({status:'fail',message:'发送失败'});
+				callback(err);
 			}else{
 				var obj={};
 				obj.id=util.getId();
@@ -76,23 +79,21 @@ router.get('/addMessageByUsername', function(req, res) {
 				mysqlUtil.insert(message,obj,function(err,doc){
 					if(err){
 						log.error(err);
-						res.send({status:'fail',message:'发送失败'});
-						return;
+						callback(err);
+					}else{
+						callback(null);
 					}
 				});
 			}
 		});
-	}
-	/**/
-	setTimeout(mysqlUtil.count(message,'to_userid="'+req.session.user.id+'" and has_read=0',function(err,count){
-		if(err){
-			log.error(err);
+	},function(errs){
+		if(errs){
+			log.error(errs);
 			res.send({status:'fail',message:'发送失败'});
 		}else{
-			req.session.message_count = count.count;
-			res.send({status:'success',message:'发送成功'});
+			refreshSessionCount(req,res,'发送');
 		}
-	}),10);
+	});
 });
 
 /* 删除站内信 */
@@ -107,15 +108,7 @@ router.get('/deleteMessage', function(req, res) {
 			res.send({status:'fail',message:'删除失败'});
 		}else{
 			//刷新当前登录人的未读信息条数
-			mysqlUtil.count(message,'to_userid="'+userid+'" and has_read=0',function(err,count){
-				if(err){
-					log.error(err);
-					res.send({status:'fail',message:'删除失败'});
-				}else{
-					req.session.message_count = count.count;
-					res.send({status:'success',message:'删除成功'});
-				}	
-			});
+			refreshSessionCount(req, res,'删除');
 		}	
 	});
 });
@@ -206,15 +199,7 @@ router.get('/changeRead', function(req, res) {
 			log.error(err);
 			res.send({status:'fail',message:'操作失败'});
 		}else{
-			mysqlUtil.count(message,' to_userid = "'+ userid +'" and has_read = 0 ',function(err,count){
-				if(err){
-					log.error(err);
-					res.send({status:'fail',message:'操作失败'});
-				}else{
-					req.session.message_count = count.count;
-					res.send({status:'success',message:'操作成功'});
-				}	
-			});
+			refreshSessionCount(req, res,'操作');
 		}
 	});
 });
@@ -240,5 +225,18 @@ router.get('/getMessageContent', function(req, res) {
 		res.send(message);
 	});
 });
+
+var refreshSessionCount = function(req,res,m){
+	var userid=req.session.user.id;
+	mysqlUtil.count(message,' to_userid = "'+ userid +'" and has_read = 0 ',function(err,count){
+		if(err){
+			log.error(err);
+			res.send({status:'fail',message:m+'失败'});
+		}else{
+			req.session.message_count = count.count;
+			res.send({status:'success',message:m+'成功'});
+		}	
+	});
+}
 
 module.exports = router;

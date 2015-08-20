@@ -286,14 +286,13 @@ function saveArticle(){
     var content=$("#editor").val();
     var height=$("#editor").height();
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/articles/addArticle",
         data: {article_id:article_id,content:content,title:title,height:height},
         dataType: "json",
         success: function(json){
-            var data=eval(json)
-            $("#article_id").val(data.id);
-            alert(data.message);
+            $("#article_id").val(json.id);
+            alert(json.message);
         }
     })
 }
@@ -302,7 +301,7 @@ function previewShow(){
 	var data=$("#editor").val();
 	$.ajax({
 		async:false,
-		type: "GET",
+		type: "POST",
 		url: "/articles/article2html",
 		data: {content:data},
 		dataType: "json",

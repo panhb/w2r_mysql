@@ -1,12 +1,33 @@
 <% if (typeof(list) !== 'undefined' && list.length > 0) { %>
 <% list.forEach(function (v, k){ %>
+
+<li class="entry-item">
+	<hr size=1 style="color: blue;border-style:dashed ;width:100%">
+	<div class="entry-meta">
+	  <% if (typeof(v.avatar)!=='undefined'&&v.avatar !== null&& v.avatar !== '') { %>
+		<a href="/relations/follow/<%= v.author_id%>"><img src='<%= v.avatar%>' title='<%= v.username%>' height='25' width='25' style='border-radius:5px;'></a>
+	  <% } else { %>
+        <a href="/relations/follow/<%= v.author_id%>"><img src='http://gravatar.com/avatar?size=25' title='<%= v.username%>' height='25' width='25' style='border-radius:5px;'></a>
+	  <% } %>
+	  &nbsp;
+	  <a title="<%- v.title %>" target="_blank" href="/articles/reading/<%= v.id %>" style="font-size:22px;"><%- v.title %></a>
+	  &nbsp;&nbsp;&nbsp;&nbsp;分享于<%= v.update_date %>&nbsp;&nbsp;&nbsp;&nbsp;
+	  <span style="color:#00DD00;font-size:16px;font-weight:900;"><%= v.reply_count %></span> / <span style="color:#9e78c0;font-size:12px;font-weight:600;"><%= v.visit_count %></span>
+	</div>
+	<div>
+	  <h2></h2>
+	</div>
+  </li>
+<% })%>
+<% } %>
+
+<!--
+<% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+<% list.forEach(function (v, k){ %>
 <li class="entry-item">
 	<div class="entry-meta">
 	  <%= v.username %>&nbsp;&nbsp;&nbsp;&nbsp;
 	  分享于<%= v.update_date %>&nbsp;&nbsp;&nbsp;&nbsp;
-	  <!--
-	  点击数&nbsp;&nbsp;<%= v.visit_count %>&nbsp;&nbsp;&nbsp;&nbsp;回复数&nbsp;&nbsp;<%= v.reply_count %>
-	  -->
 	  <span style="color:#9e78c0;font-size:14px"><%= v.reply_count %></span> / <span style="font-size:10px"><%= v.visit_count %></span>
 	</div>
 	<div>
@@ -15,4 +36,4 @@
   </li>
 <% })%>
 <% } %>
-
+-->

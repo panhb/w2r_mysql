@@ -79,10 +79,10 @@ function loadArtcile(pageIndex,pageSize,loadType){
 		dataType: "json",
 		success: function(json){
 			var data=eval(json)
-			if(data.status==='fail'){
+			if(json.status==='fail'){
 				alert('加载失败');
 			}else{
-				var list=data.list;
+				var list=json.list;
 				var html='';
 				$(list).each(function(){
 					if(loadType==='my'){
@@ -98,15 +98,15 @@ function loadArtcile(pageIndex,pageSize,loadType){
                         }
 						html+='<li class="entry-item"><div class="entry-meta">'+
 						'create:<time>'+this.create_date+'</time>&nbsp;&nbsp;'+
-						'update:<time>'+this.update_date+'</time>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
-						'<span title="编辑" onclick="editArticle(\''+this.id+'\')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>&nbsp;&nbsp;';
+						'update:<time>'+this.update_date+'</time>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+						'<span title="编辑" onclick="editArticle(\''+this.id+'\')" class="glyphicon glyphicon-pencil" style="cursor:pointer;"></span>';
 						if(this.status == 0){
-							html+='<span title="分享" onclick="shareArticle(\''+this.id+'\',\'1\',this)" class="glyphicon glyphicon-share-alt" style="cursor:pointer;"></span>&nbsp;&nbsp;'
+							html+='&nbsp;&nbsp;<span title="分享" onclick="shareArticle(\''+this.id+'\',\'1\',this)" class="glyphicon glyphicon-share-alt" style="cursor:pointer;"></span>&nbsp;&nbsp;';
+							html+='<span title="删除" onclick="deleteArticle(\''+this.id+'\')" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span>';
 						}else{
 							//html+='<span title="取消分享" onclick="shareArticle(\''+this.id+'\',\'0\',this)" class="glyphicon glyphicon-ban-circle" style="cursor:pointer;"></span>&nbsp;&nbsp;'
 						}
-						html+='<span title="删除" onclick="deleteArticle(\''+this.id+'\')" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span>'+
-						'</div><div><h2><a target="_blank" href="/articles/reading/'+this.id+'">'+this.title+'</a></h2></div></li>';
+						html+='</div><div><h2><a target="_blank" href="/articles/reading/'+this.id+'">'+this.title+'</a></h2></div></li>';
 					}else{
 						html+='<li class="entry-item"><div class="entry-meta">'+this.username+
 						'&nbsp;&nbsp;&nbsp;&nbsp;<time>'+this.update_date+'</time>&nbsp;&nbsp;&nbsp;&nbsp;点击数&nbsp;&nbsp;'+this.visit_count+'&nbsp;&nbsp;&nbsp;&nbsp;回复数&nbsp;&nbsp;'+this.reply_count+'</div>'+
@@ -114,14 +114,14 @@ function loadArtcile(pageIndex,pageSize,loadType){
 					}
 				});
 				var pagehtml='';
-				if(data.has_more){
+				if(json.has_more){
 					if(loadType==='share'){
-						pagehtml='<a style="cursor:pointer;" onclick="loadArtcile(\''+data.pageIndex+'\',\''+data.pageSize+'\',\'share\')">更多分享文章...</a>';
+						pagehtml='<a style="cursor:pointer;" onclick="loadArtcile(\''+json.pageIndex+'\',\''+json.pageSize+'\',\'share\')">更多分享文章...</a>';
 					}else{
-						pagehtml='<a style="cursor:pointer;" onclick="loadArtcile(\''+data.pageIndex+'\',\''+data.pageSize+'\',\'my\')">更多文章...</a>';
+						pagehtml='<a style="cursor:pointer;" onclick="loadArtcile(\''+json.pageIndex+'\',\''+json.pageSize+'\',\'my\')">更多文章...</a>';
 					}
 				}else{
-					pagehtml="加载完了，还加载条毛啊";
+					pagehtml="加载完鸟";
 				}
 				$('#article_list').append(html);
 				$('#pagediv').html(pagehtml);
@@ -147,6 +147,7 @@ function shareArticle(id,status,obj){
 			var data=eval(json)
 			alert(data.message);
 			if(data.status==='success'){
+				/*
 				var nstatus='0';
 				var ntitle='取消分享';
 				var nclass='glyphicon glyphicon-ban-circle';
@@ -156,7 +157,10 @@ function shareArticle(id,status,obj){
 					 nclass='glyphicon glyphicon-share-alt';
 				}
 				$(obj).before('<span title="'+ntitle+'" onclick=shareArticle("'+id+'","'+nstatus+'",this) class="'+nclass+'" style="cursor:pointer;"></span>')
+				*/
+				$(obj).next().remove();
 				$(obj).remove();
+
 			}
 		},
 		error: function(){
@@ -174,9 +178,8 @@ function deleteArticle(id){
 		data: {id:id},
 		dataType: "json",
 		success: function(json){
-			var data=eval(json)
-			alert(data.message);
-			if(data.status==='success'){
+			alert(json.message);
+			if(json.status==='success'){
 				location.reload();
 			}
 		},

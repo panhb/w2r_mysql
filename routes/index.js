@@ -10,16 +10,16 @@ var mcache = require('memory-cache');
 var marked = require('marked');
 
 /* GET home page. */
-router.get('/main', function(req, res) {
+router.get('/main/:pageIndex', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
-	var pageIndex = params.pageIndex;
+	var pageIndex= req.params.pageIndex;
 	var pageSize = params.pageSize;
 	var po = {};
 	po.pageIndex = pageIndex;
 	po.pageSize = pageSize;
 	po = util.page(po);
 	var csql = 'select count(*) count from (select * from article where status=1) a , user u where a.author_id=u.id '; 
-	var sql = 'select a.*,u.username,u.avatar count from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc'; 
+	var sql = 'select a.*,u.username,u.avatar from (select * from article where status=1) a , user u where a.author_id=u.id order by a.update_date desc'; 
 	mysqlUtil.countBySql(csql,function (err,count) {
 		if(err){
 			util.renderError(err,res,'访问失败');
@@ -28,16 +28,10 @@ router.get('/main', function(req, res) {
 				if(err){
 					util.renderError(err,res,'访问失败');
 				}else{
-					var has_more=false;
-					if(count.count<=po.pageIndex*po.pageSize){
-						has_more=false;
-					}else{
-						has_more=true;
-					}
 					for(var i in docs){
 	                    docs[i].update_date = util.fromNow(docs[i].update_date);
 	                }
-					res.render('main', {has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,title: config.name,count:count.count,list:docs});
+					res.render('main', {title: config.name,count:count.count,list:docs});
 				}
 			});
 		}
@@ -46,7 +40,7 @@ router.get('/main', function(req, res) {
 
 router.get('/', function(req, res) {
 	if (req.session.user) {
-        res.redirect('/main');
+        res.redirect('/main/1');
     } else {
     	res.render('index');
     }

@@ -10,6 +10,8 @@ var mysqlUtil = require('../utils/mysqlUtil');
 var util = require('../utils/util');
 var log = require('../log').logger('w2r');
 var qiniu = require('qiniu');
+var moment = require('moment');
+moment.locale('zh-cn'); // 使用中文
 var article = 'article';
 var comment = 'comment';
 
@@ -19,9 +21,8 @@ router.get('/writing', function(req, res) {
 });
 
 /* 转文章 */
-router.get('/article2html', function(req, res) {
-	var params = Url.parse(req.url,true).query; 
-	var content=params.content;
+router.post('/article2html', function(req, res) {
+	var content=req.body.content; 
     var html= marked(content);
 	res.send({html:html});
 });
@@ -53,6 +54,39 @@ router.get('/myArticle', function(req, res) {
 						has_more=true;
 					}
 					res.render('article/articlelist', {type:'my',has_more:has_more,pageIndex:(po.pageIndex+1),pageSize:po.pageSize,count:count.count,list:docs});
+				}
+			});
+		}
+		
+	});
+});
+
+
+/* 我的文章列表 */
+router.get('/myArticle2/:pageIndex', function(req, res) {
+	var params = Url.parse(req.url,true).query; 
+	var author_id = req.session.user.id; 
+	var pageIndex=req.params.pageIndex;
+	var pageSize = params.pageSize;
+	var po = {};
+	po.pageIndex = pageIndex;
+	po.pageSize = pageSize;
+	po = util.page(po);
+	var csql = 'select count(*) count from article a , user u where a.author_id=u.id and a.author_id="'+author_id+'"'; 
+	var sql='select a.*,u.username,u.avatar from article a , user u where a.author_id=u.id and a.author_id="'+author_id+'" order by update_date desc'; 
+	mysqlUtil.countBySql(csql,function (err,count) {
+		if(err){
+			util.renderError(err,res,'访问失败');
+		}else{
+			mysqlUtil.queryWithPage(po.pageIndex,po.pageSize,sql,function (err,docs) {
+				if(err){
+					util.renderError(err,res,'访问失败');
+				}else{
+					for(var i in docs){
+						docs[i].create_date = moment(docs[i].create_date).format('YYYY-MM-DD HH:mm');
+						docs[i].update_date = moment(docs[i].update_date).format('YYYY-MM-DD HH:mm');
+					}
+					res.render('article/myarticlelist2', {count:count.count,list:docs});
 				}
 			});
 		}
@@ -190,16 +224,15 @@ router.get('/user/articlelist', function(req, res) {
 });
 
 /* 保存文章 */
-router.get('/addArticle', function(req, res) {
-  var params = Url.parse(req.url,true).query; 
-  var content = params.content;
+router.post('/addArticle', function(req, res) {
+  var content = req.body.content;
   content = util.xss(content);
   content = util.escape(content);
-  var title = params.title;
+  var title = req.body.title;
   title = util.xss(title);
   title = util.escape(title);
-  var article_id=params.article_id;
-  var height=params.height;
+  var article_id=req.body.article_id;
+  var height=req.body.height;
   var date = util.getDate();
   var obj={};
   var updateString =' height = "'+height+'" ,content = "'+content+'" ,title = "'+title+'" ,update_date = "'+date+'" ';
@@ -226,7 +259,7 @@ router.get('/addArticle', function(req, res) {
 			res.send({id:obj.id,message:'保存失败'});
 		}else{
 			log.info(doc);
-			res.send({id:doc.id,message:'保存成功'});
+			res.send({id:obj.id,message:'保存成功'});
 		}
 	});
   }

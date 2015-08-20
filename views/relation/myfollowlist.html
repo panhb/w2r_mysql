@@ -19,7 +19,7 @@
                 <% } %>
             </div>
             <div>
-                <h4><a target="_blank" href="/articles/user/articlelist?userid=<%= v.followid%>"><%= v.username%></a></h4>
+                <h4><a href="/articles/user/articlelist?userid=<%= v.followid%>"><%= v.username%></a></h4>
                 <h4>关注时间&nbsp;:&nbsp;<time><%= v.create_date%></time></h4>
                 <div id="<%= v.id%>">
                     <button type="button" onclick="relation_focus('0','<%= v.followid%>','<%= v.id%>')" class="btn btn-primary">取消关注</button>

@@ -83,6 +83,11 @@
   text-decoration-color: rgba(0, 0, 0, 0.6);
 }
 
+.yue a:visited {
+      color: #778087;
+      text-decoration: none;
+    }
+
 .yue strong,
 .yue b {
   font-weight: 700;

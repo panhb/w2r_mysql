@@ -8,8 +8,8 @@
 .subheader {
 //	background: #fbfbfa;
 	padding: 16px 0;
-	border-top: 1px solid #eee;
-	border-bottom: 1px solid #eee;
+//	border-top: 1px solid #eee;
+//	border-bottom: 1px solid #eee;
 	text-align: center;
 }
 .entry-list {
@@ -18,9 +18,10 @@
 	list-style-type: none;
 }
 .entry-list .entry-item {
-	margin: 25px 0 35px;
+	list-style:none;
+	margin: 5px 0 15px;
 	line-height: 25px;
-	min-height: 50px;
+	min-height: 20px;
 }
 .entry-list .entry-meta {
 	font-size: 14px;
@@ -31,9 +32,9 @@
 </head>
 <body>
 <div class="yue">
-<div class="subheader"><%= username %>&nbsp;&nbsp;共
+<div class="subheader"><%= username %>&nbsp;&nbsp;共有
 <%= count %>
-篇分享文章</div>
+篇分享的文章</div>
 <ul id="article_list" class="entry-list">
     <%- partial('../article/sharearticlelist') %>
 </ul>

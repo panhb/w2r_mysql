@@ -3,7 +3,7 @@
 p#back-to-top{
     position:fixed;
     display:none;
-    bottom:130px;
+    bottom:100px;
     right:70px;
 }
 p#back-to-top a{
@@ -26,8 +26,8 @@ p#back-to-top a span{
     background:#d1d1d1 url(/images/up_26.png) no-repeat center  center ;
     border-radius:6px;
     display:block;
-    height:50px;
-    width:50px;
+    height:40px;
+    width:40px;
     margin-bottom:5px;
     /*使用CSS3中的transition属性给<span>标签背景颜色添加渐变效果*/
     -moz-transition:background 1s;
@@ -39,16 +39,18 @@ p#back-to-top a span{
 }
 </style>
 <footer>
-    <p id="back-to-top"><a><span></span>返回顶部</a></p>
+    <!--
+    <p id="back-to-top"><a><span></span>返回顶部</a></p>-->
+    <p id="back-to-top"><a><span></span></a></p>
 </footer>
 <script type="text/javascript">
 //当滚动条的位置处于距顶部100像素以下时，跳转链接出现，否则消失
 $(function () {
     $(window).scroll(function(){
         if ($(window).scrollTop()>100){
-            $("#back-to-top").fadeIn(1500);
+            $("#back-to-top").fadeIn(500);
         }else{
-            $("#back-to-top").fadeOut(1500);
+            $("#back-to-top").fadeOut(500);
         }
     });
     //当点击跳转链接后，回到页面顶部位置

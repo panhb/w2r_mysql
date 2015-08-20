@@ -8,8 +8,8 @@
 .subheader {
 //	background: #fbfbfa;
 	padding: 16px 0;
-	border-top: 1px solid #eee;
-	border-bottom: 1px solid #eee;
+//	border-top: 1px solid #eee;
+//	border-bottom: 1px solid #eee;
 	text-align: center;
 }
 .entry-list {
@@ -18,9 +18,10 @@
 	list-style-type: none;
 }
 .entry-list .entry-item {
-	margin: 25px 0 35px;
+	list-style:none;
+	margin: 5px 0 15px;
 	line-height: 25px;
-	min-height: 50px;
+	min-height: 20px;
 }
 .entry-list .entry-meta {
 	font-size: 14px;
@@ -39,18 +40,27 @@
 	<% list.forEach(function (v, k){ %>
 	<li class="entry-item">
 		<div class="entry-meta">
-		  <%= v.username %>&nbsp;&nbsp;&nbsp;&nbsp;
-		  收藏于<%= v.update_date %>&nbsp;&nbsp;&nbsp;&nbsp;
+		收藏于<%= v.update_date %>&nbsp;&nbsp;
+			<% if (typeof(v.avatar)!=='undefined'&&v.avatar !== null&& v.avatar !== '') { %>
+			<a href="/relations/follow/<%= v.author_id%>"><img src='<%= v.avatar%>' title='<%= v.username%>' height='25' width='25' style='border-radius:5px;'></a>
+		  <% } else { %>
+	        <a href="/relations/follow/<%= v.author_id%>"><img src='http://gravatar.com/avatar?size=25' title='<%= v.username%>' height='25' width='25' style='border-radius:5px;'></a>
+		  <% } %>
+		  &nbsp;
+		  <a title="<%- v.title %>" target="_blank" href="/articles/reading/<%= v.id %>" style="font-size:22px;"><%- v.title %></a>
+		  <!--
+		  &nbsp;&nbsp;&nbsp;&nbsp;
 		  <span style="color:#9e78c0;font-size:14px"><%= v.reply_count %></span> / <span style="font-size:10px"><%= v.visit_count %></span>
+		  -->
 		</div>
 		<div>
-		  <h2><a title="<%- v.title %>" target="_blank" href="/articles/reading/<%= v.id %>"><%- v.title %></a></h2>
+		  <h2></h2>
 		</div>
 	  </li>
 	<% })%>
 	<% } %>
 </ul>
-<div>
+</div>
 <%- partial('../common/footer') %>
 </body>
 </html>
