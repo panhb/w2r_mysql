@@ -69,7 +69,7 @@ $(function(){
 	$("time").each(function(){
 		$(this).html(moment($(this).html()).format('YYYY-MM-DD HH:mm'))
 	});
-})
+});
 
 function loadArtcile(pageIndex,pageSize,loadType){
 	$.ajax({
@@ -130,7 +130,7 @@ function loadArtcile(pageIndex,pageSize,loadType){
 		error: function(){
 			alert('加载失败');
 		}
-	})
+	});
 }
 
 function editArticle(id){
@@ -166,7 +166,7 @@ function shareArticle(id,status,obj){
 		error: function(){
 			alert("操作失败");
 		}
-	})
+	});
 }
 function deleteArticle(id){
 	if(!confirm('是否确定删除？')){
@@ -186,6 +186,6 @@ function deleteArticle(id){
 		error: function(){
 			alert("删除失败");
 		}
-	})
+	});
 }
 </script>

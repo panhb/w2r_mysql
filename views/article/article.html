@@ -21,7 +21,7 @@ body {
     <a target="_blank" href="/relations/follow/<%= article.author_id%>"><img class="avatar" title='<%= article.username%>' height="20" width="20" src="http://gravatar.com/avatar?size=20" ></a>
 <% } %>
 &nbsp;&nbsp;<%= article.username %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="time"><%= article.update_date %></span>
-<% if (typeof(session.user) !== 'undefined' && session.user !== null) { %>
+<% if (typeof(session.user) !== 'undefined' && session.user !== null ) { %>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<% if (typeof(has_collect) !== 'undefined' && has_collect !== null&& has_collect === true) { %>
 		<span title="取消收藏" onclick="deleteCollectArticle('<%= article.id %>',this)" class="glyphicon glyphicon-heart" style="cursor:pointer;"></span>

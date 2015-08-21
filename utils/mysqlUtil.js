@@ -6,7 +6,7 @@ var conn = mysql.createPool(config.mysql_options);
 
 
 
-
+exports.connection = conn;
 
 /**
  * 初始化数据库

@@ -21,7 +21,7 @@
 	"lodash": "2.4.1",
 	"q": "1.1.1",
 	"superagent": "0.21.0",
-	"mysql": "2.5.3",
+	"mysql": "*",
 	"log4js": "0.6.21",
 	"passport": "0.2.1",
 	"passport-github": "0.1.5",

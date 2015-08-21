@@ -437,8 +437,61 @@ router.get('/deleteArticle', function(req, res) {
     var params = Url.parse(req.url,true).query;
 	var id = params.id;
     log.info('文章id:'+id);
+    /*
 	mysqlUtil.deleteById(article,id,function (err) {
 		util.send(err,res,'删除成功','删除失败');
+	});
+	*/
+
+	/*  事务的方式处理  先删除评论 删除收藏 最后删除文章 */
+	var pool = mysqlUtil.connection;
+
+	pool.getConnection(function (err, connection) {
+		if (err) {
+			log.error(err);
+			res.send({status:'success',message:'删除失败'});
+		}
+		var sql = [ 'delete from comment where articleid = ?',
+				    'delete from collection where articleid = ?',
+					'delete from article where id = ?'];
+		connection.beginTransaction(function(err) {
+			if (err) {
+				log.error(err);
+				res.send({status:'success',message:'删除失败'});
+			}
+			connection.query(sql[0], id, function(err, result) {
+			    if (err) {
+				    return connection.rollback(function() {
+				        log.error(err);
+						res.send({status:'fail',message:'删除失败'});
+				    });	
+			    }
+			    connection.query(sql[1], id, function(err, result) {
+				    if (err) {
+					    return connection.rollback(function() {
+					        log.error(err);
+							res.send({status:'fail',message:'删除失败'});
+					    });	
+				    }
+				    connection.query(sql[2], id, function(err, result) {
+					    if (err) {
+						    return connection.rollback(function() {
+						        log.error(err);
+								res.send({status:'fail',message:'删除失败'});
+						    });	
+					    }
+					    connection.commit(function(err) {
+					        if (err) {
+						        return connection.rollback(function() {
+						            res.send({status:'fail',message:'删除失败'});
+						        });
+					        }
+					        res.send({status:'success',message:'删除成功'});
+					     });
+				    });
+			    });
+		    });
+		});
 	});
 });
 
