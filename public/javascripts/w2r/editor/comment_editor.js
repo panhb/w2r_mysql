@@ -140,9 +140,6 @@ $(function(){
 			$("#preview").fadeOut();
 		}
 	});
-<<<<<<< HEAD
-});
-=======
 
     $(".glyphicon-resize-full").click(function(){
         var elem = document.getElementById("editor");
@@ -156,8 +153,8 @@ $(function(){
             elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
         }
     });
-})
->>>>>>> a5942888a7e83a752bb9051d85e65268f19bf98d
+});
+
 
 function addlink(){
     $("#linkModal").modal("hide");

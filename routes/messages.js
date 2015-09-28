@@ -36,10 +36,10 @@ router.get('/addMessage', function(req, res) {
 				obj.send_date=send_date;
 				mysqlUtil.insert(message,obj,function(err){
 					if(err){
-						log.info('发送失败++++++send_userid:'+send_userid+',to_userid:'+to_userid);
+						log.info('发送失败++++++send_userid:'+obj.send_userid+',to_userid:'+obj.to_userid);
 						callback(err);
 					}else{
-						log.info('发送成功++++++send_userid:'+send_userid+',to_userid:'+to_userid);
+						log.info('发送成功++++++send_userid:'+obj.send_userid+',to_userid:'+obj.to_userid);
 						callback(null);
 					}
 				});
@@ -80,10 +80,10 @@ router.get('/addMessageByUsername', function(req, res) {
 				obj.send_date=send_date;
 				mysqlUtil.insert(message,obj,function(err,doc){
 					if(err){
-						log.info('发送失败++++++send_userid:'+send_userid+',to_userid:'+to_userid);
+						log.info('发送失败++++++send_userid:'+obj.send_userid+',to_userid:'+obj.to_userid);
 						callback(err);
 					}else{
-						log.info('发送成功++++++send_userid:'+send_userid+',to_userid:'+to_userid);
+						log.info('发送成功++++++send_userid:'+obj.send_userid+',to_userid:'+obj.to_userid);
 						callback(null);
 					}
 				});
