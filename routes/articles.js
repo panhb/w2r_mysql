@@ -206,7 +206,7 @@ router.get('/user/articlelist', function(req, res) {
     var csql = 'select count(*) count from (select * from article where author_id = "'+userid+'" and status = 1) a , user u where a.author_id=u.id ';
     var sql = 'select a.*,u.username,u.avatar from (select * from article where author_id = "'+userid+'" and status = 1) a , user u where a.author_id=u.id order by a.update_date desc';
     mysqlUtil.countBySql(csql,function (err, count) {
-        if(err){
+        if(err || count.count == 0){
 			util.renderError(err,res,'访问失败');
         }else{
             mysqlUtil.query(sql,function (err, docs) {
