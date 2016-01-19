@@ -299,8 +299,9 @@ function saveArticle(){
         data: {article_id:article_id,content:content,title:title,height:height},
         dataType: "json",
         success: function(json){
-            $("#article_id").val(json.id);
-            alert(json.message);
+            //$("#article_id").val(json.id);
+            //alert(json.message);
+			location.href='reading/'+json.id;
         }
     })
 }
