@@ -148,6 +148,8 @@ router.get('/loginOut', function(req, res) {
 			delete req.session.user;
 			*/
 			//
+			var article_sessionid = 'article_'+req.sessionID;
+			util.redisDel(article_sessionid);
 			req.session.destroy();
   			res.clearCookie(config.auth_cookie_name, { path: '/' });
 			res.redirect('/');

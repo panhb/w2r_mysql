@@ -34,6 +34,7 @@
     "connect-busboy": "0.0.2",
 	"marked": "~0.3.2",
 	"async": "*",
-	"oneapm": "1.2.8"
+	"oneapm": "1.2.8",
+	"ioredis": "*"
   }
 }

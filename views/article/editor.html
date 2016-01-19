@@ -53,6 +53,7 @@ body {
 <a title="全屏"  class="glyphicon glyphicon-resize-full" style="position:absolute;margin-top:15px;right: 0;"></a>
 </div>
 <textarea id="editor"  placeholder="正文" class="info"  oninput="this.style.height=this.scrollHeight+'px';"><% if (typeof(content) !== 'undefined'&&content !== '') { %><%- content%><% } %></textarea>
+<textarea id="lasteditor" style="display:none;"><% if (typeof(lastcontent) !== 'undefined'&&lastcontent !== '') { %><%- lastcontent%><% } %></textarea>
 <div id="preview" class="preview"></div>
 <div class="editor-statusbar">
 <span class="lines">1</span>

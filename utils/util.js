@@ -4,6 +4,43 @@ var crypto = require('crypto');
 var xss = require('xss');
 var log = require('../log').logger('w2r');
 var config = require('../config');
+var Redis = require('ioredis');
+var redis = new Redis(config.redis_options.port,config.redis_options.host);
+
+
+/**
+ * redis set
+ * @param {String} key 
+ * @param {String} value 
+ */
+exports.redisSet = function (key,value) { 
+	redis.set(key, value);
+};
+
+/**
+ * redis get
+ * @param {String} key 
+ */
+exports.redisGet = function (key,callback) { 
+    redis.get(key, function (err, result) {
+	  callback(err, result);
+	});
+};
+
+/**
+ * redis delete
+ * @param {String} key 
+ */
+exports.redisDel = function (key) { 
+	redis.exists(key,function(err,result){
+		if(result == '1'){
+			redis.del(key);
+			log.info('delete redis key '+key);
+		}
+	});
+};
+
+
 
 /**
  * 获取时间

@@ -15,9 +15,27 @@ moment.locale('zh-cn'); // 使用中文
 var article = 'article';
 var comment = 'comment';
 
+/* 自动保存  1秒一次 */
+router.post('/autoSaveArticle', function(req, res) {
+	var content = req.body.content;
+	content = util.xss(content);
+	content = util.escape(content);
+	var article_sessionid = 'article_'+req.sessionID;
+	util.redisSet(article_sessionid,content);
+	res.send({message:'自动保存成功'});	
+});
+
 /* 写文章 */
 router.get('/writing', function(req, res) {
-  res.render('article/editor');
+	var article_sessionid = 'article_'+req.sessionID;
+	util.redisGet(article_sessionid,function(err,content){
+		if(err){
+			log.error(err);
+			res.render('article/editor');
+		}else{
+			res.render('article/editor', {lastcontent:content});
+		}	
+	});
 });
 
 /* 转文章 */
@@ -249,6 +267,8 @@ router.post('/addArticle', function(req, res) {
 			log.error(err);
 			res.send({id:article_id,message:'保存失败'});
 		}else{
+			var article_sessionid = 'article_'+req.sessionID;
+			util.redisDel(article_sessionid);
 			res.send({id:article_id,message:'保存成功'});
 		}
 	});
@@ -259,11 +279,16 @@ router.post('/addArticle', function(req, res) {
 			res.send({id:obj.id,message:'保存失败'});
 		}else{
 			log.info(doc);
+			var article_sessionid = 'article_'+req.sessionID;
+			util.redisDel(article_sessionid);
 			res.send({id:obj.id,message:'保存成功'});
 		}
 	});
   }
 });
+
+
+
 
 /* 根据id获取文章内容 */
 router.get('/reading/:id', function(req, res) {
