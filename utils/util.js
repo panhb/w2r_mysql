@@ -22,11 +22,15 @@ exports.redisSet = function (key,value) {
  * @param {String} key 
  */
 exports.redisGet = function (key,callback) { 
+	console.log('redisGet'+key);
 	redis.exists(key,function(err,result){
+		console.log('exists');
 		if(result == '1'){
 			 redis.get(key, function (err, result) {
 			  callback(err, result);
 			});
+		}else{
+			callback(key+'不存在');
 		}
 	});
 };
@@ -35,7 +39,7 @@ exports.redisGet = function (key,callback) {
  * redis delete
  * @param {String} key 
  */
-exports.redisDel = function (key) { 
+exports.redisDel = function (key) {
 	redis.exists(key,function(err,result){
 		if(result == '1'){
 			redis.del(key);
