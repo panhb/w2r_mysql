@@ -5,7 +5,7 @@ var xss = require('xss');
 var log = require('../log').logger('w2r');
 var config = require('../config');
 var Redis = require('ioredis');
-var redis = new Redis(config.redis_options.port,config.redis_options.host);
+var redis = new Redis(config.redis_options);
 
 
 /**
@@ -22,9 +22,7 @@ exports.redisSet = function (key,value) {
  * @param {String} key 
  */
 exports.redisGet = function (key,callback) { 
-	console.log('redisGet'+key);
 	redis.exists(key,function(err,result){
-		console.log('exists');
 		if(result == '1'){
 			 redis.get(key, function (err, result) {
 			  callback(err, result);

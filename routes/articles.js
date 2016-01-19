@@ -28,10 +28,7 @@ router.post('/autoSaveArticle', function(req, res) {
 /* 写文章 */
 router.get('/writing', function(req, res) {
 	var article_sessionid = 'article_'+req.sessionID;
-	console.log(article_sessionid);
-	console.log('redisGet');
 	util.redisGet(article_sessionid,function(err,content){
-		console.log('redisGet return');
 		if(err){
 			log.error(err);
 			res.render('article/editor');
