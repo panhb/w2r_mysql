@@ -22,8 +22,12 @@ exports.redisSet = function (key,value) {
  * @param {String} key 
  */
 exports.redisGet = function (key,callback) { 
-    redis.get(key, function (err, result) {
-	  callback(err, result);
+	redis.exists(key,function(err,result){
+		if(result == '1'){
+			 redis.get(key, function (err, result) {
+			  callback(err, result);
+			});
+		}
 	});
 };
 
