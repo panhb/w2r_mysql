@@ -1,5 +1,13 @@
 var position=0;
 $(function(){
+	var lastcontent = $("#lasteditor").html();
+	
+	if(lastcontent !== null && lastcontent !== ''){
+		if(confirm('是否需要加载上一次未保存的内容?')){
+			$("#editor").html(lastcontent);
+		}
+	}
+	
 	$("#editor").focus();
 
 	var height=$("#height").val();
@@ -294,6 +302,25 @@ function saveArticle(){
             $("#article_id").val(json.id);
             alert(json.message);
         }
+    })
+}
+
+
+setInterval('autoSaveArticle()',5000);
+
+function autoSaveArticle(){   
+    var content=$("#editor").val();
+    $.ajax({
+        type: "POST",
+        url: "/articles/autoSaveArticle",
+        data: {content:content},
+        dataType: "json",
+        success: function(json){
+            //alert(json.message);
+        },
+		error:function(err){
+			console.log(err);
+		}
     })
 }
 
