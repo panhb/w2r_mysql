@@ -10,6 +10,12 @@ var config = {
     port: process.env.REDIS_PORT
   },
   
+  ioredis_options:{
+	host: process.env.REDIS_HOST,
+	password: process.env.REDIS_PASSWORD,
+    port: process.env.REDIS_PORT
+  },
+  
   mysql_options:{
     connectionLimit : process.env.MYSQL_CONNECTIONLIMIT,
     host: process.env.MYSQL_HOST,

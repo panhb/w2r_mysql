@@ -5,7 +5,7 @@ var xss = require('xss');
 var log = require('../log').logger('w2r');
 var config = require('../config');
 var Redis = require('ioredis');
-var redis = new Redis(config.redis_options);
+var redis = new Redis(config.ioredis_options);
 
 
 /**
