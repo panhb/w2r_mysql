@@ -301,7 +301,7 @@ function saveArticle(){
         success: function(json){
             //$("#article_id").val(json.id);
             //alert(json.message);
-			location.href='reading/'+json.id;
+			location.href='/articles/reading/'+json.id;
         }
     })
 }
