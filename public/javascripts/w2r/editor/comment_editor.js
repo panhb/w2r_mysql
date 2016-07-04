@@ -167,7 +167,7 @@ function previewShow(){
 	var data=$("#editor").val();
 	$.ajax({
 		async:false,
-		type: "GET",
+		type: "POST",
 		url: "/articles/article2html",
 		data: {content:data},
 		dataType: "json",
