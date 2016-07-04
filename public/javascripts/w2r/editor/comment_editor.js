@@ -172,7 +172,7 @@ function previewShow(){
 		data: {content:data},
 		dataType: "json",
 		success: function(json){
-			var data=JSON.parse(json);
+			var data=eval(json);
 			$("#preview").html(data.html);
 			$("#preview").fadeIn();
 		}
